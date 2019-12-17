@@ -1,19 +1,28 @@
 package dataStructure;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 
 public class DGraph implements graph{
-
+	
+	public DGraph() {
+		this._graph = new LinkedHashMap<Integer, nodeData>();
+	}
+	
+	
 	@Override
 	public node_data getNode(int key) {
-		// TODO Auto-generated method stub
-		return null;
+		if(this._graph.isEmpty()) {
+			return null; // later maybe throw
+		} /// if dont exist 
+		return this._graph.get(key);
 	}
 
 	@Override
 	public edge_data getEdge(int src, int dest) {
-		// TODO Auto-generated method stub
-		return null;
+		// if dont exist
+		return this._graph.get(src).get_edges().get(dest);
 	}
 
 	@Override
@@ -69,5 +78,6 @@ public class DGraph implements graph{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	/***** private data ****/
+	private LinkedHashMap<Integer, nodeData> _graph;
 }

@@ -1,5 +1,7 @@
 package dataStructure;
 
+import java.util.ArrayList;
+
 import utils.Point3D;
 
 public class nodeData implements node_data{
@@ -9,12 +11,21 @@ public class nodeData implements node_data{
 		setTag(tag);
 		setWeight(weight);
 		setInfo(info);
-		
+		set_edges();
+
+
+	}
+	public ArrayList<edgeData> get_edges() {
+		return this._edges;
+	}
+
+	public void set_edges() {
+		this._edges = new ArrayList<edgeData>();
 	}
 
 	private void setKey(int key) {
 		this._key = key;
-		
+
 	}
 
 	@Override
@@ -30,7 +41,7 @@ public class nodeData implements node_data{
 	@Override
 	public void setLocation(Point3D p) {
 		this._location = p;
-		
+
 	}
 
 	@Override
@@ -41,7 +52,7 @@ public class nodeData implements node_data{
 	@Override
 	public void setWeight(double w) {
 		this._weight = w;
-		
+
 	}
 
 	@Override
@@ -52,7 +63,7 @@ public class nodeData implements node_data{
 	@Override
 	public void setInfo(String s) {
 		this._info = s;
-		
+
 	}
 
 	@Override
@@ -65,13 +76,14 @@ public class nodeData implements node_data{
 		this._tag = t;
 	}
 
-	
+
 	/******* private data **********/
 	/*
 	 * private enum nodeColor{ white, gray, black }
 	 */
-		private int _tag, _key;
-		private String _info;
-		private double _weight; 
-		private Point3D _location;	
+	private ArrayList<edgeData> _edges;
+	private int _tag, _key;
+	private String _info;
+	private double _weight; 
+	private Point3D _location;	
 }
