@@ -2,6 +2,7 @@ package dataStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 public class DGraph implements graph{
@@ -22,7 +23,14 @@ public class DGraph implements graph{
 	@Override
 	public edge_data getEdge(int src, int dest) {
 		// if dont exist
-		return this._graph.get(src).get_edges().get(dest);
+		Iterator<edgeData> iter = this._graph.get(src).get_edges().iterator();
+		while(iter.hasNext()) {
+			edgeData edge = iter.next();
+			if(edge.getDest() == dest) {
+				return edge;
+			}
+		}
+		return null;
 	}
 
 	@Override

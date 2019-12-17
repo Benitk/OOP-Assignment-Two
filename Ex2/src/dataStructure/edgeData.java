@@ -56,6 +56,5 @@ public class edgeData implements edge_data {
 	private double Weight;
 	private String Info;
 	private int Tag;
->>>>>>> ef6b7cb0dbdf26d2503df6d712c1d2ff634fe47b
 
 }
