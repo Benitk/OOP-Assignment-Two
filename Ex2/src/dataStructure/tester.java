@@ -16,11 +16,8 @@ public class tester {
 		// connect 1 -- > 3
 		
 		
-		li.get(1).add(1);
-		li.get(1).add(2);
 		li.get(1).add(3);
-		li.get(1).remove(1);
-		System.out.println(li.get(1).get(1));
+		System.out.println(li.get(1).iterator());
 		
 	}
 

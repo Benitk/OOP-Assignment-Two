@@ -1,7 +1,6 @@
 package dataStructure;
 
-import java.util.ArrayList;
-
+import java.util.HashMap;
 import utils.Point3D;
 
 public class nodeData implements node_data{
@@ -12,15 +11,16 @@ public class nodeData implements node_data{
 		setWeight(weight);
 		setInfo(info);
 		set_edges();
-
-
 	}
-	public ArrayList<edgeData> get_edges() {
+	// adding a new edge with this node as src and input as dest
+	public void new_edge(nodeData dest, double weight) {
+		edgeData new_edge = new edgeData(this, dest, weight);
+		this.get_edges().put(dest._key, new_edge);
+	}
+	
+	
+	public HashMap<Integer, edgeData> get_edges() {
 		return this._edges;
-	}
-
-	public void set_edges() {
-		this._edges = new ArrayList<edgeData>();
 	}
 
 	private void setKey(int key) {
@@ -81,7 +81,11 @@ public class nodeData implements node_data{
 	/*
 	 * private enum nodeColor{ white, gray, black }
 	 */
-	private ArrayList<edgeData> _edges;
+	private void set_edges() {
+		this._edges = new HashMap<Integer, edgeData>();
+	}
+	
+	private HashMap<Integer, edgeData> _edges;
 	private int _tag, _key;
 	private String _info;
 	private double _weight; 
