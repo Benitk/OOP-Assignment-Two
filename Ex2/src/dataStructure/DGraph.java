@@ -6,6 +6,15 @@ import java.util.Iterator;
 
 public class DGraph implements graph {
 	
+	public DGraph(DGraph g) {
+		set_graph(new HashMap<Integer, node_data>());
+		Iterator<node_data> iter = g.getV().iterator(); // key, node
+		while(iter.hasNext()) {
+			nodeData current = (nodeData) iter.next();
+			this.get_graph().put(current.getKey(), current);
+		}
+		
+	}
 
 
 	public DGraph() {
