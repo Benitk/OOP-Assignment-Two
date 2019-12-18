@@ -1,6 +1,6 @@
 package dataStructure;
 
-import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,11 +8,11 @@ import java.util.Iterator;
 public class DGraph implements graph {
 
 	public DGraph() {
-		set_graph(new HashMap<Integer, nodeData>());
+		set_graph(new HashMap<Integer, node_data>());
 	}
 
 	// getter for graph
-	public HashMap<Integer, nodeData> get_graph() {
+	public HashMap<Integer, node_data> get_graph() {
 		return _graph;
 	}
 
@@ -22,9 +22,9 @@ public class DGraph implements graph {
 	@Override
 	public node_data getNode(int key) {
 		/* try { */
-			nodeData src_vertex = this.get_graph().get(key);
-			return src_vertex;
-	/*	} catch (Exception e) {
+		nodeData vertex = (nodeData)this.get_graph().get(key);
+		return vertex;
+		/*	} catch (Exception e) {
 			return null;
 		}*/
 	}
@@ -38,11 +38,11 @@ public class DGraph implements graph {
 		if(src == dest) {
 			throw new RuntimeException("No edge from a vertex to himself");
 		}
-		
+
 		try {
-			nodeData src_vertex = this.get_graph().get(src);
+			nodeData src_vertex = (nodeData) this.get_graph().get(src);
 			// null.get_edges() can throw
-			edgeData src_to_dest = src_vertex.get_edges().get(dest);
+			edgeData src_to_dest = (edgeData) src_vertex.get_edges().get(dest);
 			return src_to_dest;
 		} catch (Exception e) {
 			return null;
@@ -57,7 +57,7 @@ public class DGraph implements graph {
 	@Override
 	public void addNode(node_data n) {
 		if(n != null) {
-		this.get_graph().put(n.getKey(),(nodeData) n);
+			this.get_graph().put(n.getKey(),(nodeData) n);
 		}
 		throw new RuntimeException("Input is null");
 	}
@@ -67,9 +67,9 @@ public class DGraph implements graph {
 		if(src == dest) {
 			throw new RuntimeException("No edge from a vertex to himself");
 		}
-	
-		nodeData src_vertex = this.get_graph().get(src);
-		nodeData dest_vertex =  this.get_graph().get(dest);
+
+		nodeData src_vertex = (nodeData) this.get_graph().get(src);
+		nodeData dest_vertex =  (nodeData) this.get_graph().get(dest);
 		if(src_vertex == null) {
 			throw new RuntimeException("Source Vertex don't exist");
 		}
@@ -87,13 +87,12 @@ public class DGraph implements graph {
 		if(this.get_graph().isEmpty()) {
 			throw new RuntimeException("Graph is empty");
 		}
-		ArrayList<node_data> getv = new ArrayList<node_data>(this.get_graph().values());
-		return getv;
+		return this.get_graph().values();
 	}
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
-		nodeData n_vertex = this.get_graph().get(node_id);
+		nodeData n_vertex = (nodeData) this.get_graph().get(node_id);
 		if(n_vertex == null) {
 			throw new RuntimeException("Vertex don't exist");
 		}
@@ -101,8 +100,7 @@ public class DGraph implements graph {
 			throw new RuntimeException("there is no edges from this vertex");
 		}
 		else {
-			ArrayList<edge_data> get_edges = new ArrayList<edge_data>(n_vertex.get_edges().values());
-			return get_edges;
+			return n_vertex.get_edges().values();
 		}
 	}
 	/**
@@ -112,11 +110,11 @@ public class DGraph implements graph {
 	@Override
 	public node_data removeNode(int key) {
 		// if vertex doesnt exist
-		nodeData vertex =  this.get_graph().get(key);
+		nodeData vertex = (nodeData) this.get_graph().get(key);
 		if(vertex == null) {
 			throw new RuntimeException("Vertex don't exist");
 		}
-		
+
 		// delete this vertex with all his edges as dest
 		Iterator<node_data> iter = getV().iterator();
 		while(iter.hasNext()) {
@@ -126,7 +124,7 @@ public class DGraph implements graph {
 			}
 		}
 		// delete this vertex with all his edges as src
-		return vertex;
+		return this.get_graph().remove(key);
 	}
 
 	@Override
@@ -134,9 +132,9 @@ public class DGraph implements graph {
 		if(src == dest) {
 			throw new RuntimeException("No edge from a vertex to himself");
 		}
-		
-		nodeData src_vertex = this.get_graph().get(src);
-		nodeData dest_vertex =  this.get_graph().get(dest);
+
+		nodeData src_vertex = (nodeData) this.get_graph().get(src);
+		nodeData dest_vertex = (nodeData) this.get_graph().get(dest);
 		if(src_vertex == null) {
 			throw new RuntimeException("Source Vertex don't exist");
 		}
@@ -160,10 +158,10 @@ public class DGraph implements graph {
 		while(iter.hasNext()) {
 			nodeData current = (nodeData)iter.next();
 			edge_size += current.get_edges().size();
-			}
-		return edge_size;
 		}
-		
+		return edge_size;
+	}
+
 
 	@Override
 	public int getMC() {
@@ -172,9 +170,9 @@ public class DGraph implements graph {
 	}
 
 	/***** private data ****/
-	private void set_graph(HashMap<Integer, nodeData> _graph) {
+	private void set_graph(HashMap<Integer, node_data> _graph) {
 		this._graph = _graph;
 	}
 
-	private HashMap<Integer, nodeData> _graph;
+	private HashMap<Integer, node_data> _graph;
 }
