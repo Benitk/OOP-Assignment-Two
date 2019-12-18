@@ -1,11 +1,12 @@
 package dataStructure;
 
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class DGraph implements graph {
+	
+
 
 	public DGraph() {
 		set_graph(new HashMap<Integer, node_data>());
@@ -56,10 +57,10 @@ public class DGraph implements graph {
 	 */
 	@Override
 	public void addNode(node_data n) {
-		if(n != null) {
-			this.get_graph().put(n.getKey(),(nodeData) n);
+		if(n == null) {
+			throw new RuntimeException("Input is null");
 		}
-		throw new RuntimeException("Input is null");
+		this.get_graph().put(n.getKey(),(nodeData) n);
 	}
 
 	@Override

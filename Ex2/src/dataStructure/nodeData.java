@@ -2,27 +2,28 @@ package dataStructure;
 
 import java.util.HashMap;
 import utils.Point3D;
+
 /**
  * 
  * @author user
  *
  */
-public class nodeData implements node_data{
-	public nodeData(int tag, Point3D point, double weight, String info) {
+public class nodeData implements node_data {
+	public nodeData(Point3D point, double weight, String info) {
 		setLocation(point);
 		setKey(++_number_key);
-		setTag(tag);
 		setWeight(weight);
 		setInfo(info);
 		set_edges();
+		setTag(1);
 	}
+
 	// adding a new edge with this node as src and input as dest
 	public void new_edge(nodeData dest, double weight) {
 		edgeData new_edge = new edgeData(this, dest, weight);
 		this.get_edges().put(dest._key, new_edge);
 	}
-	
-	
+
 	public HashMap<Integer, edge_data> get_edges() {
 		return this._edges;
 	}
@@ -72,25 +73,30 @@ public class nodeData implements node_data{
 
 	@Override
 	public void setTag(int t) {
+		if (1 > t || 3 > t) {
+			this._tag = 1;
+		}
 		this._tag = t;
 	}
 
-
 	/******* private data **********/
-	/*
-	 * private enum nodeColor{ white, gray, black }
-	 */
+
+	//private enum tagColor{Green, Yellow, Red}
+
 	private void setKey(int key) {
 		this._key = key;
 	}
+
 	private void set_edges() {
 		this._edges = new HashMap<Integer, edge_data>();
 	}
+
 	// Integer represent dest.key and edgeData
 	private HashMap<Integer, edge_data> _edges;
+	//private tagColor _tagColor;
 	private int _tag, _key;
 	private String _info;
-	private double _weight; 
-	private Point3D _location;	
+	private double _weight;
+	private Point3D _location;
 	private static int _number_key;
 }
