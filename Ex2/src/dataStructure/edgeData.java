@@ -57,5 +57,4 @@ public class edgeData implements edge_data {
 	private String Info;
 	private int Tag;
 
-
 }
