@@ -35,6 +35,10 @@ public class tester {
 		Graph_Algo ga= new Graph_Algo();
 		ga.init(dg);
 		System.out.println(ga.isConnected());
+		ga.save("check.txt");
+		Graph_Algo gb= new Graph_Algo();
+		gb.init("check.txt");
+		System.out.println(gb.get_graphAlgo().get_graph().get(1).getLocation());
 		
 		
 	}

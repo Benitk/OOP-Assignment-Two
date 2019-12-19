@@ -1,5 +1,11 @@
 package algorithms;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,7 +21,7 @@ import dataStructure.node_data;
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms{
+public class Graph_Algo implements graph_algorithms, Serializable {
 
 	public Graph_Algo() {
 		set_graphAlgo(new DGraph());
@@ -28,15 +34,54 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public void init(String file_name) {
-		// TODO Auto-generated method stub
+		graph file_graph = null; 
+
+		try
+		{    
+			FileInputStream file = new FileInputStream(file_name); 
+			ObjectInputStream in = new ObjectInputStream(file); 
+
+			file_graph = (graph)in.readObject(); 
+			this.init(file_graph);
+
+			in.close(); 
+			file.close(); 
+		} 
+
+		catch(IOException e) 
+		{ 
+			e.printStackTrace();
+		} 
+
+		catch(ClassNotFoundException e) 
+		{ 
+			e.printStackTrace(); 
+		} 
+
+
 
 	}
 
 	@Override
 	public void save(String file_name) {
-		// TODO Auto-generated method stub
+		graph dgraph = this.copy();
+		try
+		{    
+			FileOutputStream file = new FileOutputStream(file_name); 
+			ObjectOutputStream out = new ObjectOutputStream(file); 
 
+			out.writeObject(dgraph); 
+
+			out.close(); 
+			file.close(); 
+		}   
+		catch(IOException e) 
+		{ 
+			e.printStackTrace();
+			//throw new IOException("File is not writable");
+		} 
 	}
+
 	/**
 	 * this algoritem check if one node 'A' connected to every other node
 	 * then check if every other node can reach back to A.
@@ -55,7 +100,7 @@ public class Graph_Algo implements graph_algorithms{
 			return true;
 		}
 		nodeData vertex1 = (nodeData) this.get_graphAlgo().get_graph().get(1);
-		for(int i = 2; i <= size; i++) {
+		for(int i = 2; i <= size; i++) { //O(n*(e-1)) +
 			this.GreenTag();// make every tag green -- > didnt visit there
 			if(isConnected(i, vertex1) == 0) {
 				return false;
@@ -69,11 +114,11 @@ public class Graph_Algo implements graph_algorithms{
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
-	public int isConnected(int toFind, nodeData current) {
+	private int isConnected(int toFind, nodeData current) {
 		int sum = 0;
 		if(current.getTag() == 3) {
 			return 0;
