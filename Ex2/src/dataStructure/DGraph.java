@@ -1,10 +1,11 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class DGraph implements graph {
+public class DGraph implements graph, Serializable {
 	
 	public DGraph(DGraph g) {
 		set_graph(new HashMap<Integer, node_data>());

@@ -1,5 +1,6 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import utils.Point3D;
 
@@ -8,12 +9,12 @@ import utils.Point3D;
  * @author user
  *
  */
-public class nodeData implements node_data {
-	public nodeData(Point3D point, double weight, String info) {
+public class nodeData implements node_data, Serializable {
+	public nodeData(Point3D point) {
 		setLocation(point);
 		setKey(++_number_key);
-		setWeight(weight);
-		setInfo(info);
+		setWeight(Integer.MAX_VALUE);
+		setInfo("");
 		set_edges();
 		setTag(1);
 	}
