@@ -14,6 +14,7 @@ public class tester {
 		Point3D p2=new Point3D(3,8);
 		Point3D p3=new Point3D(8,5);
 		Point3D p4=new Point3D(12,5);
+		//////what happaend?/////
 		dg.addNode(nd1);
 		dg.addNode(nd2);
 		dg.addNode(nd3);
