@@ -9,11 +9,11 @@ import utils.Point3D;
  *
  */
 public class nodeData implements node_data {
-	public nodeData(Point3D point, double weight, String info) {
+	public nodeData(Point3D point) {
 		setLocation(point);
 		setKey(++_number_key);
-		setWeight(weight);
-		setInfo(info);
+		setWeight(Integer.MAX_VALUE);
+		setInfo("");
 		set_edges();
 		setTag(1);
 	}
