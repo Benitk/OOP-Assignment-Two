@@ -23,39 +23,56 @@ public class Graph_Algo implements graph_algorithms{
 	@Override
 	public void init(graph g) {
 		set_graphAlgo((DGraph)g);
-		
+
 	}
 
 	@Override
 	public void init(String file_name) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void save(String file_name) {
 		// TODO Auto-generated method stub
-	
+
 	}
+	/**
+	 * this algoritem check if one node 'A' connected to every other node
+	 * then check if every other node can reach back to A.
+	 * if size == 1 return true becuase
+	 * graph is connected if it has exactly one connected component.
+	 */
 	@Override
 	public boolean isConnected() {
-		
+
+		if(this.get_graphAlgo().get_graph().isEmpty()) {
+			return false;
+		}
+
 		int size = this.get_graphAlgo().nodeSize();
-		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
-		while(iter.hasNext()) {
-			nodeData current = (nodeData)iter.next();
-			for(int i = 1; i < size; i++) {
-				this.GreenTag();// make every tag green -- > didnt visit there
-				if(i != current.getKey()) {
-					if(isConnected(i, current) == 0) {
-						return false;
-					}
-				}
+		if(size == 1) {
+			return true;
+		}
+		nodeData vertex1 = (nodeData) this.get_graphAlgo().get_graph().get(1);
+		for(int i = 2; i <= size; i++) {
+			this.GreenTag();// make every tag green -- > didnt visit there
+			if(isConnected(i, vertex1) == 0) {
+				return false;
 			}
 		}
+		nodeData current;
+		for(int i = 2; i <= size; i++) {
+			current = (nodeData) this.get_graphAlgo().get_graph().get(i);
+			this.GreenTag();// make every tag green -- > didnt visit there
+			if(isConnected(vertex1.getKey(), current) == 0) {
+				return false;
+			}
+		}
+		
 		return true;
 	}
-	
+
 	public int isConnected(int toFind, nodeData current) {
 		int sum = 0;
 		if(current.getTag() == 3) {
