@@ -12,18 +12,24 @@ public class edgeData implements edge_data, Serializable {
 		this.Weight=weight;
 	}
 
-	
-	
+
+
 	@Override
 	public int getSrc() {
-
 		return this.Src.getKey();
+	}
+	
+	public nodeData getNodeSrc() {
+		return this.Src;
 	}
 
 	@Override
 	public int getDest() {
-
 		return this.Dest.getKey();
+	}
+	
+	public nodeData getNodeDest() {
+		return this.Dest;
 	}
 
 	@Override
@@ -45,7 +51,7 @@ public class edgeData implements edge_data, Serializable {
 
 	@Override
 	public int getTag() {
-		
+
 		return this.Tag;
 	}
 
