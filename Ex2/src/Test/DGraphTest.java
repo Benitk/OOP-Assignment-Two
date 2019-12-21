@@ -26,10 +26,10 @@ class DGraphTest {
 		Point3D p2 = new Point3D(5,-1);
 		Point3D p3 = new Point3D(-2,4);
 		Point3D p4 = new Point3D(-4,-2);
-		nodeData v1 = new nodeData(p1, 10, "1");
-		nodeData v2 = new nodeData(p2, 15, "2");
-		nodeData v3 = new nodeData(p3, 5, "3");
-		nodeData v4 = new nodeData(p4, 13, "4");
+		nodeData v1 = new nodeData(p1);
+		nodeData v2 = new nodeData(p2);
+		nodeData v3 = new nodeData(p3);
+		nodeData v4 = new nodeData(p4);
 		g.addNode(v1);
 		g.addNode(v2);
 		g.addNode(v3);
