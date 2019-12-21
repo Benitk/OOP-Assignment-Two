@@ -19,6 +19,10 @@ public class nodeData implements node_data, Serializable {
 		setTag(1);
 	}
 
+	public nodeData() {
+		setKey(++_number_key);
+	}
+
 	// adding a new edge with this node as src and input as dest
 	public void new_edge(nodeData dest, double weight) {
 		edgeData new_edge = new edgeData(this, dest, weight);
@@ -74,7 +78,7 @@ public class nodeData implements node_data, Serializable {
 
 	@Override
 	public void setTag(int t) {
-		if (1 > t || 3 > t) {
+		if (1 > t || 3 < t) {
 			this._tag = 1;
 		}
 		this._tag = t;

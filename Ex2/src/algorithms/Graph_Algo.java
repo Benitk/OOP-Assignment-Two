@@ -6,8 +6,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import org.junit.internal.matchers.ThrowableMessageMatcher;
 
 import dataStructure.DGraph;
 import dataStructure.edgeData;
@@ -99,22 +103,19 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		if(size == 1) {
 			return true;
 		}
-		nodeData vertex1 = (nodeData) this.get_graphAlgo().get_graph().get(1);
-		for(int i = 2; i <= size; i++) { //O(n*(e-1)) +
-			this.GreenTag();// make every tag green -- > didnt visit there
-			if(isConnected(i, vertex1) == 0) {
+		Iterator<node_data> iter = (Iterator<node_data>) this.get_graphAlgo().getV().iterator();
+		nodeData first=(nodeData) iter.next();
+		while(iter.hasNext()) {
+			this.GreenTag();
+			if(isConnected(iter.next().getKey(),first)==0)
 				return false;
-			}
 		}
-		nodeData current;
-		for(int i = 2; i <= size; i++) {
-			current = (nodeData) this.get_graphAlgo().get_graph().get(i);
-			this.GreenTag();// make every tag green -- > didnt visit there
-			if(isConnected(vertex1.getKey(), current) == 0) {
+		Iterator<node_data> iter2 = (Iterator<node_data>) this.get_graphAlgo().getV().iterator();
+		while(iter2.hasNext()) {
+			this.GreenTag();
+			if(isConnected(first.getKey(),(nodeData)iter2.next())==0)
 				return false;
-			}
 		}
-
 		return true;
 	}
 
@@ -142,15 +143,61 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		nodeData start =(nodeData) this._graphAlgo.getNode(src);
+		nodeData end =(nodeData) this._graphAlgo.getNode(dest);
+		SetNodeWightMaxInt();
+		start.setWeight(0.0);
+		if(isConnected(dest,(nodeData)this.get_graphAlgo().getNode(src))==0)
+			return 0;// else throw exception
+		GreenTag();//you must do here greentag() because the isconnected mix it
+		shortestPathDist(start,end);
+		return end.getWeight();
+	}
+	private void shortestPathDist(nodeData current,nodeData end) {
+		if(current.getTag()==3 || current==end)
+			return;
+		UpDateWightNeighbor(current);
+		current.setTag(3);
+		Iterator<edge_data> iter = current.get_edges().values().iterator();
+		while(iter.hasNext()) {
+			edgeData currentEdge=(edgeData) iter.next();
+			shortestPathDist(currentEdge.getNodeDest(),end);
+		}
+
+	}
+
+	private void UpDateWightNeighbor(nodeData current) {
+		Iterator<edge_data> iter = current.get_edges().values().iterator();
+		while(iter.hasNext()) {
+			edgeData currentEdge=(edgeData) iter.next();
+			double value = current.getWeight()+currentEdge.getWeight();
+			if(value<=currentEdge.getNodeDest().getWeight()) {
+				currentEdge.getNodeDest().setWeight(value);
+				currentEdge.getNodeDest().setInfo(Integer.toString(current.getKey()));
+			}
+		}
 	}
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<node_data>listPathRev = new ArrayList<node_data>();//list in reverse
+		shortestPathDist(src,dest);
+		nodeData current=(nodeData) this.get_graphAlgo().getNode(dest);
+		listPathRev.add(current);
+		String info="";
+		while(current!=this.get_graphAlgo().getNode(src)) {
+			info=current.getInfo();
+			current=(nodeData) this.get_graphAlgo().getNode(Integer.parseInt(info));
+			listPathRev.add(current);
+		}
+		ArrayList<node_data>listPath = new ArrayList<node_data>();
+		for(int i=listPathRev.size()-1;i>=0;i--)
+			listPath.add(listPathRev.get(i));
+		
+		return listPath;
 	}
+
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
@@ -176,6 +223,14 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			nodeData current = (nodeData)iter.next();
 			current.setTag(1);
 		}
+	}
+	private void SetNodeWightMaxInt(){
+		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
+		while(iter.hasNext()) {
+			nodeData current = (nodeData)iter.next();
+			current.setWeight(Double.MAX_VALUE);;
+		}
+
 	}
 	private DGraph _graphAlgo;
 
