@@ -13,12 +13,9 @@ import dataStructure.node_data;
 import utils.Range;
 import utils.StdDraw;
 /**
- * this class Draws all the functions in the collection in a GUI window using the
- * given parameters for the GUI windo and the range & resolution
- * using array of colors to generate new color for each function up to eight
- *  then return to the first color
- * @author ben itzhak
- * @author shnai cohen
+
+ * @author Ben itzhak
+ * @author Liad ben moshe
  *
  */
 public class Draw {
@@ -30,14 +27,6 @@ public class Draw {
 		setList(g);
 	}
 	
-	/**
-	 * Draws all the functions in the collection using StdDraw
-	 * @param w
-	 * @param h
-	 * @param rx
-	 * @param ry
-	 * @param res
-	 */
 	public void draw_graph() {
 		StdDraw.setCanvasSize(this.get_Width(), this.get_Height()); // GUI windo witdh and height
 		StdDraw.setXscale(this.get_RangeX().get_min(), this.get_RangeX().get_max());

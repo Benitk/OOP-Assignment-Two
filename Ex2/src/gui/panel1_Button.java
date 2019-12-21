@@ -6,9 +6,6 @@ import java.awt.Font;
 import javax.swing.JButton;
 
 public class panel1_Button {
-	private static int _height = 220;
-	private JButton _button;
-	private final Color _dark = new Color(44, 45, 50);
 	public int getheight() {
 		return _height;
 	}
@@ -34,4 +31,9 @@ public class panel1_Button {
 		this.getbutton().setBorderPainted(false);
 		setheight(this.getheight()+60);
 	}
+	
+	/***** private data ***/
+	private static int _height = 120;
+	private JButton _button;
+	private final Color _dark = new Color(44, 45, 50);
 }

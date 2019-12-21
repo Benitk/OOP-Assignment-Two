@@ -69,14 +69,10 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		
 		
 		//labels
-		JLabel label=new JLabel("GUI Graph"); 
+		JLabel label=new JLabel("Algorithms"); 
 		label.setForeground(Color.WHITE);
-		label.setFont((new Font("Arial", Font.PLAIN, 40)));
-		label.setBounds(50, 20, 200, 100);
-		JLabel label2=new JLabel("Algorithms"); 
-		label2.setForeground(Color.WHITE);
-		label2.setFont((new Font("Arial", Font.PLAIN, 20)));
-		label2.setBounds(100, 120, 200, 100);
+		label.setFont((new Font("Arial", Font.PLAIN, 30)));
+		label.setBounds(75, 20, 200, 100);
 		
 		// buttons
 		panel1_Button b1 = new panel1_Button("is Connected");
@@ -85,7 +81,6 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 	    panel1_Button b4 = new panel1_Button("TSP");
 	    b1.getbutton().addActionListener(this);
 	
-	    this.get_panel1().add(label2);
 	    this.get_panel1().add(label);
 	    this.get_panel1().add(b1.getbutton());
 	    this.get_panel1().add(b2.getbutton());
@@ -111,7 +106,7 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		
 		//button
 		set_show_graph(new JButton("Show Graph"));
-		this.get_show_graph().setBounds(250, 490, 150, 60);
+		this.get_show_graph().setBounds(270, 490, 150, 60);
 		get_show_graph().setForeground(Color.WHITE);
 		get_show_graph().setFont((new Font("Arial", Font.PLAIN, 15)));
 		get_show_graph().setBackground(new Color(44, 45, 50));
@@ -129,8 +124,15 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		this.get_panel3().setLayout(null);
 		this.get_panel3().setBounds(300,60,this.getWidth()-300,200); 
 		Color dark_green = new Color(3, 81, 81);
+		
+		// label 
+		
+		JLabel label2=new JLabel("Graph GUI"); 
+		label2.setForeground(Color.WHITE);
+		label2.setFont((new Font("Arial", Font.PLAIN, 50)));
+		label2.setBounds(220,50, 500, 100);
 		this.get_panel3().setBackground(dark_green);  
-
+		this.get_panel3().add(label2);
 		this.add(this.get_panel3());  
 	}
 
@@ -157,9 +159,9 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		g.drawLine(0, 170, 300, 170);
 		
 		// line for label 2
-		g.setColor(Color.WHITE);
-		g.setFont((new Font("Arial", Font.PLAIN, 40)));
-		g.drawLine(110, 260, 200, 260);
+	//	g.setColor(Color.WHITE);
+		//g.setFont((new Font("Arial", Font.PLAIN, 40)));
+	//	g.drawLine(110, 260, 200, 260);
 		
 	}
 
