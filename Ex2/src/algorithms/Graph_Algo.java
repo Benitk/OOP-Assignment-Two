@@ -19,6 +19,7 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.nodeData;
 import dataStructure.node_data;
+import utils.Range;
 /**
  * This empty class represents the set of graph-theory algorithms
  * which should be implemented as part of Ex2 - Do edit this class.
@@ -103,8 +104,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		if(size == 1) {
 			return true;
 		}
+		nodeData current;
 		Iterator<node_data> iter = (Iterator<node_data>) this.get_graphAlgo().getV().iterator();
-		nodeData first=(nodeData) iter.next();
+		nodeData first = (nodeData) iter.next();
 		while(iter.hasNext()) {
 			this.GreenTag();
 			if(isConnected(iter.next().getKey(),first)==0)
@@ -113,8 +115,11 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		Iterator<node_data> iter2 = (Iterator<node_data>) this.get_graphAlgo().getV().iterator();
 		while(iter2.hasNext()) {
 			this.GreenTag();
-			if(isConnected(first.getKey(),(nodeData)iter2.next())==0)
-				return false;
+			current = (nodeData) iter2.next();
+			if(current.getKey() != first.getKey()) {
+				if(isConnected(first.getKey(),current)==0)
+					return false;
+			}
 		}
 		return true;
 	}
@@ -148,8 +153,11 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		nodeData end =(nodeData) this._graphAlgo.getNode(dest);
 		SetNodeWightMaxInt();
 		start.setWeight(0.0);
-		if(isConnected(dest,(nodeData)this.get_graphAlgo().getNode(src))==0)
-			return 0;// else throw exception
+		GreenTag();
+		if(isConnected(dest,(nodeData)this.get_graphAlgo().getNode(src))==0) {
+			throw new RuntimeException("There isnt a path between those nodes");
+			
+		}
 		GreenTag();//you must do here greentag() because the isconnected mix it
 		shortestPathDist(start,end);
 		return end.getWeight();
@@ -194,7 +202,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		ArrayList<node_data>listPath = new ArrayList<node_data>();
 		for(int i=listPathRev.size()-1;i>=0;i--)
 			listPath.add(listPathRev.get(i));
-		
+
 		return listPath;
 	}
 
@@ -204,6 +212,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
 	@Override
 	public graph copy() {
