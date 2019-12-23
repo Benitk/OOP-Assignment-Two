@@ -148,10 +148,20 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
+		if(src == dest) {
+			throw new RuntimeException("No edge from a vertex to himself");
+		}
 
 		nodeData start =(nodeData) this._graphAlgo.getNode(src);
 		nodeData end =(nodeData) this._graphAlgo.getNode(dest);
-		SetNodeWightMaxInt();
+		if(start == null) {
+			throw new RuntimeException("Source Vertex don't exist");
+		}
+		else if(end == null) {
+			throw new RuntimeException("destination Vertex don't exist");
+		}
+		
+		SetNodeWeightMaxInt();
 		start.setWeight(0.0);
 		GreenTag();
 		if(isConnected(dest,(nodeData)this.get_graphAlgo().getNode(src))==0) {
@@ -165,7 +175,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	private void shortestPathDist(nodeData current,nodeData end) {
 		if(current.getTag()==3 || current==end)
 			return;
-		UpDateWightNeighbor(current);
+		UpDateWeightNeighbor(current);
 		current.setTag(3);
 		Iterator<edge_data> iter = current.get_edges().values().iterator();
 		while(iter.hasNext()) {
@@ -175,7 +185,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	}
 
-	private void UpDateWightNeighbor(nodeData current) {
+	private void UpDateWeightNeighbor(nodeData current) {
 		Iterator<edge_data> iter = current.get_edges().values().iterator();
 		while(iter.hasNext()) {
 			edgeData currentEdge=(edgeData) iter.next();
@@ -255,6 +265,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			current.setTag(1);
 		}
 	}
+
 	
 	private void INFO() {
 		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
@@ -263,7 +274,10 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			current.setInfo("");
 		}
 	}
-	private void SetNodeWightMaxInt(){
+
+
+	private void SetNodeWeightMaxInt(){
+
 		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
 		while(iter.hasNext()) {
 			nodeData current = (nodeData)iter.next();

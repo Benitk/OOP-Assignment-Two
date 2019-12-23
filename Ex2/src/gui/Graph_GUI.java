@@ -80,6 +80,9 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		panel1_Button b3 = new panel1_Button("shortest Path");
 	    panel1_Button b4 = new panel1_Button("TSP");
 	    b1.getbutton().addActionListener(this);
+	    b2.getbutton().addActionListener(this);
+	    b3.getbutton().addActionListener(this);
+	    b4.getbutton().addActionListener(this);
 	
 	    this.get_panel1().add(label);
 	    this.get_panel1().add(b1.getbutton());
@@ -167,7 +170,6 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getActionCommand());
 
 		// click on show Graph
 		if(e.getActionCommand().equals("Show Graph")) {
@@ -176,11 +178,11 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		}
 		// is connected
 		if (e.getActionCommand().equals("is Connected")) {
-			  _console.setText(String.valueOf(this.get_graphGui().isConnected()));
+			  _console.setText("is Connected: " + String.valueOf(this.get_graphGui().isConnected()));
 		}
 		// shortest path dist
 		if (e.getActionCommand().equals("shortest Path Dist")) {
-			_console.setText("wors");
+			//_console.setText(String.valueOf(this.get_graphGui().shortestPathDist(src, dest)));
 		}
 		
 		
