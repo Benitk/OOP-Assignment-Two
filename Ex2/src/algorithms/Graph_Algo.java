@@ -160,7 +160,6 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		else if(end == null) {
 			throw new RuntimeException("destination Vertex don't exist");
 		}
-		// makes every node weight max value
 		SetNodeWeightMaxInt();
 		// set src weight to 0
 		start.setWeight(0.0);
@@ -168,7 +167,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		GreenTag();
 		// check if there is a path
 		if(isConnected(dest,(nodeData)this.get_graphAlgo().getNode(src))==0) {
-			throw new RuntimeException("There isnt a path between those nodes");	
+			throw new RuntimeException("There isnt a path between those nodes");
 		}
 		// makes every tag green
 		GreenTag();//you must do here greentag() because the isconnected mix it
@@ -224,10 +223,33 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		// TODO Auto-generated method stub
-		return null;
+		Iterator<Integer> targetlist = targets.iterator();
+		int listnum=targetlist.next();
+		int listnum2=targetlist.next();
+		List<node_data>TspList=new ArrayList<node_data>();
+		TspList.addAll(shortestPath(listnum,listnum2));
+		Iterator<node_data> iter = TspList.iterator();
+		while(targetlist.hasNext()){
+			listnum=targetlist.next();
+			while(iter.hasNext()) {
+				if(iter.next().getKey()==listnum) {
+					if(targetlist.hasNext()) {
+						listnum=targetlist.next();
+						iter=TspList.iterator();
+					}
+				}
+			}
+			int index=TspList.size()-1;
+			if(!TspList.contains(this.get_graphAlgo().getNode(listnum))) {
+				TspList.addAll(shortestPath(TspList.get(TspList.size()-1).getKey(),listnum));
+				TspList.remove(index);
+			}
+			
+		}
+		return TspList;
 	}
-	
+
+
 
 	@Override
 	public graph copy() {
@@ -248,7 +270,10 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			current.setTag(1);
 		}
 	}
+
+
 	private void SetNodeWeightMaxInt(){
+
 		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
 		while(iter.hasNext()) {
 			nodeData current = (nodeData)iter.next();
