@@ -194,15 +194,37 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		ArrayList<node_data>listPath = new ArrayList<node_data>();
 		for(int i=listPathRev.size()-1;i>=0;i--)
 			listPath.add(listPathRev.get(i));
-		
+
 		return listPath;
 	}
 
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		// TODO Auto-generated method stub
-		return null;
+		Iterator<Integer> targetlist = targets.iterator();
+		int listnum=targetlist.next();
+		int listnum2=targetlist.next();
+		List<node_data>TspList=new ArrayList<node_data>();
+		while(targetlist.hasNext()){
+			TspList.addAll(shortestPath(listnum,listnum2));//remove the last obj
+			Iterator<node_data> iter = TspList.iterator();
+			listnum=listnum2;
+			listnum2=targetlist.next();
+			while(iter.hasNext()) {
+				listnum=iter.next().getKey();
+				if(listnum==listnum2) {
+					if(targetlist.hasNext()) {
+						listnum2=targetlist.next();
+						iter=TspList.iterator();
+					}
+				}
+
+			}
+			TspList.remove(this.get_graphAlgo().getNode(listnum));
+			TspList.addAll(shortestPath(listnum,listnum2));
+			
+		}
+		return TspList;
 	}
 
 	@Override
@@ -222,6 +244,14 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		while(iter.hasNext()) {
 			nodeData current = (nodeData)iter.next();
 			current.setTag(1);
+		}
+	}
+	
+	private void INFO() {
+		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
+		while(iter.hasNext()) {
+			nodeData current = (nodeData)iter.next();
+			current.setInfo("");
 		}
 	}
 	private void SetNodeWightMaxInt(){
