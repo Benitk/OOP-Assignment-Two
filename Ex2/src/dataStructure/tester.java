@@ -14,12 +14,12 @@ public class tester {
 	public static void main(String[] args) {
 		DGraph dg = new DGraph();
 		DGraph dg1 = new DGraph();
-		Point3D p1 = new Point3D(-2.0, -2);
-		Point3D p2 = new Point3D(3, 8);
-		Point3D p3 = new Point3D(-8, 5);
-		Point3D p4 = new Point3D(-6, 2);
-		Point3D p5 = new Point3D(20, 20);
-		Point3D p6 = new Point3D(5, 4);
+		Point3D p1 = new Point3D(-3.0, 17);
+		Point3D p2 = new Point3D(7, 17);
+		Point3D p3 = new Point3D(17,12);
+		Point3D p4 = new Point3D(14,2);
+		Point3D p5 = new Point3D(2,8);
+		Point3D p6 = new Point3D(-1,0);
 	    Point3D p7 = new Point3D(-4.0, -5.0);
 
 		nodeData nd1 = new nodeData(p1);
@@ -38,14 +38,17 @@ public class tester {
 		dg.addNode(nd6);// think:this key is 6 ,did we need to change this to 1?,because is new graph
 
 		dg.connect(1, 2, 0.2);
-		dg.connect(1, 5, 1);
-		dg.connect(2, 5, 0.5);
-		dg.connect(5, 4, 1);
+		dg.connect(2, 3, 1);
+		dg.connect(3, 4, 0.5);
+		dg.connect(4, 5, 1);
+		dg.connect(5, 6, 3);
+		dg.connect(5, 2, 3);
 		dg.connect(5, 3, 3);
-		dg.connect(4, 6, 2);
-		dg.connect(3, 6, 1);
-		dg.connect(3, 1, 2);
-
+		dg.connect(1, 5, 3);
+		dg.connect(6, 4, 3);
+		dg.connect(6, 1, 3);
+		
+		
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(dg);
 	

@@ -160,18 +160,23 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		else if(end == null) {
 			throw new RuntimeException("destination Vertex don't exist");
 		}
-		
+		// makes every node weight max value
 		SetNodeWeightMaxInt();
+		// set src weight to 0
 		start.setWeight(0.0);
+		// makes every tag green
 		GreenTag();
+		// check if there is a path
 		if(isConnected(dest,(nodeData)this.get_graphAlgo().getNode(src))==0) {
-			throw new RuntimeException("There isnt a path between those nodes");
-			
+			throw new RuntimeException("There isnt a path between those nodes");	
 		}
+		// makes every tag green
 		GreenTag();//you must do here greentag() because the isconnected mix it
+		
 		shortestPathDist(start,end);
 		return end.getWeight();
 	}
+	
 	private void shortestPathDist(nodeData current,nodeData end) {
 		if(current.getTag()==3 || current==end)
 			return;

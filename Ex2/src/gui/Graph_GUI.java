@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,13 +19,14 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import algorithms.Graph_Algo;
-
+import dataStructure.node_data;
 import utils.Point3D;
 
 public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
@@ -76,8 +79,8 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		
 		// buttons
 		panel1_Button b1 = new panel1_Button("is Connected");
-		panel1_Button b2 = new panel1_Button("shortest Path Dist");
-		panel1_Button b3 = new panel1_Button("shortest Path");
+		panel1_Button b2 = new panel1_Button("Shortest Path Dist");
+		panel1_Button b3 = new panel1_Button("Shortest Path");
 	    panel1_Button b4 = new panel1_Button("TSP");
 	    b1.getbutton().addActionListener(this);
 	    b2.getbutton().addActionListener(this);
@@ -160,12 +163,7 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		g.setColor(Color.WHITE);
 		g.setFont((new Font("Arial", Font.PLAIN, 40)));
 		g.drawLine(0, 170, 300, 170);
-		
-		// line for label 2
-	//	g.setColor(Color.WHITE);
-		//g.setFont((new Font("Arial", Font.PLAIN, 40)));
-	//	g.drawLine(110, 260, 200, 260);
-		
+
 	}
 
 	@Override
@@ -174,16 +172,41 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		// click on show Graph
 		if(e.getActionCommand().equals("Show Graph")) {
 			Draw d = new Draw(this.get_graphGui().get_graphAlgo());
-			d.draw_graph();
+			d.draw_graph(0, new ArrayList<node_data>());
 		}
 		// is connected
 		if (e.getActionCommand().equals("is Connected")) {
-			  _console.setText("is Connected: " + String.valueOf(this.get_graphGui().isConnected()));
+			this.get_console().setText("is Connected: " + String.valueOf(this.get_graphGui().isConnected()));
 		}
-		// shortest path dist
-		if (e.getActionCommand().equals("shortest Path Dist")) {
-			//_console.setText(String.valueOf(this.get_graphGui().shortestPathDist(src, dest)));
+	// shortest path dist
+		if (e.getActionCommand().equals("Shortest Path Dist")) {
+				String name=JOptionPane.showInputDialog(this,"Please Enter src and dest node\n"
+					+ "In format of int,int - src,dest"); 
+			String[] split = name.split(",");
+			try {
+			this.get_console().setText("shortest Path Dist weight: " + String.valueOf(this.get_graphGui().shortestPathDist(Integer.parseInt(split[0]),
+																				 Integer.parseInt(split[1]))));
+			}catch(Exception err) {
+				this.get_console().setText("Error: please check console for more details");
+				err.printStackTrace();
+			}
 		}
+		// shortest path
+		if (e.getActionCommand().equals("Shortest Path")) {
+				String name=JOptionPane.showInputDialog(this,"Please Enter src and dest node\n"
+					+ "Format of int,int - src,dest"); 
+			String[] split = name.split(",");
+			try {
+			_console.setText("shortest Path between node "+split[0]+" to "+split[1]+" is marked with red");
+			Draw d = new Draw(this.get_graphGui().get_graphAlgo());
+			d.draw_graph(1,(ArrayList<node_data>) this.get_graphGui().shortestPath(Integer.parseInt(split[0]),Integer.parseInt(split[1])));
+			
+			}catch(Exception err) {
+				this.get_console().setText("Error: please check console for more details");
+				err.printStackTrace();
+			}
+		}
+		
 		
 		
 		 

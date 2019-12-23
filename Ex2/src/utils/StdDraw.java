@@ -1747,6 +1747,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			mouseX = StdDraw.userX(e.getX());
 			mouseY = StdDraw.userY(e.getY());
 			isMousePressed = true;
+			System.out.println(mouseX + "," + mouseY);
 		}
 	}
 
