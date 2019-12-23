@@ -83,6 +83,41 @@ public class Draw {
 						path_src = path_dest;
 					}
 				}
+				
+				if(type == 1) {
+					StdDraw.setPenColor(Color.GREEN);
+					StdDraw.setPenRadius(0.008);
+					Iterator<node_data> path = src_dest.iterator();
+					nodeData path_src = null;
+					nodeData path_dest;
+					if(path.hasNext())
+						path_src=(nodeData) path.next();
+					while(path.hasNext()) {
+						path_dest = (nodeData) path.next();
+
+						StdDraw.line(path_src.getLocation().x(), path_src.getLocation().y(),
+								path_dest.getLocation().x(),
+								path_dest.getLocation().y());
+						path_src = path_dest;
+					}
+				}
+				if(type == 2) {
+					StdDraw.setPenColor(Color.GREEN);
+					StdDraw.setPenRadius(0.008);
+					Iterator<node_data> path = src_dest.iterator();
+					nodeData path_src = null;
+					nodeData path_dest;
+					if(path.hasNext())
+						path_src=(nodeData) path.next();
+					while(path.hasNext()) {
+						path_dest = (nodeData) path.next();
+
+						StdDraw.line(path_src.getLocation().x(), path_src.getLocation().y(),
+								path_dest.getLocation().x(),
+								path_dest.getLocation().y());
+						path_src = path_dest;
+					}
+				}
 
 				// draw direction
 				StdDraw.setPenColor(Color.YELLOW);
@@ -112,6 +147,14 @@ public class Draw {
 			StdDraw.setFont(new Font("Arial", Font.PLAIN, 30));
 			StdDraw.text(middleX,this.get_RangeY().get_max() - 1 , "Shortest Path");
 		}
+		
+		if(type == 2) {
+			// draw algoritem label
+			StdDraw.setPenColor(Color.BLACK);
+			StdDraw.setFont(new Font("Arial", Font.PLAIN, 30));
+			StdDraw.text(middleX,this.get_RangeY().get_max() - 1 , "TSP");
+		}
+		
 		else {
 			// draw algoritem label
 			StdDraw.setPenColor(Color.BLACK);

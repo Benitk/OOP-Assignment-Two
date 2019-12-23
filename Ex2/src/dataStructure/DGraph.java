@@ -17,7 +17,6 @@ public class DGraph implements graph, Serializable {
 			this.get_graph().put(current.getKey(), current);
 		}
 		set_mc(0);
-		
 	}
 
 

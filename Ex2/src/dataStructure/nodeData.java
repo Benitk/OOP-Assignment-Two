@@ -20,10 +20,6 @@ public class nodeData implements node_data, Serializable {
 		setTag(1);
 	}
 
-	/*
-	 * private nodeData() { setKey(0); }
-	 */
-
 	// adding a new edge with this node as src and input as dest
 	public void new_edge(nodeData dest, double weight) {
 		edgeData new_edge = new edgeData(this, dest, weight);
