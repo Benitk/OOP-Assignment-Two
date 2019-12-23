@@ -41,43 +41,33 @@ public class tester {
 		dg.addNode(nd7);
 		
 		
-		dg.connect(1,7,0.3);
-		dg.connect(7,5,0.2);
-		dg.connect(6,4,1);
-		dg.connect(2,4,3);
-		dg.connect(1,3,1);
-		dg.connect(3,6,2);
-		dg.connect(5,6,1);
-		dg.connect(3,7,2);
-		dg.connect(3,4,2);
 		dg.connect(1,2,1);
-		dg.connect(2,3,1);
-		dg.connect(4,1,2);
+		dg.connect(2,3,2);
+		dg.connect(1,4,0.5);
+		dg.connect(4,2,0.2);
+		dg.connect(3,5,5);
+		dg.connect(2,6,4);
+		dg.connect(5,1,2);
+		dg.connect(6,5,2);
+		
 		
 		
 		List<Integer> targets=new ArrayList<Integer>();
 		targets.add(1);
-		targets.add(6);
-		targets.add(5);
-		targets.add(7);
 		targets.add(2);
+		targets.add(5);
+		
+		
 		Graph_Algo ga= new Graph_Algo();
 		ga.init(dg);
-		System.out.println(ga.shortestPathDist(2,6));
+		System.out.println(ga.shortestPathDist(6,4));
 		List<node_data> targetsMMM=new ArrayList<node_data>();
-		targetsMMM = ga.shortestPath(1,7);
+		targetsMMM = ga.TSP(targets);
 		for(int i=0;i<targetsMMM.size();i++)
-			System.out.println(targetsMMM.get(i).getKey());
+			System.out.print(targetsMMM.get(i).getKey()+",");
 		
 
-		dg.connect(1, 2, 0.2);
-		dg.connect(1, 5, 1);
-		dg.connect(2, 5, 0.5);
-		dg.connect(5, 4, 1);
-		dg.connect(5, 3, 3);
-		dg.connect(4, 6, 2);
-		dg.connect(3, 6, 1);
-		dg.connect(3, 1, 2);
+		
 
 		
 	

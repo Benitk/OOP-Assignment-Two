@@ -160,13 +160,13 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		else if(end == null) {
 			throw new RuntimeException("destination Vertex don't exist");
 		}
-		
+
 		SetNodeWeightMaxInt();
 		start.setWeight(0.0);
 		GreenTag();
 		if(isConnected(dest,(nodeData)this.get_graphAlgo().getNode(src))==0) {
 			throw new RuntimeException("There isnt a path between those nodes");
-			
+
 		}
 		GreenTag();//you must do here greentag() because the isconnected mix it
 		shortestPathDist(start,end);
@@ -223,28 +223,29 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		int listnum=targetlist.next();
 		int listnum2=targetlist.next();
 		List<node_data>TspList=new ArrayList<node_data>();
+		TspList.addAll(shortestPath(listnum,listnum2));
+		Iterator<node_data> iter = TspList.iterator();
 		while(targetlist.hasNext()){
-			TspList.addAll(shortestPath(listnum,listnum2));//remove the last obj
-			Iterator<node_data> iter = TspList.iterator();
-			listnum=listnum2;
-			listnum2=targetlist.next();
+			listnum=targetlist.next();
 			while(iter.hasNext()) {
-				listnum=iter.next().getKey();
-				if(listnum==listnum2) {
+				if(iter.next().getKey()==listnum) {
 					if(targetlist.hasNext()) {
-						listnum2=targetlist.next();
+						listnum=targetlist.next();
 						iter=TspList.iterator();
 					}
 				}
-
 			}
-			TspList.remove(this.get_graphAlgo().getNode(listnum));
-			TspList.addAll(shortestPath(listnum,listnum2));
+			int index=TspList.size()-1;
+			if(!TspList.contains(this.get_graphAlgo().getNode(listnum))) {
+				TspList.addAll(shortestPath(TspList.get(TspList.size()-1).getKey(),listnum));
+				TspList.remove(index);
+			}
 			
 		}
 		return TspList;
 	}
-	
+
+
 
 	@Override
 	public graph copy() {
@@ -266,7 +267,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}
 	}
 
-	
+
 	private void INFO() {
 		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
 		while(iter.hasNext()) {
