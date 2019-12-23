@@ -1,6 +1,5 @@
 package dataStructure;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +22,7 @@ public class tester {
 		Point3D p6=new Point3D(20,11);
 		Point3D p7=new Point3D(-4.0,-5.0);
 		
+
 
 		nodeData nd1 = new nodeData(p1);
 		nodeData nd2 = new nodeData(p2);
@@ -69,18 +69,28 @@ public class tester {
 		for(int i=0;i<targetsMMM.size();i++)
 			System.out.println(targetsMMM.get(i).getKey());
 		
-//		Graph_GUI h = new Graph_GUI(ga);
-//		h.setVisible(true);
-//		ga.get_graphAlgo().addNode(nd7);
+
+		dg.connect(1, 2, 0.2);
+		dg.connect(1, 5, 1);
+		dg.connect(2, 5, 0.5);
+		dg.connect(5, 4, 1);
+		dg.connect(5, 3, 3);
+		dg.connect(4, 6, 2);
+		dg.connect(3, 6, 1);
+		dg.connect(3, 1, 2);
+
 		
+	
+
+		  
+		 
+
 		/*
-		 * System.out.println(ga.shortestPathDist(1,6)); System.out.println("*****");
-		 * List<node_data>arr=new ArrayList<node_data>(); arr=ga.shortestPath(1,6);
-		 * for(int i=0;i<arr.size();i++) { System.out.println(arr.get(i).getKey());//woW
-		 * }
+		 * System.out.println(ga.shortestPathDist(1, 6)); System.out.println("*****");
+		 * List<node_data> arr = new ArrayList<node_data>(); arr = ga.shortestPath(1,
+		 * 6); for (int i = 0; i < arr.size(); i++) {
+		 * System.out.println(arr.get(i).getKey());// woW }
 		 */
-		
-		
 	}
 
 }

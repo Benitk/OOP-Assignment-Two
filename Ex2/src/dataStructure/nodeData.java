@@ -10,18 +10,19 @@ import utils.Point3D;
  *
  */
 public class nodeData implements node_data, Serializable {
+	
 	public nodeData(Point3D point) {
 		setLocation(point);
-		setKey(++_number_key);
+		setKey(0);
 		setWeight(Integer.MAX_VALUE);
 		setInfo("");
 		set_edges();
 		setTag(1);
 	}
 
-	public nodeData() {
-		setKey(++_number_key);
-	}
+	/*
+	 * private nodeData() { setKey(0); }
+	 */
 
 	// adding a new edge with this node as src and input as dest
 	public void new_edge(nodeData dest, double weight) {
@@ -37,7 +38,11 @@ public class nodeData implements node_data, Serializable {
 	public int getKey() {
 		return this._key;
 	}
-
+	
+	public void setKey(int key) {
+		this._key = key;
+	}
+	
 	@Override
 	public Point3D getLocation() {
 		return this._location;
@@ -88,9 +93,6 @@ public class nodeData implements node_data, Serializable {
 
 	//private enum tagColor{Green, Yellow, Red}
 
-	private void setKey(int key) {
-		this._key = key;
-	}
 
 	private void set_edges() {
 		this._edges = new HashMap<Integer, edge_data>();
@@ -103,5 +105,4 @@ public class nodeData implements node_data, Serializable {
 	private String _info;
 	private double _weight;
 	private Point3D _location;
-	private static int _number_key;
 }

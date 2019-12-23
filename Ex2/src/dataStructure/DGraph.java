@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import utils.Range;
+
 public class DGraph implements graph, Serializable {
 	
 	public DGraph(DGraph g) {
@@ -14,12 +16,14 @@ public class DGraph implements graph, Serializable {
 			nodeData current = (nodeData) iter.next();
 			this.get_graph().put(current.getKey(), current);
 		}
+		set_mc(0);
 		
 	}
 
 
 	public DGraph() {
 		set_graph(new HashMap<Integer, node_data>());
+		set_mc(0);
 	}
 
 	// getter for graph
@@ -70,7 +74,10 @@ public class DGraph implements graph, Serializable {
 		if(n == null) {
 			throw new RuntimeException("Input is null");
 		}
-		this.get_graph().put(n.getKey(),(nodeData) n);
+		set_number_key(this.get_number_key() + 1);
+		((nodeData) n).setKey(this.get_number_key());
+		this.get_graph().put(this.get_number_key(),(nodeData) n);
+		this.set_mc(this.getMC()+1);
 	}
 
 	@Override
@@ -90,6 +97,7 @@ public class DGraph implements graph, Serializable {
 		// create edge
 		else {
 			src_vertex.new_edge(dest_vertex, w);
+			this.set_mc(this.getMC()+1);
 		}
 	}
 
@@ -135,6 +143,7 @@ public class DGraph implements graph, Serializable {
 			}
 		}
 		// delete this vertex with all his edges as src
+		this.set_mc(this.getMC()-1);
 		return this.get_graph().remove(key);
 	}
 
@@ -153,6 +162,7 @@ public class DGraph implements graph, Serializable {
 			throw new RuntimeException("destination Vertex don't exist");
 		}
 		else {
+			this.set_mc(this.getMC()-1);
 			return src_vertex.get_edges().remove(dest);
 		}
 	}
@@ -176,14 +186,57 @@ public class DGraph implements graph, Serializable {
 
 	@Override
 	public int getMC() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mc;
 	}
+	public Range GraphScaleY() {
+		double minY, maxY;
+		Iterator<node_data> iter = this.getV().iterator();
+		minY = maxY = iter.next().getLocation().y();
+		while(iter.hasNext()) {
+			nodeData current = (nodeData) iter.next();
+			if(current.getLocation().y() < minY) {
+				minY = current.getLocation().y();
+			}
+			else if(current.getLocation().y() > maxY){
+				maxY = current.getLocation().y();
+			}
+		}
+		return new Range(minY, maxY);
+	}
+	public Range GraphScaleX() {
+		double minX, maxX;
+		Iterator<node_data> iter = this.getV().iterator();
+		minX = maxX = iter.next().getLocation().x();
+		while(iter.hasNext()) {
+			nodeData current = (nodeData) iter.next();
+			if(current.getLocation().x() < minX) {
+				minX = current.getLocation().x();
+			}
+			else if(current.getLocation().x() > maxX){
+				maxX = current.getLocation().x();
+			}
+		}
+		return new Range(minX, maxX);
+	}
+	
 
 	/***** private data ****/
+	private void set_mc(int m) {
+		this.mc = m;
+	}
+	
 	private void set_graph(HashMap<Integer, node_data> _graph) {
 		this._graph = _graph;
 	}
+	public int get_number_key() {
+		return _number_key;
+	}
 
+
+	public void set_number_key(int _number_key) {
+		this._number_key = _number_key;
+	}
+	private int _number_key;
+	private int mc;
 	private HashMap<Integer, node_data> _graph;
 }

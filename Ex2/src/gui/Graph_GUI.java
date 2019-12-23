@@ -167,19 +167,21 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println(e.getActionCommand());
 
 		// click on show Graph
 		if(e.getActionCommand().equals("Show Graph")) {
 			Draw d = new Draw(this.get_graphGui().get_graphAlgo());
 			d.draw_graph();
 		}
-		
-		
+		// is connected
 		if (e.getActionCommand().equals("is Connected")) {
-			  System.out.println("heelo");
-			  _console.setText("wordks ph jajsada");
-		  repaint(); 
-}
+			  _console.setText(String.valueOf(this.get_graphGui().isConnected()));
+		}
+		// shortest path dist
+		if (e.getActionCommand().equals("shortest Path Dist")) {
+			_console.setText("wors");
+		}
 		
 		
 		 
@@ -239,11 +241,6 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 
 	public JPanel get_panel1() {
 		return _panel1;
-	}
-
-
-	public Graph_Algo get_graph_gui() {
-		return _graph_gui;
 	}
 
 	public JMenuItem getMenuItem1() {
