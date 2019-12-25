@@ -9,7 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,16 +20,18 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import algorithms.Graph_Algo;
-
+import dataStructure.nodeData;
+import dataStructure.node_data;
 import utils.Point3D;
 
-public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
+public class Graph_GUI extends JFrame implements ActionListener {
 
 
 	public Graph_GUI(Graph_Algo gAlgo) {
@@ -42,23 +47,7 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		panel1();
 		panel3();
 		panel2();
-		//panel2();
-		/*
-		 *
-		 * MenuBar menuBar = new MenuBar(); Menu menu = new Menu("Menu");
-		 * menuBar.add(menu); this.setMenuBar(menuBar);
-		 * 
-		 * MenuItem showGraph = new MenuItem("show Graph");
-		 * showGraph.addActionListener(this);
-		 * 
-		 * MenuItem save = new MenuItem("save Graph"); save.addActionListener(this);
-		 * 
-		 * JMenu Algorithms = new JMenu("Algorithms on Graph");
-		 * 
-		 * menu.add(showGraph); menu.add(item2); menu.add(Algorithms);
-		 * 
-		 * this.addMouseListener(this);
-		 */
+
 	}
 	private void panel1() {
 		set_panel1(new JPanel());  
@@ -66,39 +55,39 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		this.get_panel1().setBounds(0,0,300,this.getHeight()); 
 		Color dark = new Color(44, 45, 50);
 		this.get_panel1().setBackground(dark);  
-		
-		
+
+
 		//labels
 		JLabel label=new JLabel("Algorithms"); 
 		label.setForeground(Color.WHITE);
 		label.setFont((new Font("Arial", Font.PLAIN, 30)));
 		label.setBounds(75, 20, 200, 100);
-		
+
 		// buttons
 		panel1_Button b1 = new panel1_Button("is Connected");
-		panel1_Button b2 = new panel1_Button("shortest Path Dist");
-		panel1_Button b3 = new panel1_Button("shortest Path");
-	    panel1_Button b4 = new panel1_Button("TSP");
-	    b1.getbutton().addActionListener(this);
-	    b2.getbutton().addActionListener(this);
-	    b3.getbutton().addActionListener(this);
-	    b4.getbutton().addActionListener(this);
-	
-	    this.get_panel1().add(label);
-	    this.get_panel1().add(b1.getbutton());
-	    this.get_panel1().add(b2.getbutton());
-	    this.get_panel1().add(b3.getbutton());
-	    this.get_panel1().add(b4.getbutton());
+		panel1_Button b2 = new panel1_Button("Shortest Path Dist");
+		panel1_Button b3 = new panel1_Button("Shortest Path");
+		panel1_Button b4 = new panel1_Button("TSP");
+		b1.getbutton().addActionListener(this);
+		b2.getbutton().addActionListener(this);
+		b3.getbutton().addActionListener(this);
+		b4.getbutton().addActionListener(this);
+
+		this.get_panel1().add(label);
+		this.get_panel1().add(b1.getbutton());
+		this.get_panel1().add(b2.getbutton());
+		this.get_panel1().add(b3.getbutton());
+		this.get_panel1().add(b4.getbutton());
 		this.add(this.get_panel1());  
 	}
-	
+
 	private void panel2() {
 		set_panel2(new JPanel());  
 		this.get_panel2().setLayout(null);
 		this.get_panel2().setBounds(300,0,this.getWidth()-300,this.getHeight()); 
 		Color green = new Color(16, 152, 150);
 		this.get_panel2().setBackground(green);  
-		
+
 		// text field
 		set_console(new JTextField());  
 		this.get_console().setBounds(70,420,550,50);  
@@ -106,7 +95,7 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		this.get_console().setEditable(false);
 		this.get_console().setFont((new Font("Arial", Font.PLAIN, 20)));
 		this.get_console().setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		//button
 		set_show_graph(new JButton("Show Graph"));
 		this.get_show_graph().setBounds(270, 490, 150, 60);
@@ -115,21 +104,21 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		get_show_graph().setBackground(new Color(44, 45, 50));
 		get_show_graph().setBorderPainted(false);
 		get_show_graph().addActionListener(this);
-		
-		
+
+
 		this.get_panel2().add(get_show_graph());
-		this.get_panel2().add(_console);
+		this.get_panel2().add(this.get_console());
 		this.add(this.get_panel2());  
 	}
-	
+
 	private void panel3() {
 		set_panel3(new JPanel());  
 		this.get_panel3().setLayout(null);
 		this.get_panel3().setBounds(300,60,this.getWidth()-300,200); 
 		Color dark_green = new Color(3, 81, 81);
-		
+
 		// label 
-		
+
 		JLabel label2=new JLabel("Graph GUI"); 
 		label2.setForeground(Color.WHITE);
 		label2.setFont((new Font("Arial", Font.PLAIN, 50)));
@@ -143,29 +132,26 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 
 	private void menu() {
 		set_mb(new JMenuBar());
-		set_menu(new JMenu("Menu"));
-		setMenuItem1(new JMenuItem("save Graph"));
+		set_menu(new JMenu("File"));
+		setMenuItem1(new JMenuItem("Save Graph"));
+		setMenuItem2(new JMenuItem("Load Graph"));
 		this.getMenuItem1().addActionListener(this);
+		this.getMenuItem2().addActionListener(this);
 		this.get_menu().add(this.getMenuItem1());
+		this.get_menu().add(this.getMenuItem2());
 		this.get_mb().add(this.get_menu());
 		this.setJMenuBar(this.get_mb());
-		this.addMouseListener(this);
 
 	}
 
 	public void paint(Graphics g) {
 		super.paint(g);
-		
+
 		// line for label 1
 		g.setColor(Color.WHITE);
 		g.setFont((new Font("Arial", Font.PLAIN, 40)));
 		g.drawLine(0, 170, 300, 170);
-		
-		// line for label 2
-	//	g.setColor(Color.WHITE);
-		//g.setFont((new Font("Arial", Font.PLAIN, 40)));
-	//	g.drawLine(110, 260, 200, 260);
-		
+
 	}
 
 	@Override
@@ -174,60 +160,88 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 		// click on show Graph
 		if(e.getActionCommand().equals("Show Graph")) {
 			Draw d = new Draw(this.get_graphGui().get_graphAlgo());
-			d.draw_graph();
+			d.draw_graph(0, new ArrayList<node_data>());
 		}
 		// is connected
 		if (e.getActionCommand().equals("is Connected")) {
-			  _console.setText("is Connected: " + String.valueOf(this.get_graphGui().isConnected()));
+			this.get_console().setText("is Connected: " + String.valueOf(this.get_graphGui().isConnected()));
 		}
 		// shortest path dist
-		if (e.getActionCommand().equals("shortest Path Dist")) {
-			//_console.setText(String.valueOf(this.get_graphGui().shortestPathDist(src, dest)));
+		if (e.getActionCommand().equals("Shortest Path Dist")) {
+			String name=JOptionPane.showInputDialog(this,"Please Enter src and dest node\n"
+					+ "In format of int,int - src,dest"); 
+			String[] split = name.split(",");
+			try {
+				this.get_console().setText("shortest Path Dist weight: " + String.valueOf(this.get_graphGui().shortestPathDist(Integer.parseInt(split[0]),
+						Integer.parseInt(split[1]))));
+				
+			}catch(Exception err) {
+				this.get_console().setText("Error: please check console for more details");
+				err.printStackTrace();
+			}
+		}
+		// shortest path
+		if (e.getActionCommand().equals("Shortest Path")) {
+			String name=JOptionPane.showInputDialog(this,"Please Enter src and dest node\n"
+					+ "Format of int,int - src,dest"); 
+			String[] split = name.split(",");
+			try {
+				this.get_console().setText("shortest Path between node "+split[0]+" to "+split[1]+" is marked with red");
+				Draw d = new Draw(this.get_graphGui().get_graphAlgo());
+				d.draw_graph(1,(ArrayList<node_data>) this.get_graphGui().shortestPath(Integer.parseInt(split[0]),Integer.parseInt(split[1])));
+
+			}catch(Exception err) {
+				this.get_console().setText("Error: please check console for more details");
+				err.printStackTrace();
+			}
+		}
+
+		// TSP
+		if (e.getActionCommand().equals("TSP")) {
+			String name=JOptionPane.showInputDialog(this,"Please Enter list of different nodes\n"
+					+ "In format of int,int,int.... - node.key3,node.key2,node.key3.."); 
+			String[] split = name.split(",");
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			for(int i = 0; i < split.length; i++) {
+				list.add(Integer.parseInt(split[i]));
+			}
+			try {
+				this.get_console().setText("TSP");
+				Draw d = new Draw(this.get_graphGui().get_graphAlgo());
+				d.draw_graph(2,(ArrayList<node_data>) this.get_graphGui().TSP(list));
+
+			}catch(Exception err) {
+				this.get_console().setText("Error: please check console for more details");
+				err.printStackTrace();
+			}
 		}
 		
-		
-		 
-
-		String str = e.getActionCommand();
-
-		if (str.equals("Item 1")) {
-			Point3D p1 = new Point3D(100, 100);
-			Point3D p2 = new Point3D(50, 300);
-			Point3D p3 = new Point3D(400, 150);
-
-			repaint();
+		if(e.getSource() == this.getMenuItem1()) {
+			String name = JOptionPane.showInputDialog(this,"Please Enter name of file");
+			try {
+				this.get_graphGui().save(name);
+				this.get_console().setText("The file save in your project directory");
+			}
+			catch(Exception err) {
+				this.get_console().setText("Error: file is not writable");
+				err.printStackTrace();
+			}
 		}
 
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-
-		int x = e.getX();
-		int y = e.getY();
-		System.out.println(x+","+y);
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		System.out.println("mouseReleased");
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		System.out.println("mouseEntered");
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		System.out.println("mouseExited");
+		if(e.getSource() == this.getMenuItem2()) {
+			String name = JOptionPane.showInputDialog(this,"Please Enter file\n"
+					+ "that are save in your project directory");
+			try {
+				this.get_graphGui().init(name);
+				this.get_console().setText("The file load from project directory");
+				Draw d = new Draw(this.get_graphGui().get_graphAlgo());
+				d.draw_graph(0, new ArrayList<node_data>());
+			}
+			catch(Exception err) {
+				this.get_console().setText("Error: file is no readable or not found, check console for details please");
+				err.printStackTrace();
+			}
+		}
 	}
 
 
@@ -244,9 +258,12 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 	public JPanel get_panel1() {
 		return _panel1;
 	}
+	public JMenuItem getMenuItem2() {
+		return _i2;
+	}
 
 	public JMenuItem getMenuItem1() {
-		return i1;
+		return _i1;
 	}
 
 	public JTextField get_console() {
@@ -277,11 +294,11 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 	private void set_show_graph(JButton _show_graph) {
 		this._show_graph = _show_graph;
 	}
-	
+
 	private void set_mb(JMenuBar _mb) {
 		this._mb = _mb;
 	}
-	
+
 	private void set_panel3(JPanel _p) {
 		this._panel3 = _p;
 	}
@@ -296,15 +313,20 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 	}
 
 	private void setMenuItem1(JMenuItem i1) {
-		this.i1 = i1;
+		this._i1 = i1;
 	}
 	private void set_console(JTextField _console) {
 		this._console = _console;
 	}
-	
+
+	private void setMenuItem2(JMenuItem i2) {
+		this._i2 = i2;
+	}
+
 	private Graph_Algo _graph_gui;
 	private JMenu _menu;
-	private JMenuItem i1;
+	private JMenuItem _i2;
+	private JMenuItem _i1;
 	private JPanel _panel1;
 	private JPanel _panel2;
 	private JPanel _panel3;

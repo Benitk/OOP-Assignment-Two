@@ -12,8 +12,6 @@ public class edgeData implements edge_data, Serializable {
 		this.Weight=weight;
 	}
 
-
-
 	@Override
 	public int getSrc() {
 		return this.Src.getKey();

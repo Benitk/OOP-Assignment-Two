@@ -2,7 +2,9 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import dataStructure.DGraph;
 import dataStructure.edgeData;
@@ -26,10 +28,10 @@ public class Draw {
 	 * @param functions_list
 	 */
 	public Draw(graph g) {
-		setList(g);
+		setGraph(g);
 	}
 
-	public void draw_graph() {
+	public void draw_graph(int type, ArrayList<node_data> src_dest) {
 		StdDraw.setCanvasSize(this.get_Width(), this.get_Height()); // GUI windo witdh and height
 		setRangeX(this.getGraphDraw().GraphScaleX());
 		setRangeY(this.getGraphDraw().GraphScaleY());
@@ -37,11 +39,11 @@ public class Draw {
 		StdDraw.setYscale(this.get_RangeY().get_min() - 1, this.get_RangeY().get_max() + 1);
 
 		// directions compute;
-		 double directionX = 0;
-		 double directionY = 0;
-		 double middleX = 0;
-		 double middleY = 0;
-		 // draw points
+		double directionX = 0;
+		double directionY = 0;
+		double middleX = 0;
+		double middleY = 0;
+		// draw points
 		Iterator<node_data> iter = this.getGraphDraw().getV().iterator();
 		Iterator<edge_data> iter_edge;
 		while (iter.hasNext()) {
@@ -53,37 +55,111 @@ public class Draw {
 				StdDraw.setPenRadius(0.008);
 				edgeData current_edge = (edgeData) iter_edge.next();
 
-				
+
 				// calcations
-				directionX = current.getLocation().x()*0.9 + current_edge.getNodeDest().getLocation().x()*0.1;
-				directionY = current.getLocation().y()*0.9 + current_edge.getNodeDest().getLocation().y()*0.1;
-				
+				directionX = current.getLocation().x()*0.1 + current_edge.getNodeDest().getLocation().x()*0.9;
+				directionY = current.getLocation().y()*0.1 + current_edge.getNodeDest().getLocation().y()*0.9;
+
 
 				// draw edges
 				StdDraw.line(current.getLocation().x(), current.getLocation().y(),
 						current_edge.getNodeDest().getLocation().x(),
 						current_edge.getNodeDest().getLocation().y());
+
+				if(type == 1) {
+					StdDraw.setPenColor(Color.GREEN);
+					StdDraw.setPenRadius(0.008);
+					Iterator<node_data> path = src_dest.iterator();
+					nodeData path_src = null;
+					nodeData path_dest;
+					if(path.hasNext())
+						path_src=(nodeData) path.next();
+					while(path.hasNext()) {
+						path_dest = (nodeData) path.next();
+
+						StdDraw.line(path_src.getLocation().x(), path_src.getLocation().y(),
+								path_dest.getLocation().x(),
+								path_dest.getLocation().y());
+						path_src = path_dest;
+					}
+				}
+				
+				if(type == 1) {
+					StdDraw.setPenColor(Color.GREEN);
+					StdDraw.setPenRadius(0.008);
+					Iterator<node_data> path = src_dest.iterator();
+					nodeData path_src = null;
+					nodeData path_dest;
+					if(path.hasNext())
+						path_src=(nodeData) path.next();
+					while(path.hasNext()) {
+						path_dest = (nodeData) path.next();
+
+						StdDraw.line(path_src.getLocation().x(), path_src.getLocation().y(),
+								path_dest.getLocation().x(),
+								path_dest.getLocation().y());
+						path_src = path_dest;
+					}
+				}
+				if(type == 2) {
+					StdDraw.setPenColor(Color.GREEN);
+					StdDraw.setPenRadius(0.008);
+					Iterator<node_data> path = src_dest.iterator();
+					nodeData path_src = null;
+					nodeData path_dest;
+					if(path.hasNext())
+						path_src=(nodeData) path.next();
+					while(path.hasNext()) {
+						path_dest = (nodeData) path.next();
+
+						StdDraw.line(path_src.getLocation().x(), path_src.getLocation().y(),
+								path_dest.getLocation().x(),
+								path_dest.getLocation().y());
+						path_src = path_dest;
+					}
+				}
+
 				// draw direction
-				  StdDraw.setPenColor(Color.YELLOW);
-				  StdDraw.setPenRadius(0.02);
-				  StdDraw.point(directionX, directionY);
-				 // edge weight 
-				  middleX = (current.getLocation().x() + current_edge.getNodeDest().getLocation().x()) / 2;
-				  middleY = (current.getLocation().y() + current_edge.getNodeDest().getLocation().y()) / 2;
-				  StdDraw.setPenColor(new Color(0, 153, 0));
-				  StdDraw.setFont(new Font("Arial", Font.PLAIN, 20));
-				  StdDraw.text(middleX, middleY + 0.2, String.valueOf(current_edge.getWeight()));
-				  
+				StdDraw.setPenColor(Color.YELLOW);
+				StdDraw.setPenRadius(0.02);
+				StdDraw.point(directionX, directionY);
+				// edge weight 
+				middleX = (current.getLocation().x() + current_edge.getNodeDest().getLocation().x()) / 2;
+				middleY = (current.getLocation().y() + current_edge.getNodeDest().getLocation().y()) / 2;
+				StdDraw.setPenColor(new Color(0, 153, 0));
+				StdDraw.setFont(new Font("Arial", Font.PLAIN, 20));
+				StdDraw.text(middleX, middleY + 0.2, String.valueOf(current_edge.getWeight()));
+
 			}
 			// draw point
 			StdDraw.setPenColor(Color.BLUE);
 			StdDraw.setPenRadius(0.03);
 			StdDraw.point(current.getLocation().x(), current.getLocation().y());
-			
+
 			// node key
 			StdDraw.setPenColor(Color.BLACK);
 			StdDraw.setFont(new Font("Arial", Font.PLAIN, 20));
-			StdDraw.text(current.getLocation().x(), current.getLocation().y() + 0.2, String.valueOf(current.getKey()));
+			StdDraw.text(current.getLocation().x(), current.getLocation().y() + 0.3, String.valueOf(current.getKey()));
+		}
+		if(type == 1) {
+			// draw algoritem label
+			StdDraw.setPenColor(Color.BLACK);
+			StdDraw.setFont(new Font("Arial", Font.PLAIN, 30));
+			StdDraw.text(middleX,this.get_RangeY().get_max() - 1 , "Shortest Path");
+		}
+		
+		if(type == 2) {
+			// draw algoritem label
+			StdDraw.setPenColor(Color.BLACK);
+			StdDraw.setFont(new Font("Arial", Font.PLAIN, 30));
+			StdDraw.text(middleX,this.get_RangeY().get_max() - 1 , "TSP");
+		}
+		
+		else {
+			// draw algoritem label
+			StdDraw.setPenColor(Color.BLACK);
+			StdDraw.setFont(new Font("Arial", Font.PLAIN, 30));
+			StdDraw.text(middleX,this.get_RangeY().get_max() - 1 , "Graph");
 		}
 	}
 
@@ -119,7 +195,7 @@ public class Draw {
 
 	/**** Private methods and data ******/
 
-	private void setList(graph _graph) {
+	private void setGraph(graph _graph) {
 		this._graphDraw = (DGraph) _graph;
 	}
 

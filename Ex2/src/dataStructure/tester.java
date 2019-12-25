@@ -12,6 +12,7 @@ import utils.Point3D;
 public class tester {
 
 	public static void main(String[] args) {
+
 		DGraph dg=new DGraph();
 		
 		Point3D p1=new Point3D(-4.0,4.0);
@@ -21,8 +22,6 @@ public class tester {
 		Point3D p5=new Point3D(15,5);
 		Point3D p6=new Point3D(20,11);
 		Point3D p7=new Point3D(-4.0,-5.0);
-		
-
 
 		nodeData nd1 = new nodeData(p1);
 		nodeData nd2 = new nodeData(p2);
@@ -37,7 +36,7 @@ public class tester {
 		dg.addNode(nd3);
 		dg.addNode(nd4);
 		dg.addNode(nd5);
-		dg.addNode(nd6);//think:this key is 6 ,did we need to change this to 1?,because is new graph
+		//dg.addNode(nd6);//think:this key is 6 ,did we need to change this to 1?,because is new graph
 		dg.addNode(nd7);
 		
 		
@@ -48,7 +47,7 @@ public class tester {
 		dg.connect(3,5,5);
 		dg.connect(2,6,4);
 		dg.connect(5,1,2);
-		dg.connect(6,5,2);
+		//dg.connect(6,5,2);
 		
 		
 		
@@ -60,16 +59,19 @@ public class tester {
 		
 		Graph_Algo ga= new Graph_Algo();
 		ga.init(dg);
-		System.out.println(ga.shortestPathDist(6,4));
-		List<node_data> targetsMMM=new ArrayList<node_data>();
-		targetsMMM = ga.TSP(targets);
-		for(int i=0;i<targetsMMM.size();i++)
-			System.out.print(targetsMMM.get(i).getKey()+",");
-		
+		//ga.save("hs.saa");
+		//Graph_Algo ga1= new Graph_Algo();
+	//	ga1.init("hs.saa");
+	//	System.out.println(ga1.get_graphAlgo().get_graph().get(1).getKey());
+		Graph_GUI a = new Graph_GUI(ga);
+		a.setVisible(true);
+		/*
+		 * System.out.println(ga.shortestPathDist(6,4)); List<node_data> targetsMMM=new
+		 * ArrayList<node_data>(); targetsMMM = ga.TSP(targets); for(int
+		 * i=0;i<targetsMMM.size();i++)
+		 * System.out.print(targetsMMM.get(i).getKey()+",");
+		 */
 
-		
-
-		
 	
 
 		  

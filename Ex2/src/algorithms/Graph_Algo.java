@@ -7,11 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Iterator;
 import java.util.List;
-
-import org.junit.internal.matchers.ThrowableMessageMatcher;
 
 import dataStructure.DGraph;
 import dataStructure.edgeData;
@@ -19,7 +17,7 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.nodeData;
 import dataStructure.node_data;
-import utils.Range;
+
 /**
  * This empty class represents the set of graph-theory algorithms
  * which should be implemented as part of Ex2 - Do edit this class.
@@ -55,12 +53,12 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 		catch(IOException e) 
 		{ 
-			e.printStackTrace();
+			throw new RuntimeException("File is not readable");	
 		} 
 
 		catch(ClassNotFoundException e) 
 		{ 
-			e.printStackTrace(); 
+			throw new RuntimeException("File is not Found");	
 		} 
 
 
@@ -82,8 +80,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}   
 		catch(IOException e) 
 		{ 
-			e.printStackTrace();
-			//throw new IOException("File is not writable");
+			throw new RuntimeException("File is not writable");
 		} 
 	}
 
@@ -160,18 +157,22 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		else if(end == null) {
 			throw new RuntimeException("destination Vertex don't exist");
 		}
-
 		SetNodeWeightMaxInt();
+		// set src weight to 0
 		start.setWeight(0.0);
+		// makes every tag green
 		GreenTag();
+		// check if there is a path
 		if(isConnected(dest,(nodeData)this.get_graphAlgo().getNode(src))==0) {
 			throw new RuntimeException("There isnt a path between those nodes");
-
 		}
+		// makes every tag green
 		GreenTag();//you must do here greentag() because the isconnected mix it
+		
 		shortestPathDist(start,end);
 		return end.getWeight();
 	}
+	
 	private void shortestPathDist(nodeData current,nodeData end) {
 		if(current.getTag()==3 || current==end)
 			return;
@@ -264,15 +265,6 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		while(iter.hasNext()) {
 			nodeData current = (nodeData)iter.next();
 			current.setTag(1);
-		}
-	}
-
-
-	private void INFO() {
-		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
-		while(iter.hasNext()) {
-			nodeData current = (nodeData)iter.next();
-			current.setInfo("");
 		}
 	}
 
