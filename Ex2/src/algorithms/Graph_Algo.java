@@ -53,13 +53,12 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 		catch(IOException e) 
 		{ 
-			e.printStackTrace();
-			
+			throw new RuntimeException("File is not readable");	
 		} 
 
 		catch(ClassNotFoundException e) 
 		{ 
-			e.printStackTrace(); 
+			throw new RuntimeException("File is not Found");	
 		} 
 
 
@@ -81,8 +80,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}   
 		catch(IOException e) 
 		{ 
-			e.printStackTrace();
-			//throw new IOException("File is not writable");
+			throw new RuntimeException("File is not writable");
 		} 
 	}
 

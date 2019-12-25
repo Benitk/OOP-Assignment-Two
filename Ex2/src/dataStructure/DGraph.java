@@ -139,6 +139,7 @@ public class DGraph implements graph, Serializable {
 			nodeData current = (nodeData)iter.next();
 			if(current.get_edges().get(key) != null) {
 				current.get_edges().remove(key);
+				this.set_mc(this.getMC()-1);
 			}
 		}
 		// delete this vertex with all his edges as src
