@@ -168,11 +168,11 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}
 		// makes every tag green
 		GreenTag();//you must do here greentag() because the isconnected mix it
-		
+
 		shortestPathDist(start,end);
 		return end.getWeight();
 	}
-	
+
 	private void shortestPathDist(nodeData current,nodeData end) {
 		if(current.getTag()==3 || current==end)
 			return;
@@ -219,31 +219,40 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 
 	@Override
-	public List<node_data> TSP(List<Integer> targets) {
-		Iterator<Integer> targetlist = targets.iterator();
-		int listnum=targetlist.next();
-		int listnum2=targetlist.next();
-		List<node_data>TspList=new ArrayList<node_data>();
-		TspList.addAll(shortestPath(listnum,listnum2));
-		Iterator<node_data> iter = TspList.iterator();
-		while(targetlist.hasNext()){
-			listnum=targetlist.next();
-			while(iter.hasNext()) {
-				if(iter.next().getKey()==listnum) {
-					if(targetlist.hasNext()) {
-						listnum=targetlist.next();
-						iter=TspList.iterator();
+	public List<node_data> TSP(List<Integer> targets){
+		double count=0;
+		double limit=Math.pow(targets.size(),4);
+		ArrayList<Integer>arrTarget=(ArrayList<Integer>) targets;
+		ArrayList<Integer> arrkey= new ArrayList<>();
+		while(arrkey.size()<arrTarget.size()) {
+			
+			for(int i=0;i<arrTarget.size();i++) {
+				boolean flag=true;
+				for(int j=0;j<arrTarget.size();j++) {
+					if(!arrkey.contains(arrTarget.get(i)) && !arrkey.contains(arrTarget.get(j))) {
+						GreenTag();
+						if(arrTarget.get(j)!=arrTarget.get(i)) {
+							if(isConnected(arrTarget.get(j),(nodeData) this.get_graphAlgo().getNode(arrTarget.get(i)))==0) {
+								flag=false;
+							}
+						}
 					}
 				}
+				if(flag==true && !arrkey.contains(arrTarget.get(i))) {
+					arrkey.add(arrTarget.get(i));
+				}
 			}
-			int index=TspList.size()-1;
-			if(!TspList.contains(this.get_graphAlgo().getNode(listnum))) {
-				TspList.addAll(shortestPath(TspList.get(TspList.size()-1).getKey(),listnum));
-				TspList.remove(index);
-			}
-			
+			count++;
+			if(count>limit)
+				throw new RuntimeException("There is no path with all this location");
 		}
-		return TspList;
+		List<node_data> Tsplist=new ArrayList<node_data>();
+		for(int k=0;k<arrkey.size()-1;k++) {
+			Tsplist.addAll(shortestPath(arrkey.get(k),arrkey.get(k+1)));
+			if(k!=arrkey.size()-2)
+				Tsplist.remove(Tsplist.get(Tsplist.size()-1));
+		}
+		return Tsplist;
 	}
 
 
