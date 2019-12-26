@@ -7,19 +7,15 @@ import java.awt.Graphics;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
+
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -34,16 +30,17 @@ import utils.Point3D;
 public class Graph_GUI extends JFrame implements ActionListener {
 
 
-	public Graph_GUI(Graph_Algo gAlgo) {
-		set_graphGui(gAlgo);
+	public Graph_GUI() {
+		set_graphGui(new Graph_Algo());
 		initGUI();
+		this.setVisible(true);
 	}
 
 	private void initGUI() {
 		this.setSize(1000, 700);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		menu();
+		menu1();
 		panel1();
 		panel3();
 		panel2();
@@ -109,6 +106,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this.get_panel2().add(get_show_graph());
 		this.get_panel2().add(this.get_console());
 		this.add(this.get_panel2());  
+		
 	}
 
 	private void panel3() {
@@ -127,21 +125,30 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this.get_panel3().add(label2);
 		this.add(this.get_panel3());  
 	}
-
-
-
-	private void menu() {
+	
+	private void menu1() {
 		set_mb(new JMenuBar());
-		set_menu(new JMenu("File"));
-		setMenuItem1(new JMenuItem("Save Graph"));
-		setMenuItem2(new JMenuItem("Load Graph"));
-		this.getMenuItem1().addActionListener(this);
-		this.getMenuItem2().addActionListener(this);
-		this.get_menu().add(this.getMenuItem1());
-		this.get_menu().add(this.getMenuItem2());
-		this.get_mb().add(this.get_menu());
+		// file menu
+		Menu menu1 = new Menu("File");
+		menu1.addItem("Save Graph");
+		menu1.addItem("Load Graph");
+		menu1.getMenu().getItem(0).addActionListener(this);
+		menu1.getMenu().getItem(1).addActionListener(this);
+		this.get_mb().add(menu1.getMenu());
+		
+		// graph options
+		Menu menu2 = new Menu("Graph Options");
+		menu2.addItem("Add Node");
+		menu2.addItem("Connect");
+		menu2.addItem("Remove Node");
+		menu2.addItem("Remove Edge");
+		menu2.getMenu().getItem(0).addActionListener(this);
+		menu2.getMenu().getItem(1).addActionListener(this);
+		menu2.getMenu().getItem(2).addActionListener(this);
+		menu2.getMenu().getItem(3).addActionListener(this);
+		this.get_mb().add(menu2.getMenu());
+		
 		this.setJMenuBar(this.get_mb());
-
 	}
 
 	public void paint(Graphics g) {
@@ -160,7 +167,12 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		// click on show Graph
 		if(e.getActionCommand().equals("Show Graph")) {
 			Draw d = new Draw(this.get_graphGui().get_graphAlgo());
-			d.draw_graph(0, new ArrayList<node_data>());
+			if(this.get_graphGui().get_graphAlgo().get_graph().isEmpty()) {
+				d.drawEmptygraph();
+			}
+			else {
+				d.draw_graph(0, new ArrayList<node_data>());
+			}
 		}
 		// is connected
 		if (e.getActionCommand().equals("is Connected")) {
@@ -186,7 +198,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 					+ "Format of int,int - src,dest"); 
 			String[] split = name.split(",");
 			try {
-				this.get_console().setText("shortest Path between node "+split[0]+" to "+split[1]+" is marked with red");
+				this.get_console().setText("shortest Path between node "+split[0]+" to "+split[1]+" is marked with orange");
 				Draw d = new Draw(this.get_graphGui().get_graphAlgo());
 				d.draw_graph(1,(ArrayList<node_data>) this.get_graphGui().shortestPath(Integer.parseInt(split[0]),Integer.parseInt(split[1])));
 
@@ -216,7 +228,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			}
 		}
 		
-		if(e.getSource() == this.getMenuItem1()) {
+		if(e.getActionCommand().equals("Save Graph")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter name of file");
 			try {
 				this.get_graphGui().save(name);
@@ -228,7 +240,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			}
 		}
 
-		if(e.getSource() == this.getMenuItem2()) {
+		if(e.getActionCommand().equals("Load Graph")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter file\n"
 					+ "that are save in your project directory");
 			try {
@@ -242,6 +254,65 @@ public class Graph_GUI extends JFrame implements ActionListener {
 				err.printStackTrace();
 			}
 		}
+		
+		if(e.getActionCommand().equals("Add Node")) {
+			String name = JOptionPane.showInputDialog(this,"Please Enter Node location\n"
+					+ "In format of double,double.. - node.x,node.y");
+			String[] split = name.split(",");
+			try {
+				nodeData n = new nodeData(new Point3D(Double.parseDouble(split[0]), Double.parseDouble(split[1])));
+				this.get_graphGui().get_graphAlgo().addNode(n);
+				this.get_console().setText("Node succesfully add - Show Graph to observe");
+			}
+			catch(Exception err) {
+				this.get_console().setText("Error: please check console for more details");
+				err.printStackTrace();
+			}
+		}
+		
+		// connect
+		if(e.getActionCommand().equals("Connect")) {
+			String name = JOptionPane.showInputDialog(this,"Please Enter src,dest node keys and weight for edge\n"
+					+ "In format of int,int,double.. - src.key,dest.key,weight");
+			String[] split = name.split(",");
+			try {
+				this.get_graphGui().get_graphAlgo().connect(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Double.parseDouble(split[2]));
+				this.get_console().setText("Connect succesfully - Show Graph to observe");
+			}
+			catch(Exception err) {
+				this.get_console().setText("Error: please check console for more details");
+				err.printStackTrace();
+			}
+		}
+		
+		// remove Node
+		if(e.getActionCommand().equals("Remove Node")) {
+			String name = JOptionPane.showInputDialog(this,"Please Enter node key for removal\n"
+					+ "In format of int.. - node.key");
+	
+			try {
+				this.get_graphGui().get_graphAlgo().removeNode(Integer.parseInt(name));
+				this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
+			}
+			catch(Exception err) {
+				this.get_console().setText("Error: please check console for more details");
+				err.printStackTrace();
+			}
+		}
+		
+		if(e.getActionCommand().equals("Remove Edge")) {
+			String name = JOptionPane.showInputDialog(this,"Please Enter src,dest key for remove the Edge between them\n"
+					+ "In format of int,int.. - src.key,dest.key");
+			String[] split = name.split(",");
+			try {
+				this.get_graphGui().get_graphAlgo().removeEdge(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+				this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
+			}
+			catch(Exception err) {
+				this.get_console().setText("Error: please check console for more details");
+				err.printStackTrace();
+			}
+		}
 	}
 
 
@@ -249,21 +320,8 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		return _graph_gui;
 	}
 
-
-	public JMenu get_menu() {
-		return _menu;
-	}
-
-
 	public JPanel get_panel1() {
 		return _panel1;
-	}
-	public JMenuItem getMenuItem2() {
-		return _i2;
-	}
-
-	public JMenuItem getMenuItem1() {
-		return _i1;
 	}
 
 	public JTextField get_console() {
@@ -308,28 +366,14 @@ public class Graph_GUI extends JFrame implements ActionListener {
 	private void set_panel1(JPanel _p) {
 		this._panel1 = _p;
 	}
-	private void set_menu(JMenu _menu) {
-		this._menu = _menu;
-	}
 
-	private void setMenuItem1(JMenuItem i1) {
-		this._i1 = i1;
-	}
 	private void set_console(JTextField _console) {
 		this._console = _console;
 	}
 
-	private void setMenuItem2(JMenuItem i2) {
-		this._i2 = i2;
-	}
-
+    
 	private Graph_Algo _graph_gui;
-	private JMenu _menu;
-	private JMenuItem _i2;
-	private JMenuItem _i1;
-	private JPanel _panel1;
-	private JPanel _panel2;
-	private JPanel _panel3;
+	private JPanel _panel1, _panel2, _panel3;
 	private JTextField _console;
 	private JButton _show_graph;
 	private JMenuBar _mb;

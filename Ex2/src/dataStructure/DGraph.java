@@ -19,7 +19,6 @@ public class DGraph implements graph, Serializable {
 		set_mc(0);
 	}
 
-
 	public DGraph() {
 		set_graph(new HashMap<Integer, node_data>());
 		set_mc(0);
@@ -139,11 +138,11 @@ public class DGraph implements graph, Serializable {
 			nodeData current = (nodeData)iter.next();
 			if(current.get_edges().get(key) != null) {
 				current.get_edges().remove(key);
-				this.set_mc(this.getMC()-1);
+				this.set_mc(this.getMC()+1);
 			}
 		}
 		// delete this vertex with all his edges as src
-		this.set_mc(this.getMC()-1);
+		this.set_mc(this.getMC()+1);
 		return this.get_graph().remove(key);
 	}
 
@@ -162,7 +161,7 @@ public class DGraph implements graph, Serializable {
 			throw new RuntimeException("destination Vertex don't exist");
 		}
 		else {
-			this.set_mc(this.getMC()-1);
+			this.set_mc(this.getMC()+1);
 			return src_vertex.get_edges().remove(dest);
 		}
 	}
