@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+
 
 import dataStructure.DGraph;
 import dataStructure.edgeData;
@@ -27,11 +27,11 @@ public class Draw {
 	 * 
 	 * @param functions_list
 	 */
-	public Draw(graph g) {
+	protected Draw(graph g) {
 		setGraph(g);
 	}
 	
-	public void drawEmptygraph() {
+	protected void drawEmptyGraph() {
 		StdDraw.setCanvasSize(this.get_Width(), this.get_Height());
 		StdDraw.setScale(-5,5);
 		StdDraw.setPenColor(Color.BLACK);
@@ -40,12 +40,10 @@ public class Draw {
 	}
 	
 
-	public void draw_graph(int type, ArrayList<node_data> src_dest) {
+	protected void draw_graph(int type, ArrayList<node_data> src_dest) {
 		StdDraw.setCanvasSize(this.get_Width(), this.get_Height()); // GUI windo witdh and height
 		setRangeX(this.getGraphDraw().GraphScaleX());
-		System.out.println(this.getGraphDraw().GraphScaleX());
 		setRangeY(this.getGraphDraw().GraphScaleY());
-		System.out.println(this.getGraphDraw().GraphScaleY());
 		StdDraw.setXscale(this.get_RangeX().get_min() - 1, this.get_RangeX().get_max() + 1);
 		StdDraw.setYscale(this.get_RangeY().get_min() - 1, this.get_RangeY().get_max() + 1);
 
@@ -94,26 +92,20 @@ public class Draw {
 						path_src = path_dest;
 					}
 				}
-				if(type == 2) {
-					StdDraw.setPenColor(new Color(242, 189, 16));
-					StdDraw.setPenRadius(0.007);
-					Iterator<node_data> path = src_dest.iterator();
-					nodeData path_src = null;
-					nodeData path_dest;
-					if(path.hasNext())
-						path_src=(nodeData) path.next();
-					while(path.hasNext()) {
-						path_dest = (nodeData) path.next();
-
-						StdDraw.line(path_src.getLocation().x(), path_src.getLocation().y(),
-								path_dest.getLocation().x(),
-								path_dest.getLocation().y());
-						path_src = path_dest;
-					}
-				}
+				/*
+				 * if(type == 2) { StdDraw.setPenColor(new Color(242, 189, 16));
+				 * StdDraw.setPenRadius(0.007); Iterator<node_data> path = src_dest.iterator();
+				 * nodeData path_src = null; nodeData path_dest; if(path.hasNext())
+				 * path_src=(nodeData) path.next(); while(path.hasNext()) { path_dest =
+				 * (nodeData) path.next();
+				 * 
+				 * StdDraw.line(path_src.getLocation().x(), path_src.getLocation().y(),
+				 * path_dest.getLocation().x(), path_dest.getLocation().y()); path_src =
+				 * path_dest; } }
+				 */
 
 				// draw direction
-				StdDraw.setPenColor(Color.YELLOW);
+				StdDraw.setPenColor(Color.CYAN);
 				StdDraw.setPenRadius(0.025);
 				StdDraw.point(directionX, directionY);
 				// edge weight 
@@ -152,33 +144,33 @@ public class Draw {
 		 */
 	}
 
-	public DGraph getGraphDraw() {
+	protected DGraph getGraphDraw() {
 		return _graphDraw;
 	}
 
-	public int get_Width() {
+	protected int get_Width() {
 		return _Width;
 	}
 
-	public int get_Height() {
+	protected int get_Height() {
 		return _Height;
 	}
 
-	public int get_Resolution() {
+	protected int get_Resolution() {
 		return _Resolution;
 	}
 
-	public Range get_RangeY() {
+	protected Range get_RangeY() {
 		return _RangeY;
 	}
 
-	public Range get_RangeX() {
+	protected Range get_RangeX() {
 		return _RangeX;
 	}
-	public void setRangeX(Range r) {
+	protected void setRangeX(Range r) {
 		this._RangeX = r;
 	}
-	public void setRangeY(Range r) {
+	protected void setRangeY(Range r) {
 		this._RangeY = r;
 	}
 

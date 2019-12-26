@@ -5,13 +5,13 @@ import javax.swing.JMenuItem;
 
 public class Menu {
 	
-	public Menu(String name) {
+	protected Menu(String name) {
 		setMenu(name);
 	}	
-	public JMenu getMenu() {
+	protected JMenu getMenu() {
 		return _menu;
 	}
-	public void addItem(String Iname) {
+	protected void addItem(String Iname) {
 		this.getMenu().add(new JMenuItem(Iname));
 	}
 

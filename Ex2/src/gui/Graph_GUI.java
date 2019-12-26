@@ -106,7 +106,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this.get_panel2().add(get_show_graph());
 		this.get_panel2().add(this.get_console());
 		this.add(this.get_panel2());  
-		
+
 	}
 
 	private void panel3() {
@@ -125,7 +125,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this.get_panel3().add(label2);
 		this.add(this.get_panel3());  
 	}
-	
+
 	private void menu1() {
 		set_mb(new JMenuBar());
 		// file menu
@@ -135,7 +135,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		menu1.getMenu().getItem(0).addActionListener(this);
 		menu1.getMenu().getItem(1).addActionListener(this);
 		this.get_mb().add(menu1.getMenu());
-		
+
 		// graph options
 		Menu menu2 = new Menu("Graph Options");
 		menu2.addItem("Add Node");
@@ -147,7 +147,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		menu2.getMenu().getItem(2).addActionListener(this);
 		menu2.getMenu().getItem(3).addActionListener(this);
 		this.get_mb().add(menu2.getMenu());
-		
+
 		this.setJMenuBar(this.get_mb());
 	}
 
@@ -168,7 +168,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		if(e.getActionCommand().equals("Show Graph")) {
 			Draw d = new Draw(this.get_graphGui().get_graphAlgo());
 			if(this.get_graphGui().get_graphAlgo().get_graph().isEmpty()) {
-				d.drawEmptygraph();
+				d.drawEmptyGraph();
 			}
 			else {
 				d.draw_graph(0, new ArrayList<node_data>());
@@ -186,7 +186,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			try {
 				this.get_console().setText("shortest Path Dist weight: " + String.valueOf(this.get_graphGui().shortestPathDist(Integer.parseInt(split[0]),
 						Integer.parseInt(split[1]))));
-				
+
 			}catch(Exception err) {
 				this.get_console().setText("Error: please check console for more details");
 				err.printStackTrace();
@@ -214,20 +214,20 @@ public class Graph_GUI extends JFrame implements ActionListener {
 					+ "In format of int,int,int.... - node.key3,node.key2,node.key3.."); 
 			String[] split = name.split(",");
 			ArrayList<Integer> list = new ArrayList<Integer>();
-			for(int i = 0; i < split.length; i++) {
-				list.add(Integer.parseInt(split[i]));
-			}
 			try {
-				this.get_console().setText("TSP");
+				for(int i = 0; i < split.length; i++) {
+					list.add(Integer.parseInt(split[i]));
+				}
+				this.get_console().setText("TSP result is marked with orange");
 				Draw d = new Draw(this.get_graphGui().get_graphAlgo());
-				d.draw_graph(2,(ArrayList<node_data>) this.get_graphGui().TSP(list));
+				d.draw_graph(1,(ArrayList<node_data>) this.get_graphGui().TSP(list));
 
 			}catch(Exception err) {
 				this.get_console().setText("Error: please check console for more details");
 				err.printStackTrace();
 			}
 		}
-		
+
 		if(e.getActionCommand().equals("Save Graph")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter name of file");
 			try {
@@ -235,7 +235,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 				this.get_console().setText("The file save in your project directory");
 			}
 			catch(Exception err) {
-				this.get_console().setText("Error: file is not writable");
+				this.get_console().setText("Error: file is not writable, check console");
 				err.printStackTrace();
 			}
 		}
@@ -250,11 +250,11 @@ public class Graph_GUI extends JFrame implements ActionListener {
 				d.draw_graph(0, new ArrayList<node_data>());
 			}
 			catch(Exception err) {
-				this.get_console().setText("Error: file is no readable or not found, check console for details please");
+				this.get_console().setText("Error: file is no readable or not found, check console");
 				err.printStackTrace();
 			}
 		}
-		
+
 		if(e.getActionCommand().equals("Add Node")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter Node location\n"
 					+ "In format of double,double.. - node.x,node.y");
@@ -269,7 +269,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 				err.printStackTrace();
 			}
 		}
-		
+
 		// connect
 		if(e.getActionCommand().equals("Connect")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter src,dest node keys and weight for edge\n"
@@ -284,12 +284,12 @@ public class Graph_GUI extends JFrame implements ActionListener {
 				err.printStackTrace();
 			}
 		}
-		
+
 		// remove Node
 		if(e.getActionCommand().equals("Remove Node")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter node key for removal\n"
 					+ "In format of int.. - node.key");
-	
+
 			try {
 				this.get_graphGui().get_graphAlgo().removeNode(Integer.parseInt(name));
 				this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
@@ -299,7 +299,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 				err.printStackTrace();
 			}
 		}
-		
+
 		if(e.getActionCommand().equals("Remove Edge")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter src,dest key for remove the Edge between them\n"
 					+ "In format of int,int.. - src.key,dest.key");
@@ -371,7 +371,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this._console = _console;
 	}
 
-    
+
 	private Graph_Algo _graph_gui;
 	private JPanel _panel1, _panel2, _panel3;
 	private JTextField _console;
