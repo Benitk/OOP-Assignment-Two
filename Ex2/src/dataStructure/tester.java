@@ -40,6 +40,7 @@ public class tester {
 		
 		
 		dg.connect(1,2,1);
+		dg.connect(1,2,4);
 		dg.connect(2,3,2);
 		dg.connect(1,3,0.2);
     	dg.connect(3,4,0.5);

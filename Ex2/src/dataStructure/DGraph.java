@@ -24,22 +24,14 @@ public class DGraph implements graph, Serializable {
 		set_mc(0);
 	}
 
-	// getter for graph
-	public HashMap<Integer, node_data> get_graph() {
-		return _graph;
-	}
 
 	/**
 	 * if dont exist or empty return null
 	 */
 	@Override
 	public node_data getNode(int key) {
-		/* try { */
 		nodeData vertex = (nodeData)this.get_graph().get(key);
 		return vertex;
-		/*	} catch (Exception e) {
-			return null;
-		}*/
 	}
 
 	/**
@@ -54,7 +46,6 @@ public class DGraph implements graph, Serializable {
 
 		try {
 			nodeData src_vertex = (nodeData) this.get_graph().get(src);
-			// null.get_edges() can throw
 			edgeData src_to_dest = (edgeData) src_vertex.get_edges().get(dest);
 			return src_to_dest;
 		} catch (Exception e) {
@@ -217,6 +208,13 @@ public class DGraph implements graph, Serializable {
 		}
 		return new Range(minX, maxX);
 	}
+	public int get_number_key() {
+		return _number_key;
+	}
+	// getter for graph
+	public HashMap<Integer, node_data> get_graph() {
+		return _graph;
+	}
 	
 
 	/***** private data ****/
@@ -227,12 +225,8 @@ public class DGraph implements graph, Serializable {
 	private void set_graph(HashMap<Integer, node_data> _graph) {
 		this._graph = _graph;
 	}
-	public int get_number_key() {
-		return _number_key;
-	}
 
-
-	public void set_number_key(int _number_key) {
+	private void set_number_key(int _number_key) {
 		DGraph._number_key = _number_key;
 	}
 	private static int _number_key;
