@@ -18,12 +18,7 @@ import dataStructure.graph;
 import dataStructure.nodeData;
 import dataStructure.node_data;
 
-/**
- * This empty class represents the set of graph-theory algorithms
- * which should be implemented as part of Ex2 - Do edit this class.
- * @author 
- *
- */
+
 public class Graph_Algo implements graph_algorithms, Serializable {
 
 	public Graph_Algo() {
@@ -216,8 +211,8 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 		return listPath;
 	}
-	
-	
+
+
 
 
 	@Override
@@ -227,7 +222,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		ArrayList<Integer>arrTarget=(ArrayList<Integer>) targets;
 		ArrayList<Integer> arrkey= new ArrayList<>();
 		while(arrkey.size()<arrTarget.size()) {
-			
+
 			for(int i=0;i<arrTarget.size();i++) {
 				boolean flag=true;
 				for(int j=0;j<arrTarget.size();j++) {
@@ -250,9 +245,17 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}
 		List<node_data> Tsplist=new ArrayList<node_data>();
 		for(int k=0;k<arrkey.size()-1;k++) {
-			Tsplist.addAll(shortestPath(arrkey.get(k),arrkey.get(k+1)));
-			if(k!=arrkey.size()-2)
-				Tsplist.remove(Tsplist.get(Tsplist.size()-1));
+			if(!Tsplist.contains(this.get_graphAlgo().getNode(arrkey.get(k+1)))){
+				if( Tsplist.size()!=0 && Tsplist.get(Tsplist.size()-1)==this.get_graphAlgo().getNode(arrkey.get(k)))
+					Tsplist.remove(Tsplist.size()-1);
+				Tsplist.addAll(shortestPath(arrkey.get(k),arrkey.get(k+1)));
+				if(k!=arrkey.size()-2) {
+					node_data d1=Tsplist.get(Tsplist.size()-1);
+					Tsplist.remove(Tsplist.get(Tsplist.size()-1));
+					if(!Tsplist.contains(d1))
+						Tsplist.add(d1);
+				}
+			}
 		}
 		return Tsplist;
 	}
