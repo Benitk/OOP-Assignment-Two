@@ -56,8 +56,8 @@ public class tester {
 		List<Integer> targets=new ArrayList<Integer>();
 		targets.add(1);
 		//targets.add(2);
-		//targets.add(3);
-		targets.add(4);
+		targets.add(3);
+		//targets.add(4);
 		targets.add(5);
 		
 		
@@ -72,7 +72,7 @@ public class tester {
 		for(int i=0;i<targetsMMM.size();i++)
 			System.out.print(targetsMMM.get(i).getKey()+",");
 		Graph_GUI gui=new Graph_GUI(ga);
-		gui.show();
+		//gui.show();
 		
 		
 
