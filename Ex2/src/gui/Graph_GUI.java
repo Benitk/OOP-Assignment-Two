@@ -30,12 +30,15 @@ import utils.Point3D;
 public class Graph_GUI extends JFrame implements ActionListener {
 
 
+
 	public Graph_GUI() {
 		set_graphGui(new Graph_Algo());
 		initGUI();
-		this.setVisible(true);
 	}
 
+	/**
+	 * initialize GUI by setting size, menu, panels and layout as null
+	 */
 	private void initGUI() {
 		this.setSize(1000, 700);
 		this.setLayout(null);
@@ -44,8 +47,16 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		panel1();
 		panel3();
 		panel2();
+		this.setVisible(true);
 
 	}
+	/**
+	 * initialize panel1 bounds,background color
+	 * adding label 'Algorithms'
+	 * and create four new object of our project class panel1_button and jframe
+	 * that are used for button for each algoritem and add an Action listener
+	 * to each one
+	 */
 	private void panel1() {
 		set_panel1(new JPanel());  
 		this.get_panel1().setLayout(null);
@@ -78,6 +89,11 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this.add(this.get_panel1());  
 	}
 
+	/**
+	 * initialize panel2 bounds,background color
+	 * create button that will open a Graph draw with Action listener
+	 * and uneditable text field that will use for print messges
+	 */
 	private void panel2() {
 		set_panel2(new JPanel());  
 		this.get_panel2().setLayout(null);
@@ -109,6 +125,10 @@ public class Graph_GUI extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * initialize panel3 bounds,background color
+	 * creating new Label 'Graph GUI'
+	 */
 	private void panel3() {
 		set_panel3(new JPanel());  
 		this.get_panel3().setLayout(null);
@@ -125,7 +145,10 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this.get_panel3().add(label2);
 		this.add(this.get_panel3());  
 	}
-
+	/**
+	 * initialize new MenuBar setting name and adding items
+	 * using our project menu class and Jframe
+	 */
 	private void menu1() {
 		set_mb(new JMenuBar());
 		// file menu
@@ -151,6 +174,9 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this.setJMenuBar(this.get_mb());
 	}
 
+	/**
+	 * painting a line after label 'algorithmes'
+	 */
 	public void paint(Graphics g) {
 		super.paint(g);
 
@@ -161,6 +187,10 @@ public class Graph_GUI extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * this function listend to each event(click on gui buttons/menu)
+	 * then preform an action and printing to the text Field
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -228,6 +258,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			}
 		}
 
+		// on file -> save graph
 		if(e.getActionCommand().equals("Save Graph")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter name of file");
 			try {
@@ -240,6 +271,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			}
 		}
 
+		// on file -> load graph
 		if(e.getActionCommand().equals("Load Graph")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter file\n"
 					+ "that are save in your project directory");
@@ -255,6 +287,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			}
 		}
 
+		// on options -> add node
 		if(e.getActionCommand().equals("Add Node")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter Node location\n"
 					+ "In format of double,double.. - node.x,node.y");
@@ -270,7 +303,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			}
 		}
 
-		// connect
+		// on options -> connect
 		if(e.getActionCommand().equals("Connect")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter src,dest node keys and weight for edge\n"
 					+ "In format of int,int,double.. - src.key,dest.key,weight");
@@ -285,7 +318,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			}
 		}
 
-		// remove Node
+		// on options -> remove Node
 		if(e.getActionCommand().equals("Remove Node")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter node key for removal\n"
 					+ "In format of int.. - node.key");
@@ -300,6 +333,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			}
 		}
 
+		// on options -> remove edge
 		if(e.getActionCommand().equals("Remove Edge")) {
 			String name = JOptionPane.showInputDialog(this,"Please Enter src,dest key for remove the Edge between them\n"
 					+ "In format of int,int.. - src.key,dest.key");
