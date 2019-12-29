@@ -57,7 +57,7 @@ public class tester {
 			System.out.print(targetsMMM.get(i).getKey()+",");
 		
 		
-		Graph_GUI gui = new Graph_GUI();
+		Graph_GUI gui = new Graph_GUI(ga);
 		
 
 		

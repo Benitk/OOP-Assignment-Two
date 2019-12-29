@@ -35,6 +35,11 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		set_graphGui(new Graph_Algo());
 		initGUI();
 	}
+	
+	public Graph_GUI(Graph_Algo ga) {
+		set_graphGui(ga);
+		initGUI();
+	}
 
 	/**
 	 * initialize GUI by setting size, menu, panels and layout as null
