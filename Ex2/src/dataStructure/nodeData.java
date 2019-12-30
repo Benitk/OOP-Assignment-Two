@@ -6,7 +6,8 @@ import utils.Point3D;
 
 /**
  * 
- * @author user
+ * @author ben itzhak
+ * @author liad ben moshe
  *
  */
 public class nodeData implements node_data, Serializable {
@@ -20,7 +21,9 @@ public class nodeData implements node_data, Serializable {
 		setTag(1);
 	}
 
-	// adding a new edge with this node as src and input as dest
+	/*
+	 * adding a new edge with this node as src and input as dest
+	 */
 	public void new_edge(nodeData dest, double weight) {
 		edgeData new_edge = new edgeData(this, dest, weight);
 		this.get_edges().put(dest._key, new_edge);
@@ -86,17 +89,11 @@ public class nodeData implements node_data, Serializable {
 	}
 
 	/******* private data **********/
-
-	//private enum tagColor{Green, Yellow, Red}
-
-
 	private void set_edges() {
 		this._edges = new HashMap<Integer, edge_data>();
 	}
 
-	// Integer represent dest.key and edgeData
 	private HashMap<Integer, edge_data> _edges;
-	//private tagColor _tagColor;
 	private int _tag, _key;
 	private String _info;
 	private double _weight;

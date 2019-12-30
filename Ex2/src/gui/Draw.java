@@ -30,6 +30,7 @@ public class Draw {
 	 */
 	protected Draw(graph g) {
 		setGraph(g);
+		StdDraw.setCanvasSize(this.get_Width(), this.get_Height()); // GUI windo witdh and height
 	}
 	
 	/**
@@ -38,7 +39,6 @@ public class Draw {
 	 * 
 	 */
 	protected void drawEmptyGraph() {
-		StdDraw.setCanvasSize(this.get_Width(), this.get_Height());
 		StdDraw.setScale(-5,5);
 		StdDraw.setPenColor(Color.BLACK);
 		StdDraw.setFont(new Font("Arial", Font.PLAIN, 30));
@@ -55,7 +55,6 @@ public class Draw {
 	 * @param src_dest is an Arraylist - the list of vertices to draw the result of the algoritem
 	 */
 	protected void draw_graph(int type, ArrayList<node_data> src_dest) {
-		StdDraw.setCanvasSize(this.get_Width(), this.get_Height()); // GUI windo witdh and height
 		setRangeX(this.getGraphDraw().GraphScaleX());
 		setRangeY(this.getGraphDraw().GraphScaleY());
 		StdDraw.setXscale(this.get_RangeX().get_min() - 1, this.get_RangeX().get_max() + 1);
@@ -75,7 +74,7 @@ public class Draw {
 			// draw edges
 			while (iter_edge.hasNext()) {
 				StdDraw.setPenColor(Color.BLACK);
-				StdDraw.setPenRadius(0.008);
+				StdDraw.setPenRadius(0.007);
 				edgeData current_edge = (edgeData) iter_edge.next();
 
 
@@ -129,22 +128,6 @@ public class Draw {
 			StdDraw.setFont(new Font("Arial", Font.PLAIN, 20));
 			StdDraw.text(current.getLocation().x(), current.getLocation().y() + 0.25, String.valueOf(current.getKey()));
 		}
-/*		if(type == 1) {
-			// draw algoritem label
-			StdDraw.setPenColor(Color.BLACK);
-			StdDraw.setFont(new Font("Arial", Font.PLAIN, 30));
-			StdDraw.text(middleX,this.get_RangeY().get_max() - 1 , "Shortest Path");
-		}*/
-/*		else if(type == 2) {
-			// draw algoritem label
-			StdDraw.setPenColor(Color.BLACK);
-			StdDraw.setFont(new Font("Arial", Font.PLAIN, 30));
-			StdDraw.text(middleX,this.get_RangeY().get_max() - 1 , "TSP");
-		}*/
-		/*
-		 * else { StdDraw.setPenColor(Color.BLACK); StdDraw.setFont(new Font("Arial",
-		 * Font.PLAIN, 30)); StdDraw.text(2,2.5, "Graph"); }
-		 */
 	}
 
 	protected DGraph getGraphDraw() {

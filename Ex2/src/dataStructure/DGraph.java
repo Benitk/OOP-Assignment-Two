@@ -228,9 +228,9 @@ public class DGraph implements graph, Serializable {
 	}
 
 	private void set_number_key(int _number_key) {
-		DGraph._number_key = _number_key;
+		this._number_key = _number_key;
 	}
-	private static int _number_key;
+	private int _number_key;
 	private int mc;
 	private HashMap<Integer, node_data> _graph;
 }

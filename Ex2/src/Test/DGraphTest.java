@@ -68,7 +68,6 @@ class DGraphTest {
 	@Order(2)
 	void getEdgeTest() {
 		// edge 1 to 2
-
 		assertEquals("", g.getEdge(1, 2).getInfo(),"getEdge info Test");
 		assertEquals(0, g.getEdge(1, 2).getTag(),"getEdge tag Test");
 		assertEquals(1, g.getEdge(1, 2).getSrc(),"getEdge src key Test");
