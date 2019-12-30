@@ -18,7 +18,7 @@ import dataStructure.nodeData;
 import dataStructure.node_data;
 import utils.Point3D;
 
-//why re you gay
+
 @TestMethodOrder(OrderAnnotation.class)
 class DGraphTest {
 	private static DGraph g = new DGraph();
