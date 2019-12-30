@@ -30,6 +30,7 @@ public class DGraph implements graph, Serializable {
 	 */
 	@Override
 	public node_data getNode(int key) {
+
 		nodeData vertex = (nodeData)this.get_graph().get(key);
 		return vertex;
 	}

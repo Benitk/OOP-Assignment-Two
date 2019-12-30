@@ -5,24 +5,30 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 
+/**
+ * Creating buttons for panel1 - with custom String input
+ * used only in the Graph_GUI class 
+ * @author ben itzhak
+ * @author liad ben moshe
+ */
 public class panel1_Button {
-	public int getheight() {
+	protected int getheight() {
 		return _height;
 	}
-	public void setheight(int _height) {
+	protected void setheight(int _height) {
 		panel1_Button._height = _height;
 	}
-	public JButton getbutton() {
+	protected JButton getbutton() {
 		return _button;
 	}
-	public void setbutton(JButton _button) {
+	protected void setbutton(JButton _button) {
 		this._button = _button;
 	}
-	public Color getBackColor() {
+	protected Color getBackColor() {
 		return _dark;
 	}
 	
-	public panel1_Button(String name) {
+	protected panel1_Button(String name) {
 		setbutton(new JButton(name));  
 		this.getbutton().setBounds(0, this.getheight(), 300, 45);
 		this.getbutton().setForeground(Color.WHITE);

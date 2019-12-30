@@ -3,6 +3,12 @@ package gui;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+/**
+ * Creating menu - with custom String input
+ * used only in the Graph_GUI class 
+ * @author ben itzhak
+ * @author liad ben moshe
+ */
 public class Menu {
 	
 	protected Menu(String name) {

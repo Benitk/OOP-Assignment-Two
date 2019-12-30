@@ -16,10 +16,11 @@ import utils.Range;
 import utils.StdDraw;
 
 /**
- * 
+ * this class if built for drawing the Graph using StdDraw
+ * used only in the Graph_GUI class 
  * @author Ben itzhak
  * @author Liad ben moshe
- *
+ * 
  */
 public class Draw {
 	/**
@@ -31,6 +32,11 @@ public class Draw {
 		setGraph(g);
 	}
 	
+	/**
+	 * Open windo with defualt settings 
+	 * when graph is empty or when create a new object of Graph_GUI
+	 * 
+	 */
 	protected void drawEmptyGraph() {
 		StdDraw.setCanvasSize(this.get_Width(), this.get_Height());
 		StdDraw.setScale(-5,5);
@@ -40,6 +46,14 @@ public class Draw {
 	}
 	
 
+	/**
+	 * Open windo that adjusted scale bound by the vertices
+	 * drawing the Graph by draw points using iterator on each vertices location including key
+	 * and draw lines to the edges including direction and weight
+	 * 
+	 * @param type - 1 if there is an Additions drawing for Algoritem (shortestPath/TSP)
+	 * @param src_dest is an Arraylist - the list of vertices to draw the result of the algoritem
+	 */
 	protected void draw_graph(int type, ArrayList<node_data> src_dest) {
 		StdDraw.setCanvasSize(this.get_Width(), this.get_Height()); // GUI windo witdh and height
 		setRangeX(this.getGraphDraw().GraphScaleX());
@@ -92,17 +106,6 @@ public class Draw {
 						path_src = path_dest;
 					}
 				}
-				/*
-				 * if(type == 2) { StdDraw.setPenColor(new Color(242, 189, 16));
-				 * StdDraw.setPenRadius(0.007); Iterator<node_data> path = src_dest.iterator();
-				 * nodeData path_src = null; nodeData path_dest; if(path.hasNext())
-				 * path_src=(nodeData) path.next(); while(path.hasNext()) { path_dest =
-				 * (nodeData) path.next();
-				 * 
-				 * StdDraw.line(path_src.getLocation().x(), path_src.getLocation().y(),
-				 * path_dest.getLocation().x(), path_dest.getLocation().y()); path_src =
-				 * path_dest; } }
-				 */
 
 				// draw direction
 				StdDraw.setPenColor(Color.CYAN);

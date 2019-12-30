@@ -213,8 +213,6 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	}
 
 
-
-
 	@Override
 	public List<node_data> TSP(List<Integer> targets){
 		double count=0;
