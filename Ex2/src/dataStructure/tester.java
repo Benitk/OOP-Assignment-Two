@@ -10,6 +10,8 @@ import utils.Point3D;
 public class tester {
 
 	public static void main(String[] args) {
+		
+		
 		DGraph dg=new DGraph();
 		
 		Point3D p1=new Point3D(-4.0,4.0);

@@ -27,6 +27,7 @@ import dataStructure.nodeData;
 import dataStructure.node_data;
 import utils.Point3D;
 
+
 public class Graph_GUI extends JFrame implements ActionListener {
 
 
@@ -201,12 +202,12 @@ public class Graph_GUI extends JFrame implements ActionListener {
 
 		// click on show Graph
 		if(e.getActionCommand().equals("Show Graph")) {
-			Draw d = new Draw(this.get_graphGui().get_graphAlgo());
+			set_draw(new Draw(this.get_graphGui().get_graphAlgo()));
 			if(this.get_graphGui().get_graphAlgo().get_graph().isEmpty()) {
-				d.drawEmptyGraph();
+				this.get_draw().drawEmptyGraph();
 			}
 			else {
-				d.draw_graph(0, new ArrayList<node_data>());
+				this.get_draw().draw_graph(0, new ArrayList<node_data>());
 			}
 		}
 		// is connected
@@ -234,8 +235,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			String[] split = name.split(",");
 			try {
 				this.get_console().setText("shortest Path between node "+split[0]+" to "+split[1]+" is marked with orange");
-				Draw d = new Draw(this.get_graphGui().get_graphAlgo());
-				d.draw_graph(1,(ArrayList<node_data>) this.get_graphGui().shortestPath(Integer.parseInt(split[0]),Integer.parseInt(split[1])));
+				this.get_draw().draw_graph(1,(ArrayList<node_data>) this.get_graphGui().shortestPath(Integer.parseInt(split[0]),Integer.parseInt(split[1])));
 
 			}catch(Exception err) {
 				this.get_console().setText("Error: please check console for more details");
@@ -254,8 +254,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 					list.add(Integer.parseInt(split[i]));
 				}
 				this.get_console().setText("TSP result is marked with orange");
-				Draw d = new Draw(this.get_graphGui().get_graphAlgo());
-				d.draw_graph(1,(ArrayList<node_data>) this.get_graphGui().TSP(list));
+				this.get_draw().draw_graph(1,(ArrayList<node_data>) this.get_graphGui().TSP(list));
 
 			}catch(Exception err) {
 				this.get_console().setText("Error: please check console for more details");
@@ -283,8 +282,8 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			try {
 				this.get_graphGui().init(name);
 				this.get_console().setText("The file load from project directory");
-				Draw d = new Draw(this.get_graphGui().get_graphAlgo());
-				d.draw_graph(0, new ArrayList<node_data>());
+				set_draw(new Draw(this.get_graphGui().get_graphAlgo()));
+				this.get_draw().draw_graph(0, new ArrayList<node_data>());
 			}
 			catch(Exception err) {
 				this.get_console().setText("Error: file is no readable or not found, check console");
@@ -300,6 +299,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			try {
 				nodeData n = new nodeData(new Point3D(Double.parseDouble(split[0]), Double.parseDouble(split[1])));
 				this.get_graphGui().get_graphAlgo().addNode(n);
+				this.get_draw().draw_graph(0, new ArrayList<node_data>());
 				this.get_console().setText("Node succesfully add - Show Graph to observe");
 			}
 			catch(Exception err) {
@@ -315,6 +315,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			String[] split = name.split(",");
 			try {
 				this.get_graphGui().get_graphAlgo().connect(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Double.parseDouble(split[2]));
+				this.get_draw().draw_graph(0, new ArrayList<node_data>());
 				this.get_console().setText("Connect succesfully - Show Graph to observe");
 			}
 			catch(Exception err) {
@@ -330,6 +331,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 
 			try {
 				this.get_graphGui().get_graphAlgo().removeNode(Integer.parseInt(name));
+				this.get_draw().draw_graph(0, new ArrayList<node_data>());
 				this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
 			}
 			catch(Exception err) {
@@ -345,6 +347,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			String[] split = name.split(",");
 			try {
 				this.get_graphGui().get_graphAlgo().removeEdge(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+				this.get_draw().draw_graph(0, new ArrayList<node_data>());
 				this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
 			}
 			catch(Exception err) {
@@ -373,6 +376,10 @@ public class Graph_GUI extends JFrame implements ActionListener {
 	}
 	public JPanel get_panel3() {
 		return _panel3;
+	}
+
+	public Draw get_draw() {
+		return _d;
 	}
 
 
@@ -410,7 +417,12 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this._console = _console;
 	}
 
+	private void set_draw(Draw _d) {
+		this._d = _d;
+	}
 
+
+	private Draw _d;
 	private Graph_Algo _graph_gui;
 	private JPanel _panel1, _panel2, _panel3;
 	private JTextField _console;
