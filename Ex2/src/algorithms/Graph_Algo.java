@@ -211,13 +211,37 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 		return listPath;
 	}
+	private ArrayList<Integer> checklist(List<Integer> targets){
+
+		ArrayList<Integer> newlist=(ArrayList<Integer>) targets;
+		for(int i=0;i<newlist.size();i++) {
+			// node dont exist in graph throw 
+			if(this.get_graphAlgo().get_graph().get(newlist.get(i)) == null) {
+				throw new RuntimeException("Vertex "+newlist.get(i)+" don't exist");
+			}
+			int count=0;
+			for(int j=0;j<newlist.size();j++) {
+				if(newlist.get(i)==newlist.get(j)) {
+					count++;
+				}
+				if(count>1) {
+					newlist.remove(i);
+					i=0;
+					break;
+				}
+
+			}
+
+		}
+		return newlist;
+	}
 
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets){
 		double count=0;
 		double limit=Math.pow(targets.size(),4);
-		ArrayList<Integer>arrTarget=(ArrayList<Integer>) targets;
+		ArrayList<Integer>arrTarget=checklist(targets);
 		ArrayList<Integer> arrkey= new ArrayList<>();
 		while(arrkey.size()<arrTarget.size()) {
 
@@ -257,7 +281,14 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}
 		return Tsplist;
 	}
-
+	public List<node_data> TSP2(List<Integer> targets){
+		List<node_data> Tsplist=new ArrayList<node_data>();
+		ArrayList<Integer>arrTarget=checklist(targets);
+		for(int i=0;i<arrTarget.size()-1;i++) {
+			Tsplist.addAll(shortestPath(arrTarget.get(i),arrTarget.get(i+1)));
+		}
+		return Tsplist;
+	}
 
 
 	@Override

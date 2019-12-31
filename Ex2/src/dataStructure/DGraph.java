@@ -8,7 +8,7 @@ import java.util.Iterator;
 import utils.Range;
 
 public class DGraph implements graph, Serializable {
-	
+
 	public DGraph(DGraph g) {
 		set_graph(new HashMap<Integer, node_data>());
 		Iterator<node_data> iter = g.getV().iterator(); // key, node
@@ -25,7 +25,8 @@ public class DGraph implements graph, Serializable {
 	}
 
 
-	/**
+	/*
+	 * return the node_data by key
 	 * if dont exist or empty return null
 	 */
 	@Override
@@ -36,6 +37,7 @@ public class DGraph implements graph, Serializable {
 	}
 
 	/**
+	 * return the esge_data by src and dest
 	 * if src dont exist or empty return null src.get_edges() --> return the _edge
 	 * hashmap
 	 */
@@ -54,10 +56,8 @@ public class DGraph implements graph, Serializable {
 		}
 	}
 
-	/**
-	 * override if exist
-	 * maybe check should check first if exist
-	 * 
+	/*
+	 *add node_data to the graph 
 	 */
 	@Override
 	public void addNode(node_data n) {
@@ -70,6 +70,9 @@ public class DGraph implements graph, Serializable {
 		this.set_mc(this.getMC()+1);
 	}
 
+	/*
+	 * connect between two dots(node_data)
+	 */
 	@Override
 	public void connect(int src, int dest, double w) {
 		if(src == dest) {
@@ -91,6 +94,9 @@ public class DGraph implements graph, Serializable {
 		}
 	}
 
+	/*
+	 * return the collection of the node_data
+	 */
 	@Override
 	public Collection<node_data> getV() {
 		if(this.get_graph().isEmpty()) {
@@ -98,6 +104,7 @@ public class DGraph implements graph, Serializable {
 		}
 		return this.get_graph().values();
 	}
+	
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
@@ -135,6 +142,7 @@ public class DGraph implements graph, Serializable {
 		}
 		// delete this vertex with all his edges as src
 		this.set_mc(this.getMC()+1);
+		this.set_number_key(get_number_key()-1);
 		return this.get_graph().remove(key);
 	}
 
@@ -216,13 +224,13 @@ public class DGraph implements graph, Serializable {
 	public HashMap<Integer, node_data> get_graph() {
 		return _graph;
 	}
-	
+
 
 	/***** private data ****/
 	private void set_mc(int m) {
 		this.mc = m;
 	}
-	
+
 	private void set_graph(HashMap<Integer, node_data> _graph) {
 		this._graph = _graph;
 	}
