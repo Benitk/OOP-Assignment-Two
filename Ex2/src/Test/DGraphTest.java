@@ -10,6 +10,8 @@ import dataStructure.DGraph;
 import dataStructure.nodeData;
 import utils.Point3D;
 
+
+
 class DGraphTest {
 	private static final DGraph dg1=new DGraph();
 
