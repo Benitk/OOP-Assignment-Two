@@ -142,7 +142,7 @@ public class DGraph implements graph, Serializable {
 		}
 		// delete this vertex with all his edges as src
 		this.set_mc(this.getMC()+1);
-		this.set_number_key(get_number_key()-1);
+		
 		return this.get_graph().remove(key);
 	}
 

@@ -24,12 +24,18 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	public Graph_Algo() {
 		set_graphAlgo(new DGraph());
 	}
+	/*
+	 * init a Graph_algo from a graph
+	 */
 	@Override
 	public void init(graph g) {
 		set_graphAlgo((DGraph)g);
 
 	}
 
+	/*
+	 * load a graph from a file
+	 */
 	@Override
 	public void init(String file_name) {
 		graph file_graph = null; 
@@ -60,6 +66,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	}
 
+	/*
+	 * save the Graph_algo
+	 */
 	@Override
 	public void save(String file_name) {
 		graph dgraph = this.copy();
@@ -138,6 +147,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		return sum;
 	}
 
+	/*
+	 * return the short distance from src to dest 
+	 */
 	@Override
 	public double shortestPathDist(int src, int dest) {
 		if(src == dest) {
@@ -192,7 +204,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			}
 		}
 	}
-
+	/*
+	 * return a list of node_data that is the shortest way from src to dest
+	 */
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		ArrayList<node_data>listPathRev = new ArrayList<node_data>();//list in reverse
@@ -290,7 +304,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		return Tsplist;
 	}
 
-
+	/*
+	 * copy this graph algo
+	 */
 	@Override
 	public graph copy() {
 		graph g = new DGraph(this.get_graphAlgo());

@@ -73,7 +73,6 @@ class DGraphTest {
 	@Test
 	void testConnect() {
 		dg1.connect(2,6,20);
-		System.out.println(dg1.getEdge(2,6).getWeight());
 		assertTrue(dg1.getEdge(2,6).getWeight()==20);
 	}
 
