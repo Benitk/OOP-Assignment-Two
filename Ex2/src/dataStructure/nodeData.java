@@ -87,7 +87,7 @@ public class nodeData implements node_data, Serializable {
 
 	@Override
 	public void setTag(int t) {
-		if (1 != t || t != 3) {
+		if (1 > t || t > 3) {
 			this._tag = 1;
 		}
 		this._tag = t;

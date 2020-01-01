@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -212,11 +212,13 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		ArrayList<node_data>listPathRev = new ArrayList<node_data>();//list in reverse
 		shortestPathDist(src,dest);
 		nodeData current=(nodeData) this.get_graphAlgo().getNode(dest);
+		current.setTag(2);
 		listPathRev.add(current);
 		String info="";
 		while(current!=this.get_graphAlgo().getNode(src)) {
 			info=current.getInfo();
 			current=(nodeData) this.get_graphAlgo().getNode(Integer.parseInt(info));
+			current.setTag(2);
 			listPathRev.add(current);
 		}
 		ArrayList<node_data>listPath = new ArrayList<node_data>();
@@ -253,53 +255,22 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets){
-		double count=0;
-		double limit=Math.pow(targets.size(),4);
-		ArrayList<Integer>arrTarget=checklist(targets);
-		ArrayList<Integer> arrkey= new ArrayList<>();
-		while(arrkey.size()<arrTarget.size()) {
-
-			for(int i=0;i<arrTarget.size();i++) {
-				boolean flag=true;
-				for(int j=0;j<arrTarget.size();j++) {
-					if(!arrkey.contains(arrTarget.get(i)) && !arrkey.contains(arrTarget.get(j))) {
-						GreenTag();
-						if(arrTarget.get(j)!=arrTarget.get(i)) {
-							if(isConnected(arrTarget.get(j),(nodeData) this.get_graphAlgo().getNode(arrTarget.get(i)))==0) {
-								flag=false;
-							}
-						}
-					}
-				}
-				if(flag==true && !arrkey.contains(arrTarget.get(i))) {
-					arrkey.add(arrTarget.get(i));
-				}
-			}
-			count++;
-			if(count>limit)
-				throw new RuntimeException("There is no path with all this location");
-		}
 		List<node_data> Tsplist=new ArrayList<node_data>();
-		for(int k=0;k<arrkey.size()-1;k++) {
-			if(!Tsplist.contains(this.get_graphAlgo().getNode(arrkey.get(k+1)))){
-				if( Tsplist.size()!=0 && Tsplist.get(Tsplist.size()-1)==this.get_graphAlgo().getNode(arrkey.get(k)))
+		ArrayList<Integer>arrTarget=checklist(targets);
+		Iterator<Integer> iter = arrTarget.iterator();
+		int srcKey = iter.next();
+		int destKey;
+		while(iter.hasNext()) {
+			destKey = iter.next();
+			nodeData dest = (nodeData) this._graphAlgo.get_graph().get(destKey);
+			if(dest.getTag() != 2) {
+				Tsplist.addAll(shortestPath(srcKey,destKey));
+				srcKey = destKey;
+				// delete duplicate
+				if(iter.hasNext()) {
 					Tsplist.remove(Tsplist.size()-1);
-				Tsplist.addAll(shortestPath(arrkey.get(k),arrkey.get(k+1)));
-				if(k!=arrkey.size()-2) {
-					node_data d1=Tsplist.get(Tsplist.size()-1);
-					Tsplist.remove(Tsplist.get(Tsplist.size()-1));
-					if(!Tsplist.contains(d1))
-						Tsplist.add(d1);
 				}
 			}
-		}
-		return Tsplist;
-	}
-	public List<node_data> TSP2(List<Integer> targets){
-		List<node_data> Tsplist=new ArrayList<node_data>();
-		ArrayList<Integer>arrTarget=checklist(targets);
-		for(int i=0;i<arrTarget.size()-1;i++) {
-			Tsplist.addAll(shortestPath(arrTarget.get(i),arrTarget.get(i+1)));
 		}
 		return Tsplist;
 	}
