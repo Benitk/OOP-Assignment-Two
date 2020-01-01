@@ -19,7 +19,7 @@ import dataStructure.node_data;
 import utils.Point3D;
 
 
-@TestMethodOrder(OrderAnnotation.class)
+//@TestMethodOrder(OrderAnnotation.class)
 class DGraphTest {
 	private static DGraph g = new DGraph();
 
@@ -51,7 +51,7 @@ class DGraphTest {
 	 * get Node test
 	 */
 	@Test
-	@Order(1)
+//	@Order(1)
 	void getNodeTest() {
 		String ans[] = {"2.0,3.0,0.0", "5.0,-1.0,0.0", "-2.0,4.0,0.0", "-4.0,-2.0,0.0"};
 		for(int i = 1; i <= g.nodeSize(); i++) {
@@ -66,7 +66,7 @@ class DGraphTest {
 	 * get edge test
 	 */
 	@Test
-	@Order(2)
+//	@Order(2)
 	void getEdgeTest() {
 		// edge 1 to 2
 		assertEquals("", g.getEdge(1, 2).getInfo(),"getEdge info Test");
@@ -87,7 +87,7 @@ class DGraphTest {
 	 * add Node test
 	 */
 	@Test
-	@Order(3)
+//	@Order(3)
 	void addNodeTest() {
 		Point3D p = new Point3D(4,10);
 		g.addNode(new nodeData(p));
@@ -101,7 +101,7 @@ class DGraphTest {
 	 * connect test
 	 */
 	@Test
-	@Order(4)
+//	@Order(4)
 	void ConnectTest() {
 		g.connect(2, 3, 4.2);
 	
@@ -116,7 +116,7 @@ class DGraphTest {
 	 * getV test
 	 */
 	@Test
-	@Order(5)
+	//@Order(5)
 	void getVTest() {
 		Collection<node_data> v =  g.getV();
 		int nodeKey_counter = 0;
@@ -129,7 +129,7 @@ class DGraphTest {
 	 * getE test
 	 */
 	@Test
-	@Order(6)
+	//@Order(6)
 	void getETest() {
 		g.connect(2, 1, 3);
 		// node 2 is connected to 2->1 and 2->3
@@ -146,7 +146,7 @@ class DGraphTest {
 	 * removeNode test
 	 */
 	@Test
-	@Order(7)
+	//@Order(7)
 	void removeNodeTest() {
 		// add new node
 		Point3D p = new Point3D(-3,5);
@@ -164,7 +164,7 @@ class DGraphTest {
 	 * removeEdge test
 	 */
 	@Test
-	@Order(8)
+	//@Order(8)
 	void removeEdgeTest() {
 		// add new edge
 		g.connect(1, 4, 2);
@@ -180,7 +180,7 @@ class DGraphTest {
 	 *  node and edge sizes test
 	 */
 	@Test
-	@Order(9)
+//	@Order(9)
 	void NodeAndEdge_sizeTest() {
 
 		int expected_nodeSize = 5; //(2,3), (5,-1), (-2,4), (-4,-2), (4,10)
@@ -192,9 +192,9 @@ class DGraphTest {
 	 * get mc test
 	 */
 	@Test
-	@Order(10)
+//	@Order(10)
 	void getMCTest() {
-		int expected_MC = 13;
+		int expected_MC = 12;
 		assertEquals(expected_MC, g.getMC(),"MC Test");
 	}
 	
@@ -202,7 +202,7 @@ class DGraphTest {
 	 * get GraphScale test
 	 */
 	@Test
-	@Order(11)
+//	@Order(11)
 	void GraphScaleTest() {
 		double expectedRangeX[] = {-4,5}; 
 		double expectedRangeY[] = {-2, 10}; 
