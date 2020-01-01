@@ -24,12 +24,18 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	public Graph_Algo() {
 		set_graphAlgo(new DGraph());
 	}
+	/*
+	 * init a Graph_algo from a graph
+	 */
 	@Override
 	public void init(graph g) {
 		set_graphAlgo((DGraph)g);
 
 	}
 
+	/*
+	 * load a graph from a file
+	 */
 	@Override
 	public void init(String file_name) {
 		graph file_graph = null; 
@@ -60,6 +66,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	}
 
+	/*
+	 * save the Graph_algo
+	 */
 	@Override
 	public void save(String file_name) {
 		graph dgraph = this.copy();
@@ -138,6 +147,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		return sum;
 	}
 
+	/*
+	 * return the short distance from src to dest 
+	 */
 	@Override
 	public double shortestPathDist(int src, int dest) {
 		if(src == dest) {
@@ -192,7 +204,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			}
 		}
 	}
-
+	/*
+	 * return a list of node_data that is the shortest way from src to dest
+	 */
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		ArrayList<node_data>listPathRev = new ArrayList<node_data>();//list in reverse
@@ -211,13 +225,37 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 		return listPath;
 	}
+	private ArrayList<Integer> checklist(List<Integer> targets){
+
+		ArrayList<Integer> newlist=(ArrayList<Integer>) targets;
+		for(int i=0;i<newlist.size();i++) {
+			// node dont exist in graph throw 
+			if(this.get_graphAlgo().get_graph().get(newlist.get(i)) == null) {
+				throw new RuntimeException("Vertex "+newlist.get(i)+" don't exist");
+			}
+			int count=0;
+			for(int j=0;j<newlist.size();j++) {
+				if(newlist.get(i)==newlist.get(j)) {
+					count++;
+				}
+				if(count>1) {
+					newlist.remove(i);
+					i=0;
+					break;
+				}
+
+			}
+
+		}
+		return newlist;
+	}
 
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets){
 		double count=0;
 		double limit=Math.pow(targets.size(),4);
-		ArrayList<Integer>arrTarget=(ArrayList<Integer>) targets;
+		ArrayList<Integer>arrTarget=checklist(targets);
 		ArrayList<Integer> arrkey= new ArrayList<>();
 		while(arrkey.size()<arrTarget.size()) {
 
@@ -257,9 +295,18 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}
 		return Tsplist;
 	}
+	public List<node_data> TSP2(List<Integer> targets){
+		List<node_data> Tsplist=new ArrayList<node_data>();
+		ArrayList<Integer>arrTarget=checklist(targets);
+		for(int i=0;i<arrTarget.size()-1;i++) {
+			Tsplist.addAll(shortestPath(arrTarget.get(i),arrTarget.get(i+1)));
+		}
+		return Tsplist;
+	}
 
-
-
+	/*
+	 * copy this graph algo
+	 */
 	@Override
 	public graph copy() {
 		graph g = new DGraph(this.get_graphAlgo());

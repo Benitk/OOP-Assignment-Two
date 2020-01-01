@@ -32,10 +32,9 @@ public class DGraph implements graph, Serializable {
 		set_mc(0);
 	}
 
-
-	/**
-	 * if node doesnt exist or graph is empty return null
-	 * else return node
+	/*
+	 * return the node_data by key
+	 * if dont exist or empty return null
 	 */
 	@Override
 	public node_data getNode(int key) {
@@ -47,8 +46,7 @@ public class DGraph implements graph, Serializable {
 	/**
 	 * if src node doesnt exist or  graph is empty return null,
 	 * else if src == dest throw Exception
-	 * src.get_edges() --> return the _edge
-	 * hashmap
+	 * src.get_edges() --> return the edge_data
 	 */
 	@Override
 	public edge_data getEdge(int src, int dest) {
@@ -107,7 +105,7 @@ public class DGraph implements graph, Serializable {
 	}
 
 	/**
-	 * return the hashmap values aka all nodes
+	 * return the collection of the node_data
 	 */
 	@Override
 	public Collection<node_data> getV() {
@@ -116,6 +114,7 @@ public class DGraph implements graph, Serializable {
 		}
 		return this.get_graph().values();
 	}
+	
 
 	
 	/**
@@ -162,6 +161,7 @@ public class DGraph implements graph, Serializable {
 		}
 		// delete this vertex with all his edges as src
 		this.set_mc(this.getMC()+1);
+		
 		return this.get_graph().remove(key);
 	}
 
@@ -274,13 +274,13 @@ public class DGraph implements graph, Serializable {
 	public HashMap<Integer, node_data> get_graph() {
 		return _graph;
 	}
-	
+
 
 	/***** private data ****/
 	private void set_mc(int m) {
 		this.mc = m;
 	}
-	
+
 	private void set_graph(HashMap<Integer, node_data> _graph) {
 		this._graph = _graph;
 	}

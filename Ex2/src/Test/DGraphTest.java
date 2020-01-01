@@ -1,216 +1,107 @@
 package Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.util.Collection;
-import java.util.Iterator;
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import dataStructure.DGraph;
-import dataStructure.edge_data;
 import dataStructure.nodeData;
-import dataStructure.node_data;
 import utils.Point3D;
 
 
-//@TestMethodOrder(OrderAnnotation.class)
+
 class DGraphTest {
-	private static DGraph g = new DGraph();
+	private static final DGraph dg1=new DGraph();
 
-	@BeforeAll
-	static void printinit() {
-		System.out.println("initialize Vertices");
-		System.out.println("(2,3), (5,-1), (-2,4), (-4,-2)");
-	}
+	 static Point3D p11=new Point3D(-4.0,4.0);
+	 static Point3D p21=new Point3D(3,8);
+	 static Point3D p31=new Point3D(8,5);
+	 static Point3D p41=new Point3D(12,5);
+	 static Point3D p51=new Point3D(10,10);
+	 static Point3D p61=new Point3D(20,14);
 
-	@BeforeAll
-	static void init() {
-		Point3D p1 = new Point3D(2,3);
-		Point3D p2 = new Point3D(5,-1);
-		Point3D p3 = new Point3D(-2,4);
-		Point3D p4 = new Point3D(-4,-2);
-		nodeData v1 = new nodeData(p1);
-		nodeData v2 = new nodeData(p2);
-		nodeData v3 = new nodeData(p3);
-		nodeData v4 = new nodeData(p4);
-		g.addNode(v1);
-		g.addNode(v2);
-		g.addNode(v3);
-		g.addNode(v4);
-		g.connect(1, 2, 5);
-		g.connect(3, 4, 3.5);
-	}
-
-	/** 
-	 * get Node test
-	 */
-	@Test
-//	@Order(1)
-	void getNodeTest() {
-		String ans[] = {"2.0,3.0,0.0", "5.0,-1.0,0.0", "-2.0,4.0,0.0", "-4.0,-2.0,0.0"};
-		for(int i = 1; i <= g.nodeSize(); i++) {
-			assertEquals(i, g.getNode(i).getKey(),"getNode key Test");
-			assertEquals(1, g.getNode(i).getTag(),"getNode tag Test");
-			assertEquals("", g.getNode(i).getInfo(),"getNode info Test");
-			assertEquals(Integer.MAX_VALUE, g.getNode(i).getWeight(),"getNode weight Test");
-			assertEquals(ans[i-1], g.getNode(i).getLocation().toString(), "getNode locations Test");
+	 static nodeData nd11 = new nodeData(p11);
+	 static nodeData nd21 = new nodeData(p21);
+	 static nodeData nd31 = new nodeData(p31);
+	 static nodeData nd41 = new nodeData(p41);
+	 static nodeData nd51 = new nodeData(p51);
+	 static nodeData nd61 = new nodeData(p61);
+	 
+	 @BeforeAll
+		static void params(){
+			dg1.addNode(nd11);
+			dg1.addNode(nd21);
+			dg1.addNode(nd31);
+			dg1.addNode(nd41);
+			dg1.addNode(nd51);
+			dg1.addNode(nd61);
+			
+			dg1.connect(1,2,1);
+			dg1.connect(2,3,2);
+			dg1.connect(1,3,0.2);
+	    	dg1.connect(3,4,0.5);
+			dg1.connect(3,5,5);
+	    	dg1.connect(5,6,4);
+			dg1.connect(4,6,2);
+			dg1.connect(6,1,1.2);
+			
 		}
-	}
-	/**
-	 * get edge test
-	 */
 	@Test
-//	@Order(2)
-	void getEdgeTest() {
-		// edge 1 to 2
-		assertEquals("", g.getEdge(1, 2).getInfo(),"getEdge info Test");
-		assertEquals(0, g.getEdge(1, 2).getTag(),"getEdge tag Test");
-		assertEquals(1, g.getEdge(1, 2).getSrc(),"getEdge src key Test");
-		assertEquals(2, g.getEdge(1, 2).getDest(),"getEdge dest key Test");
-		assertEquals(5, g.getEdge(1, 2).getWeight(),"getEdge weight Test");
-
-		// edge 3 to 4
-		assertEquals("", g.getEdge(3, 4).getInfo(),"getEdge info Test");
-		assertEquals(0, g.getEdge(3, 4).getTag(),"getEdge tag Test");
-		assertEquals(3, g.getEdge(3, 4).getSrc(),"getEdge src key Test");
-		assertEquals(4, g.getEdge(3, 4).getDest(),"getEdge dest key Test");
-		assertEquals(3.5, g.getEdge(3, 4).getWeight(),"getEdge weight Test");
+	void testGetNode() {
+		assertEquals(dg1.getNode(2),nd21);
 	}
 
-	/**
-	 * add Node test
-	 */
 	@Test
-//	@Order(3)
-	void addNodeTest() {
-		Point3D p = new Point3D(4,10);
-		g.addNode(new nodeData(p));
-		int nodeKey = g.get_number_key();
-		assertEquals(1, g.getNode(nodeKey).getTag(),"addNode tag Test");
-		assertEquals("", g.getNode(nodeKey).getInfo(),"addNode info Test");
-		assertEquals(Integer.MAX_VALUE, g.getNode(nodeKey).getWeight(),"addNode weight Test");
-		assertEquals("4.0,10.0,0.0", g.getNode(nodeKey).getLocation().toString(), "addNode locations Test");
+	void testGetEdge() {
+		assertEquals(dg1.getEdge(1,2),nd11.get_edges().get(2));
 	}
-	/**
-	 * connect test
-	 */
+
 	@Test
-//	@Order(4)
-	void ConnectTest() {
-		g.connect(2, 3, 4.2);
-	
-		assertEquals("", g.getEdge(2, 3).getInfo(),"connect info Test");
-		assertEquals(0, g.getEdge(2, 3).getTag(),"connect tag Test");
-		assertEquals(2, g.getEdge(2, 3).getSrc(),"connect src key Test");
-		assertEquals(3, g.getEdge(2, 3).getDest(),"connect dest key Test");
-		assertEquals(4.2, g.getEdge(2, 3).getWeight(),"connect weight Test");
+	void testAddNode() {
+		Point3D p71=new Point3D(7.0,4.0);
+		nodeData nd71 = new nodeData(p71);
+		dg1.addNode(nd71);
+		assertTrue(dg1.get_number_key()==7);
+	}
+
+	@Test
+	void testConnect() {
+		dg1.connect(2,6,20);
+		assertTrue(dg1.getEdge(2,6).getWeight()==20);
+	}
+
+	@Test
+	void testGetV() {
+		assertTrue(dg1.getV().size()==dg1.get_number_key());
+	}
+
+	@Test
+	void testGetE() {
+		assertTrue(dg1.getE(2).size()==1);
+	}
+
+	@Test
+	void testRemoveNode() {
+		dg1.removeNode(1);
+		assertTrue(dg1.getNode(1)==null);
 		
 	}
-	/**
-	 * getV test
-	 */
-	@Test
-	//@Order(5)
-	void getVTest() {
-		Collection<node_data> v =  g.getV();
-		int nodeKey_counter = 0;
-		Iterator<node_data> iter = v.iterator();
-		while(iter.hasNext()) {
-			assertEquals(++nodeKey_counter, iter.next().getKey(), "getV key Test");
-		}		
-	}
-	/**
-	 * getE test
-	 */
-	@Test
-	//@Order(6)
-	void getETest() {
-		g.connect(2, 1, 3);
-		// node 2 is connected to 2->1 and 2->3
-		int expected[] = {1, 3};
-		Collection<edge_data> e =  g.getE(2);
-		Iterator<edge_data> iter = e.iterator();
-		while(iter.hasNext()) {
-			assertEquals(expected[0], iter.next().getDest(), "getE dest Test");
-			assertEquals(expected[1], iter.next().getDest(), "getE dest Test");
-		}		
-	}
-	
-	/**
-	 * removeNode test
-	 */
-	@Test
-	//@Order(7)
-	void removeNodeTest() {
-		// add new node
-		Point3D p = new Point3D(-3,5);
-		g.addNode(new nodeData(p));
-		int nodeKey = g.get_number_key();
-		assertEquals(nodeKey, g.getNode(g.get_number_key()).getKey(),"remove Node key Test");
-		
-		g.removeNode(nodeKey);
-		if(g.getNode(nodeKey) != null) {
-			fail("Error: node number 6 should be deleted from graph");
-		}
-	}
-	
-	/**
-	 * removeEdge test
-	 */
-	@Test
-	//@Order(8)
-	void removeEdgeTest() {
-		// add new edge
-		g.connect(1, 4, 2);
-		assertEquals(1, g.getEdge(1, 4).getSrc(),"remove edge src key Test");
-		assertEquals(4, g.getEdge(1, 4).getDest(),"remove edge dest key Test");
-		
-		g.removeEdge(1, 4);
-		if(g.getEdge(1, 4) != null) {
-			fail("Error: edge 1->4 should be deleted from graph");
-		}
-	}
-	/**
-	 *  node and edge sizes test
-	 */
-	@Test
-//	@Order(9)
-	void NodeAndEdge_sizeTest() {
 
-		int expected_nodeSize = 5; //(2,3), (5,-1), (-2,4), (-4,-2), (4,10)
-		int expected_edgeSize = 4; // 1->2, 3->4 2->3 2->1
-		assertEquals(expected_nodeSize, g.nodeSize(),"node size Test");
-		assertEquals(expected_edgeSize, g.edgeSize(),"edge size Test");
-	}
-	/**
-	 * get mc test
-	 */
 	@Test
-//	@Order(10)
-	void getMCTest() {
-		int expected_MC = 12;
-		assertEquals(expected_MC, g.getMC(),"MC Test");
+	void testRemoveEdge() {
+		dg1.removeEdge(1,2);
+		assertTrue(dg1.getEdge(1,2)==null);
 	}
-	
-	/**
-	 * get GraphScale test
-	 */
 	@Test
-//	@Order(11)
 	void GraphScaleTest() {
-		double expectedRangeX[] = {-4,5}; 
-		double expectedRangeY[] = {-2, 10}; 
+		double expectedRangeX[] = {3,20}; 
+		double expectedRangeY[] = {4, 14}; 
 
-		assertEquals(expectedRangeX[0], g.GraphScaleX().get_min(),"ScaleX Test");
-		assertEquals(expectedRangeX[1], g.GraphScaleX().get_max(),"ScaleX Test");
-		assertEquals(expectedRangeY[0], g.GraphScaleY().get_min(),"ScaleY Test");
-		assertEquals(expectedRangeY[1], g.GraphScaleY().get_max(),"ScaleY Test");
+		assertEquals(expectedRangeX[0], dg1.GraphScaleX().get_min(),"ScaleX Test");
+		assertEquals(expectedRangeX[1], dg1.GraphScaleX().get_max(),"ScaleX Test");
+		assertEquals(expectedRangeY[0], dg1.GraphScaleY().get_min(),"ScaleY Test");
+		assertEquals(expectedRangeY[1], dg1.GraphScaleY().get_max(),"ScaleY Test");
 	}
-	
 }
