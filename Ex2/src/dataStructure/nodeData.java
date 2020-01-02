@@ -25,7 +25,7 @@ public class nodeData implements node_data, Serializable {
 		setInfo("");
 		set_edges();
 		setTag(1);
-		setColor('x');
+		setBol('x');
 	}
 
 	/*
@@ -100,18 +100,18 @@ public class nodeData implements node_data, Serializable {
 		this._edges = new HashMap<Integer, edge_data>();
 	}
 
-	public char getColor() {
-		return _color;
+	public char getBol() {
+		return _bol;
 	}
 
-	public void setColor(char _color) {
-		this._color = _color;
+	public void setBol(char _bol) {
+		this._bol = _bol;
 	}
 
 	private HashMap<Integer, edge_data> _edges;
 	private int _tag, _key;
 	private String _info;
-	private char _color;
+	private char _bol;
 	private double _weight;
 	private Point3D _location;
 }

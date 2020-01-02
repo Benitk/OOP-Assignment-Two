@@ -218,13 +218,13 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		ArrayList<node_data>listPathRev = new ArrayList<node_data>();//list in reverse
 		shortestPathDist(src,dest);
 		nodeData current=(nodeData) this.get_graphAlgo().getNode(dest);
-		current.setColor('v');
+		current.setBol('v');
 		listPathRev.add(current);
 		String info="";
 		while(current!=this.get_graphAlgo().getNode(src)) {
 			info=current.getInfo();
 			current=(nodeData) this.get_graphAlgo().getNode(Integer.parseInt(info));
-			current.setColor('v');
+			current.setBol('v');
 			listPathRev.add(current);
 		}
 		ArrayList<node_data>listPath = new ArrayList<node_data>();
@@ -274,7 +274,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		while(iter.hasNext()) {
 			destKey = iter.next();
 			nodeData dest = (nodeData) this._graphAlgo.get_graph().get(destKey);
-			if(dest.getColor() != 'v') {
+			if(dest.getBol() != 'v') {
 				Tsplist.addAll(shortestPath(srcKey,destKey));
 				srcKey = destKey;
 				// delete duplicate
@@ -315,7 +315,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		Iterator<Integer> iter = targets.iterator();
 		while(iter.hasNext()) {
 			nodeData current = (nodeData) this.get_graphAlgo().get_graph().get(iter.next());
-			current.setColor('x');
+			current.setBol('x');
 		}
 	}
 
