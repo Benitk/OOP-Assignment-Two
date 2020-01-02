@@ -48,10 +48,6 @@ class DGraphTest {
 			dg1.connect(6,1,1.2);
 			
 		}
-	
-		
-	
-
 	@Test
 	void testGetNode() {
 		assertEquals(dg1.getNode(2),nd21);
@@ -98,8 +94,14 @@ class DGraphTest {
 		dg1.removeEdge(1,2);
 		assertTrue(dg1.getEdge(1,2)==null);
 	}
+	@Test
+	void GraphScaleTest() {
+		double expectedRangeX[] = {3,20}; 
+		double expectedRangeY[] = {4, 14}; 
 
-	
-	
-
+		assertEquals(expectedRangeX[0], dg1.GraphScaleX().get_min(),"ScaleX Test");
+		assertEquals(expectedRangeX[1], dg1.GraphScaleX().get_max(),"ScaleX Test");
+		assertEquals(expectedRangeY[0], dg1.GraphScaleY().get_min(),"ScaleY Test");
+		assertEquals(expectedRangeY[1], dg1.GraphScaleY().get_max(),"ScaleY Test");
+	}
 }

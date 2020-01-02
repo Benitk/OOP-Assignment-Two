@@ -12,6 +12,11 @@ import utils.Point3D;
  */
 public class nodeData implements node_data, Serializable {
 	
+	/**
+	 * init node with default param
+	 * and hashmap <Integer, edge_data> represent as <dest.key,edge>
+	 * Example node 1 --> (connect) node 2 then hashmap<2, 1-->2(edge)>
+	 */
 	public nodeData(Point3D point) {
 		setLocation(point);
 		setKey(0);
@@ -82,7 +87,7 @@ public class nodeData implements node_data, Serializable {
 
 	@Override
 	public void setTag(int t) {
-		if (1 != t || t != 3) {
+		if (1 > t || t > 3) {
 			this._tag = 1;
 		}
 		this._tag = t;
