@@ -132,15 +132,15 @@ public class tester {
               tar.add(i);
           }
       }
-      System.out.println(test.get_graphAlgo().nodeSize());
-      Date date = new Date();
-      double ff = date.getTime();
-      List t =test.TSP2(tar);
-      System.out.println();
-      date = new Date();
-      double f = date.getTime();
-      System.out.println(f-ff);
-      System.out.println(t.size());
+//      System.out.println(test.get_graphAlgo().nodeSize());
+//      Date date = new Date();
+//      double ff = date.getTime();
+//      List t =test.TSP2(tar);
+//      System.out.println();
+//      date = new Date();
+//      double f = date.getTime();
+//      System.out.println(f-ff);
+//      System.out.println(t.size());
 		
 	
 		

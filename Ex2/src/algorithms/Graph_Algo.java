@@ -24,6 +24,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	public Graph_Algo() {
 		set_graphAlgo(new DGraph());
 	}
+	public Graph_Algo(graph _graph) {
+		set_graphAlgo((DGraph)_graph);
+	}
 	/*
 	 * init a Graph_algo from a graph
 	 */
