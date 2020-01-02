@@ -13,7 +13,8 @@ import utils.Point3D;
 public class nodeData implements node_data, Serializable {
 	
 	/**
-	 * init node with default param
+	 * init node with default param 
+	 * @param point setting the location of the node
 	 * and hashmap <Integer, edge_data> represent as <dest.key,edge>
 	 * Example node 1 --> (connect) node 2 then hashmap<2, 1-->2(edge)>
 	 */
@@ -24,6 +25,7 @@ public class nodeData implements node_data, Serializable {
 		setInfo("");
 		set_edges();
 		setTag(1);
+		setColor('x');
 	}
 
 	/*
@@ -98,9 +100,18 @@ public class nodeData implements node_data, Serializable {
 		this._edges = new HashMap<Integer, edge_data>();
 	}
 
+	public char getColor() {
+		return _color;
+	}
+
+	public void setColor(char _color) {
+		this._color = _color;
+	}
+
 	private HashMap<Integer, edge_data> _edges;
 	private int _tag, _key;
 	private String _info;
+	private char _color;
 	private double _weight;
 	private Point3D _location;
 }

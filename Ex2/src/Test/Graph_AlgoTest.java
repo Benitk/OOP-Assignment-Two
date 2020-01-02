@@ -4,6 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -125,7 +126,7 @@ class Graph_AlgoTest {
 		for(int i=0;i<targetsMMM.size();i++) {
 			arr2[i]=targetsMMM.get(i).getKey();
 		}
-		int arr3[]= {4,6,1,3,5};
+		int arr3[]= {4, 6, 1, 3, 5};
 		assertArrayEquals(arr2,arr3);
 		
 		

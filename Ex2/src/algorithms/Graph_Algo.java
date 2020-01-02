@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +23,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	public Graph_Algo() {
 		set_graphAlgo(new DGraph());
 	}
+
 	public Graph_Algo(graph _graph) {
 		set_graphAlgo((DGraph)_graph);
 	}
@@ -38,6 +38,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	/*
 	 * load a graph from a file
+	 * using implemention Serializable
 	 */
 	@Override
 	public void init(String file_name) {
@@ -70,7 +71,8 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	}
 
 	/*
-	 * save the Graph_algo
+	 * save graph to a file
+	 * using implemention Serializable,
 	 */
 	@Override
 	public void save(String file_name) {
@@ -94,14 +96,15 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	/**
 	 * this algoritem check if one node 'A' connected to every other node
 	 * then check if every other node can reach back to A.
-	 * if size == 1 return true becuase
+	 * if empty or size == 1 return true becuase
 	 * graph is connected if it has exactly one connected component.
+	 * assume diectional graph
 	 */
 	@Override
 	public boolean isConnected() {
 
 		if(this.get_graphAlgo().get_graph().isEmpty()) {
-			return false;
+			return true;
 		}
 
 		int size = this.get_graphAlgo().nodeSize();
@@ -151,7 +154,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	}
 
 	/*
-	 * return the short distance from src to dest 
+	 * return the short distance from src to dest as double
 	 */
 	@Override
 	public double shortestPathDist(int src, int dest) {
@@ -215,13 +218,13 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		ArrayList<node_data>listPathRev = new ArrayList<node_data>();//list in reverse
 		shortestPathDist(src,dest);
 		nodeData current=(nodeData) this.get_graphAlgo().getNode(dest);
-		current.setTag(2);
+		current.setColor('v');
 		listPathRev.add(current);
 		String info="";
 		while(current!=this.get_graphAlgo().getNode(src)) {
 			info=current.getInfo();
 			current=(nodeData) this.get_graphAlgo().getNode(Integer.parseInt(info));
-			current.setTag(2);
+			current.setColor('v');
 			listPathRev.add(current);
 		}
 		ArrayList<node_data>listPath = new ArrayList<node_data>();
@@ -230,6 +233,8 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 		return listPath;
 	}
+
+
 	private ArrayList<Integer> checklist(List<Integer> targets){
 
 		ArrayList<Integer> newlist=(ArrayList<Integer>) targets;
@@ -248,16 +253,19 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 					i=0;
 					break;
 				}
-
 			}
-
 		}
 		return newlist;
 	}
 
 
+	/**
+	 * return the short path that include every node in the input list 'targets'
+	 */
 	@Override
 	public List<node_data> TSP(List<Integer> targets){
+		// O(targes)
+		ColorsetX(targets);
 		List<node_data> Tsplist=new ArrayList<node_data>();
 		ArrayList<Integer>arrTarget=checklist(targets);
 		Iterator<Integer> iter = arrTarget.iterator();
@@ -266,7 +274,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		while(iter.hasNext()) {
 			destKey = iter.next();
 			nodeData dest = (nodeData) this._graphAlgo.get_graph().get(destKey);
-			if(dest.getTag() != 2) {
+			if(dest.getColor() != 'v') {
 				Tsplist.addAll(shortestPath(srcKey,destKey));
 				srcKey = destKey;
 				// delete duplicate
@@ -274,12 +282,16 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 					Tsplist.remove(Tsplist.size()-1);
 				}
 			}
+			else {
+				Tsplist.add((nodeData) this._graphAlgo.get_graph().get(srcKey));
+			}
+			
 		}
 		return Tsplist;
 	}
 
 	/*
-	 * copy this graph algo
+	 * return deep copy of this graph algo
 	 */
 	@Override
 	public graph copy() {
@@ -289,10 +301,24 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	public DGraph get_graphAlgo() {
 		return _graphAlgo;
 	}
+
+
+
+	/**** private data *****/
+	
 	private void set_graphAlgo(DGraph _graphAlgo) {
 		this._graphAlgo = _graphAlgo;
 	}
-	///////////private///////////////
+
+
+	private void ColorsetX(List<Integer> targets) {
+		Iterator<Integer> iter = targets.iterator();
+		while(iter.hasNext()) {
+			nodeData current = (nodeData) this.get_graphAlgo().get_graph().get(iter.next());
+			current.setColor('x');
+		}
+	}
+
 	private void GreenTag() {
 		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
 		while(iter.hasNext()) {
@@ -301,9 +327,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		}
 	}
 
-
 	private void SetNodeWeightMaxInt(){
-
 		Iterator<node_data> iter = this.get_graphAlgo().getV().iterator();
 		while(iter.hasNext()) {
 			nodeData current = (nodeData)iter.next();

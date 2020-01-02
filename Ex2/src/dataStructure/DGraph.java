@@ -33,6 +33,7 @@ public class DGraph implements graph, Serializable {
 	}
 
 	/*
+	 * @param g
 	 * return the node_data by key
 	 * if dont exist or empty return null
 	 */
@@ -105,7 +106,7 @@ public class DGraph implements graph, Serializable {
 	}
 
 	/**
-	 * return the collection of the node_data
+	 * @return collection of the node_data
 	 */
 	@Override
 	public Collection<node_data> getV() {
@@ -119,7 +120,7 @@ public class DGraph implements graph, Serializable {
 	
 	/**
 	 * check if node is valid in the hashmap else throw Exception
-	 * return given node inner hashmap values aka his edges the from him to any dest
+	 *@return given node inner hashmap values aka his edges the from him to any dest
 	 * 
 	 */
 	@Override
@@ -140,7 +141,6 @@ public class DGraph implements graph, Serializable {
 	 * and removes all edges which starts or ends at this node.
 	 * all the edges should be removed.
 	 * @return the data of the removed node (null if none). 
-	 * @param key
 	 */
 	@Override
 	public node_data removeNode(int key) {
@@ -168,8 +168,6 @@ public class DGraph implements graph, Serializable {
 	/**
 	 * check validation of src and dest else throw Exception	 
 	 * Delete the edge from the graph, 
-	 * @param src
-	 * @param dest
 	 * @return the data of the removed edge (null if none).
 	 */
 	@Override
@@ -191,20 +189,20 @@ public class DGraph implements graph, Serializable {
 			return src_vertex.get_edges().remove(dest);
 		}
 	}
+	
 	/** 
 	 * return the number of nodes.
 	 * @return size
 	 */
-
 	@Override
 	public int nodeSize() {
 		return this.get_graph().size();
 	}
+	
 	/** 
 	 * return the number of edges (assume directional graph).
 	 * @return size
 	 */
-
 	@Override
 	public int edgeSize() {
 		int edge_size = 0;
@@ -270,7 +268,7 @@ public class DGraph implements graph, Serializable {
 	public int get_number_key() {
 		return _number_key;
 	}
-	// getter for graph
+	
 	public HashMap<Integer, node_data> get_graph() {
 		return _graph;
 	}

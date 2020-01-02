@@ -3,7 +3,9 @@
 
 	import static org.junit.jupiter.api.Assertions.*;
 
-	import org.junit.jupiter.api.BeforeAll;
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeAll;
 	import org.junit.jupiter.api.BeforeEach;
 	import org.junit.jupiter.api.Test;
 
@@ -54,23 +56,10 @@
 		
 		private static graph tinyGraph() {
 			graph ans = new DGraph();
-			Point3D p100=new Point3D(-4.0,4.0);
-			Point3D p200=new Point3D(3,8);
-			Point3D p300=new Point3D(8,5);
-			nodeData nd100 = new nodeData(p100);
-			nodeData nd200 = new nodeData(p200);
-			nodeData nd300 = new nodeData(p300);
-			ans.addNode(nd100);
-			ans.addNode(nd200);
-			ans.addNode(nd300);
-			ans.connect(1,2,1);
-			ans.connect(2,3,3);
-			ans.connect(3,1,10);
-			
 			return ans;
 		}
 		boolean drawGraph(graph g) { 
-			// YOUR GUI graph draw 
+			Graph_GUI gui = new Graph_GUI(new Graph_Algo(g));
 			return true;
 			
 		}
