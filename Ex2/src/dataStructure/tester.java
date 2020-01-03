@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import algorithms.Graph_Algo;
 import gui.Graph_GUI;
@@ -21,6 +22,7 @@ public class tester {
 		Point3D p4 = new Point3D(12, 5);
 		Point3D p5 = new Point3D(10, 10);
 		Point3D p6 = new Point3D(20, 14);
+		Point3D p7 = new Point3D(14, 14);
 
 		nodeData nd1 = new nodeData(p1);
 		nodeData nd2 = new nodeData(p2);
@@ -53,14 +55,31 @@ public class tester {
 
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(dg);
-
+		ga.get_graphAlgo().addNode(new nodeData(p7));
+		List<Integer> Tsplist=new ArrayList<Integer>();
 		Graph_GUI gugu = new Graph_GUI(ga);
-		List<node_data> targetsMMM = new ArrayList<node_data>();
+		Tsplist.add(1);
+		Tsplist.add(700);
+		try {
+		String[] a = "3,4,".split(",");
+		a[2] = "s";
+		}
+		catch(ArrayIndexOutOfBoundsException e) 
+		{ 
+			System.out.println("ben");	
+		} 
+		catch (Exception e) {
+			System.out.println(e.getClass());
+		}
+		/*
+		 * try { ga.TSP(Tsplist);
+		 * 
+		 * } catch (Exception e) { // TODO Auto-generated catch block
+		 * System.out.println(e.getMessage()); } System.out.println(length);
+		 */
 		
-		targetsMMM = ga.TSP(targets); for(int i=0;i<targetsMMM.size();i++)
-		System.out.print(targetsMMM.get(i).getKey()+",");
-		 
-
+		
+		
 
 	}
 

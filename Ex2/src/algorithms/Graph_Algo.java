@@ -159,16 +159,16 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	@Override
 	public double shortestPathDist(int src, int dest) {
 		if(src == dest) {
-			throw new RuntimeException("No edge from a vertex to himself");
+			throw new RuntimeException("No edge from a node to himself");
 		}
 
 		nodeData start =(nodeData) this._graphAlgo.getNode(src);
 		nodeData end =(nodeData) this._graphAlgo.getNode(dest);
 		if(start == null) {
-			throw new RuntimeException("Source Vertex don't exist");
+			throw new RuntimeException("Source node doesn't exist in the graph");
 		}
 		else if(end == null) {
-			throw new RuntimeException("destination Vertex don't exist");
+			throw new RuntimeException("Destination node doesn't exist in the graph");
 		}
 		SetNodeWeightMaxInt();
 		// set src weight to 0
@@ -177,7 +177,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		GreenTag();
 		// check if there is a path
 		if(isConnected(dest,(nodeData)this.get_graphAlgo().getNode(src))==0) {
-			throw new RuntimeException("There isnt a path between those nodes");
+			return Integer.MAX_VALUE;
 		}
 		// makes every tag green
 		GreenTag();//you must do here greentag() because the isconnected mix it
@@ -216,7 +216,10 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		ArrayList<node_data>listPathRev = new ArrayList<node_data>();//list in reverse
-		shortestPathDist(src,dest);
+		double length = shortestPathDist(src,dest);
+		if(length == Integer.MAX_VALUE) {
+			return null;
+		}
 		nodeData current=(nodeData) this.get_graphAlgo().getNode(dest);
 		current.setBol('v');
 		listPathRev.add(current);
@@ -241,7 +244,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		for(int i=0;i<newlist.size();i++) {
 			// node dont exist in graph throw 
 			if(this.get_graphAlgo().get_graph().get(newlist.get(i)) == null) {
-				throw new RuntimeException("Vertex "+newlist.get(i)+" don't exist");
+				throw new RuntimeException("Node "+newlist.get(i)+" don't exist in the graph");
 			}
 			int count=0;
 			for(int j=0;j<newlist.size();j++) {
@@ -264,10 +267,10 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	 */
 	@Override
 	public List<node_data> TSP(List<Integer> targets){
+		ArrayList<Integer>arrTarget=checklist(targets);
+		List<node_data> Tsplist=new ArrayList<node_data>();
 		// O(targes)
 		ColorsetX(targets);
-		List<node_data> Tsplist=new ArrayList<node_data>();
-		ArrayList<Integer>arrTarget=checklist(targets);
 		Iterator<Integer> iter = arrTarget.iterator();
 		int srcKey = iter.next();
 		int destKey;
@@ -275,7 +278,18 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			destKey = iter.next();
 			nodeData dest = (nodeData) this._graphAlgo.get_graph().get(destKey);
 			if(dest.getBol() != 'v') {
-				Tsplist.addAll(shortestPath(srcKey,destKey));
+				try {
+					Tsplist.addAll(shortestPath(srcKey,destKey));
+				}catch(Exception e) {
+					// shortestPath return null
+					if(e.getMessage() == null) {
+						return null;
+					}
+					// shortestPath return Exception
+					else {
+						throw new RuntimeException(e.getMessage());
+					}
+				}
 				srcKey = destKey;
 				// delete duplicate
 				if(iter.hasNext()) {
@@ -285,7 +299,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			else {
 				Tsplist.add((nodeData) this._graphAlgo.get_graph().get(srcKey));
 			}
-			
+
 		}
 		return Tsplist;
 	}
@@ -305,7 +319,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 
 	/**** private data *****/
-	
+
 	private void set_graphAlgo(DGraph _graphAlgo) {
 		this._graphAlgo = _graphAlgo;
 	}

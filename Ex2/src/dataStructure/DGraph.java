@@ -40,8 +40,8 @@ public class DGraph implements graph, Serializable {
 	@Override
 	public node_data getNode(int key) {
 
-		nodeData vertex = (nodeData)this.get_graph().get(key);
-		return vertex;
+		nodeData node = (nodeData)this.get_graph().get(key);
+		return node;
 	}
 
 	/**
@@ -52,12 +52,12 @@ public class DGraph implements graph, Serializable {
 	@Override
 	public edge_data getEdge(int src, int dest) {
 		if(src == dest) {
-			throw new RuntimeException("No edge from a vertex to himself");
+			throw new RuntimeException("No edge from a node to himself");
 		}
 
 		try {
-			nodeData src_vertex = (nodeData) this.get_graph().get(src);
-			edgeData src_to_dest = (edgeData) src_vertex.get_edges().get(dest);
+			nodeData src_node = (nodeData) this.get_graph().get(src);
+			edgeData src_to_dest = (edgeData) src_node.get_edges().get(dest);
 			return src_to_dest;
 		} catch (Exception e) {
 			return null;
@@ -87,20 +87,20 @@ public class DGraph implements graph, Serializable {
 	@Override
 	public void connect(int src, int dest, double w) {
 		if(src == dest) {
-			throw new RuntimeException("No edge from a vertex to himself");
+			throw new RuntimeException("No edge from a node to himself");
 		}
 
-		nodeData src_vertex = (nodeData) this.get_graph().get(src);
-		nodeData dest_vertex =  (nodeData) this.get_graph().get(dest);
-		if(src_vertex == null) {
-			throw new RuntimeException("Source Vertex don't exist");
+		nodeData src_node = (nodeData) this.get_graph().get(src);
+		nodeData dest_node =  (nodeData) this.get_graph().get(dest);
+		if(src_node == null) {
+			throw new RuntimeException("Source node doesn't exist in the graph");
 		}
-		else if(dest_vertex == null) {
-			throw new RuntimeException("destination Vertex don't exist");
+		else if(dest_node == null) {
+			throw new RuntimeException("destination node doesn't exist in the graph");
 		}
 		// create edge
 		else {
-			src_vertex.new_edge(dest_vertex, w);
+			src_node.new_edge(dest_node, w);
 			this.set_mc(this.getMC()+1);
 		}
 	}
@@ -125,15 +125,15 @@ public class DGraph implements graph, Serializable {
 	 */
 	@Override
 	public Collection<edge_data> getE(int node_id) {
-		nodeData n_vertex = (nodeData) this.get_graph().get(node_id);
-		if(n_vertex == null) {
-			throw new RuntimeException("Vertex don't exist");
+		nodeData node = (nodeData) this.get_graph().get(node_id);
+		if(node == null) {
+			throw new RuntimeException("Node doesn't exist in the graph");
 		}
-		else if(n_vertex.get_edges().isEmpty()) {
-			throw new RuntimeException("there is no edges from this vertex");
+		else if(node.get_edges().isEmpty()) {
+			throw new RuntimeException("there is no edges from this Node");
 		}
 		else {
-			return n_vertex.get_edges().values();
+			return node.get_edges().values();
 		}
 	}
 	/**
@@ -144,13 +144,13 @@ public class DGraph implements graph, Serializable {
 	 */
 	@Override
 	public node_data removeNode(int key) {
-		// if vertex doesnt exist
-		nodeData vertex = (nodeData) this.get_graph().get(key);
-		if(vertex == null) {
-			throw new RuntimeException("Vertex don't exist");
+		// if node doesnt exist
+		nodeData node = (nodeData) this.get_graph().get(key);
+		if(node == null) {
+			throw new RuntimeException("Node doesn't exist in the graph");
 		}
 
-		// delete this vertex with all his edges as dest
+		// delete this node with all his edges as dest
 		Iterator<node_data> iter = getV().iterator();
 		while(iter.hasNext()) {
 			nodeData current = (nodeData)iter.next();
@@ -159,7 +159,7 @@ public class DGraph implements graph, Serializable {
 				this.set_mc(this.getMC()+1);
 			}
 		}
-		// delete this vertex with all his edges as src
+		// delete this node with all his edges as src
 		this.set_mc(this.getMC()+1);
 		
 		return this.get_graph().remove(key);
@@ -173,20 +173,20 @@ public class DGraph implements graph, Serializable {
 	@Override
 	public edge_data removeEdge(int src, int dest) {
 		if(src == dest) {
-			throw new RuntimeException("No edge from a vertex to himself");
+			throw new RuntimeException("No edge from a node to himself");
 		}
 
-		nodeData src_vertex = (nodeData) this.get_graph().get(src);
-		nodeData dest_vertex = (nodeData) this.get_graph().get(dest);
-		if(src_vertex == null) {
-			throw new RuntimeException("Source Vertex don't exist");
+		nodeData src_node = (nodeData) this.get_graph().get(src);
+		nodeData dest_node = (nodeData) this.get_graph().get(dest);
+		if(src_node == null) {
+			throw new RuntimeException("Source Node doesn't exist in the graph");
 		}
-		else if(dest_vertex == null) {
-			throw new RuntimeException("destination Vertex don't exist");
+		else if(dest_node == null) {
+			throw new RuntimeException("destination Node doesn't exist in the graph");
 		}
 		else {
 			this.set_mc(this.getMC()+1);
-			return src_vertex.get_edges().remove(dest);
+			return src_node.get_edges().remove(dest);
 		}
 	}
 	
@@ -220,7 +220,7 @@ public class DGraph implements graph, Serializable {
 	 */
 	@Override
 	public int getMC() {
-		return mc;
+		return _mc;
 	}
 	/**
 	 * iterate on all the nodes in the graph and return
@@ -276,7 +276,7 @@ public class DGraph implements graph, Serializable {
 
 	/***** private data ****/
 	private void set_mc(int m) {
-		this.mc = m;
+		this._mc = m;
 	}
 
 	private void set_graph(HashMap<Integer, node_data> _graph) {
@@ -287,6 +287,6 @@ public class DGraph implements graph, Serializable {
 		this._number_key = _number_key;
 	}
 	private int _number_key;
-	private int mc;
+	private int _mc;
 	private HashMap<Integer, node_data> _graph;
 }

@@ -39,6 +39,7 @@ public class Draw {
 	 * 
 	 */
 	protected void drawEmptyGraph() {
+		StdDraw.clear();
 		StdDraw.setScale(-5,5);
 		StdDraw.setPenColor(Color.BLACK);
 		StdDraw.setFont(new Font("Arial", Font.PLAIN, 30));
@@ -47,14 +48,15 @@ public class Draw {
 	
 
 	/**
-	 * Open windo that adjusted scale bound by the vertices
-	 * drawing the Graph by draw points using iterator on each vertices location including key
+	 * Open windo that adjusted scale bound by the nodes
+	 * drawing the Graph by draw points using iterator on each nodes location including key
 	 * and draw lines to the edges including direction and weight
 	 * 
 	 * @param type - 1 if there is an Additions drawing for Algoritem (shortestPath/TSP)
-	 * @param src_dest is an Arraylist - the list of vertices to draw the result of the algoritem
+	 * @param src_dest is an Arraylist - the list of nodes to draw the result of the algoritem
 	 */
 	protected void draw_graph(int type, ArrayList<node_data> src_dest) {
+		StdDraw.clear();
 		setRangeX(this.getGraphDraw().GraphScaleX());
 		setRangeY(this.getGraphDraw().GraphScaleY());
 		StdDraw.setXscale(this.get_RangeX().get_min() - 1, this.get_RangeX().get_max() + 1);

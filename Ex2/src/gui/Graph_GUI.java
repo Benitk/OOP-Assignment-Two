@@ -36,7 +36,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		set_graphGui(new Graph_Algo());
 		initGUI();
 	}
-	
+
 	public Graph_GUI(Graph_Algo ga) {
 		set_graphGui(ga);
 		initGUI();
@@ -194,8 +194,12 @@ public class Graph_GUI extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * this function listend to each event(click on gui buttons/menu)
+	 * this function listen to each event(click on gui buttons/menu)
 	 * then preform an action and printing to the text Field
+	 * using JOptionPane.showInputDialog to read user input and
+	 * surrounded with try/catch because methods could throw
+	 * Exception if there is wrong input from the user
+	 * @param e - event for the gui windo
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -216,143 +220,200 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		}
 		// shortest path dist
 		if (e.getActionCommand().equals("Shortest Path Dist")) {
-			String name=JOptionPane.showInputDialog(this,"Please Enter src and dest node\n"
-					+ "In format of int,int - src,dest"); 
-			String[] split = name.split(",");
 			try {
-				this.get_console().setText("shortest Path Dist weight: " + String.valueOf(this.get_graphGui().shortestPathDist(Integer.parseInt(split[0]),
-						Integer.parseInt(split[1]))));
-
-			}catch(Exception err) {
-				this.get_console().setText("Error: please check console for more details");
-				err.printStackTrace();
+				String name=JOptionPane.showInputDialog(this,"Please Enter src and dest node\n"
+						+ "In format of int,int - src,dest"); 
+				if(name == null) {
+					this.get_console().setText("Err: no input is entered please try again");
+				}
+				else {
+					String[] split = name.split(",");
+					double length = this.get_graphGui().shortestPathDist(Integer.parseInt(split[0]),
+							Integer.parseInt(split[1]));
+					if(length != Integer.MAX_VALUE) {
+						this.get_console().setText("shortest Path Dist length is: " + String.valueOf(length));
+					}
+					else {
+						this.get_console().setText("shortest Path Dist length is: Infinity");
+					}
+				}
+			}
+			catch(Exception err) {
+				this.get_console().setText("Err: "+err.getMessage());
 			}
 		}
 		// shortest path
 		if (e.getActionCommand().equals("Shortest Path")) {
-			String name=JOptionPane.showInputDialog(this,"Please Enter src and dest node\n"
-					+ "Format of int,int - src,dest"); 
-			String[] split = name.split(",");
 			try {
-				this.get_console().setText("shortest Path between node "+split[0]+" to "+split[1]+" is marked with orange");
-				this.get_draw().draw_graph(1,(ArrayList<node_data>) this.get_graphGui().shortestPath(Integer.parseInt(split[0]),Integer.parseInt(split[1])));
-
-			}catch(Exception err) {
-				this.get_console().setText("Error: please check console for more details");
-				err.printStackTrace();
+				String name=JOptionPane.showInputDialog(this,"Please Enter src and dest node\n"
+						+ "Format of int,int - src,dest"); 
+				if(name == null) {
+					this.get_console().setText("Err: no input is entered please try again");
+				}
+				else {
+					String[] split = name.split(",");
+					ArrayList<node_data> list = (ArrayList<node_data>) this.get_graphGui().shortestPath(Integer.parseInt(split[0]),Integer.parseInt(split[1]));
+					if(list != null) {
+						this.get_console().setText("shortest Path between node "+split[0]+" to "+split[1]+" is marked with orange");
+						this.get_draw().draw_graph(1,list);
+					}
+					else {
+						this.get_console().setText("There isn't a path between node "+split[0]+" to "+split[1]+"");
+					}
+				}
+			}
+			catch(Exception err) {
+				this.get_console().setText("Err: "+err.getMessage());
 			}
 		}
 
 		// TSP
 		if (e.getActionCommand().equals("TSP")) {
-			String name=JOptionPane.showInputDialog(this,"Please Enter list of different nodes\n"
-					+ "In format of int,int,int.... - node.key3,node.key2,node.key3.."); 
-			String[] split = name.split(",");
-			ArrayList<Integer> list = new ArrayList<Integer>();
 			try {
-				for(int i = 0; i < split.length; i++) {
-					list.add(Integer.parseInt(split[i]));
-				}
-				this.get_console().setText("TSP result is marked with orange");
-				this.get_draw().draw_graph(1,(ArrayList<node_data>) this.get_graphGui().TSP(list));
+				String name=JOptionPane.showInputDialog(this,"Please Enter list of different nodes\n"
+						+ "In format of int,int,int.... - node.key3,node.key2,node.key3.."); 
 
-			}catch(Exception err) {
-				this.get_console().setText("Error: please check console for more details");
-				err.printStackTrace();
+				if(name == null) {
+					this.get_console().setText("Err: no input is entered please try again");
+				}
+				else {
+					String[] split = name.split(",");
+					ArrayList<Integer> list = new ArrayList<Integer>();
+					for(int i = 0; i < split.length; i++) {
+						list.add(Integer.parseInt(split[i]));
+					}
+					ArrayList<node_data> Tsp = (ArrayList<node_data>) this.get_graphGui().TSP(list);
+					if(Tsp != null) {
+						this.get_console().setText("TSP result is marked with orange");
+						this.get_draw().draw_graph(1,Tsp);
+					}
+					else {
+						this.get_console().setText("There isn't a path between the given nodes list");
+					}
+				}
+			}
+			catch(Exception err) {
+				this.get_console().setText("Err: "+err.getMessage());
 			}
 		}
 
 		// on file -> save graph
 		if(e.getActionCommand().equals("Save Graph")) {
-			String name = JOptionPane.showInputDialog(this,"Please Enter name of file");
 			try {
-				this.get_graphGui().save(name);
-				this.get_console().setText("The file save in your project directory");
+				String name = JOptionPane.showInputDialog(this,"Please Enter name of file");
+				if(name == null) {
+					this.get_console().setText("Err: no input is entered please try again");
+				}
+				else {
+					this.get_graphGui().save(name);
+					this.get_console().setText("The file save in your project directory");
+				}
 			}
 			catch(Exception err) {
-				this.get_console().setText("Error: file is not writable, check console");
-				err.printStackTrace();
+				this.get_console().setText("Err: "+err.getMessage());
 			}
 		}
 
 		// on file -> load graph
 		if(e.getActionCommand().equals("Load Graph")) {
-			String name = JOptionPane.showInputDialog(this,"Please Enter file\n"
-					+ "that are save in your project directory");
 			try {
-				this.get_graphGui().init(name);
-				this.get_console().setText("The file load from project directory");
-				set_draw(new Draw(this.get_graphGui().get_graphAlgo()));
-				this.get_draw().draw_graph(0, new ArrayList<node_data>());
+				String name = JOptionPane.showInputDialog(this,"Please Enter file\n"
+						+ "that are save in your project directory");
+				if(name == null) {
+					this.get_console().setText("Err: no input is entered please try again");
+				}
+				else {
+					this.get_graphGui().init(name);
+					this.get_console().setText("The file load from project directory");
+					set_draw(new Draw(this.get_graphGui().get_graphAlgo()));
+					this.get_draw().draw_graph(0, new ArrayList<node_data>());
+				}
 			}
 			catch(Exception err) {
-				this.get_console().setText("Error: file is no readable or not found, check console");
-				err.printStackTrace();
+				this.get_console().setText("Err: "+err.getMessage());
 			}
 		}
 
 		// on options -> add node
 		if(e.getActionCommand().equals("Add Node")) {
-			String name = JOptionPane.showInputDialog(this,"Please Enter Node location\n"
-					+ "In format of double,double.. - node.x,node.y");
-			String[] split = name.split(",");
 			try {
-				nodeData n = new nodeData(new Point3D(Double.parseDouble(split[0]), Double.parseDouble(split[1])));
-				this.get_graphGui().get_graphAlgo().addNode(n);
-				this.get_draw().draw_graph(0, new ArrayList<node_data>());
-				this.get_console().setText("Node succesfully add - Show Graph to observe");
+				String name = JOptionPane.showInputDialog(this,"Please Enter Node location\n"
+						+ "In format of double,double.. - node.x,node.y");
+				if(name == null) {
+					this.get_console().setText("Err: no input is entered please try again");
+				}
+				else {
+					String[] split = name.split(",");
+					nodeData n = new nodeData(new Point3D(Double.parseDouble(split[0]), Double.parseDouble(split[1])));
+					this.get_graphGui().get_graphAlgo().addNode(n);
+					this.get_draw().draw_graph(0, new ArrayList<node_data>());
+					this.get_console().setText("Node succesfully add - Show Graph to observe");
+				}
 			}
 			catch(Exception err) {
-				this.get_console().setText("Error: please check console for more details");
-				err.printStackTrace();
+				this.get_console().setText("Err: "+err.getMessage());
 			}
 		}
 
 		// on options -> connect
 		if(e.getActionCommand().equals("Connect")) {
-			String name = JOptionPane.showInputDialog(this,"Please Enter src,dest node keys and weight for edge\n"
-					+ "In format of int,int,double.. - src.key,dest.key,weight");
-			String[] split = name.split(",");
 			try {
-				this.get_graphGui().get_graphAlgo().connect(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Double.parseDouble(split[2]));
-				this.get_draw().draw_graph(0, new ArrayList<node_data>());
-				this.get_console().setText("Connect succesfully - Show Graph to observe");
+				String name = JOptionPane.showInputDialog(this,"Please Enter src,dest node keys and weight for edge\n"
+						+ "In format of int,int,double.. - src.key,dest.key,weight");
+				if(name == null) {
+					this.get_console().setText("Err: no input is entered please try again");
+				}
+				else {
+					String[] split = name.split(",");
+					this.get_graphGui().get_graphAlgo().connect(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Double.parseDouble(split[2]));
+					this.get_draw().draw_graph(0, new ArrayList<node_data>());
+					this.get_console().setText("Connect succesfully - Show Graph to observe");
+				}
 			}
+			catch(ArrayIndexOutOfBoundsException err) { 
+				this.get_console().setText("Err: Wrong input format");	
+			} 
 			catch(Exception err) {
-				this.get_console().setText("Error: please check console for more details");
-				err.printStackTrace();
+				this.get_console().setText("Err: "+err.getMessage());
 			}
 		}
 
 		// on options -> remove Node
 		if(e.getActionCommand().equals("Remove Node")) {
-			String name = JOptionPane.showInputDialog(this,"Please Enter node key for removal\n"
-					+ "In format of int.. - node.key");
-
 			try {
-				this.get_graphGui().get_graphAlgo().removeNode(Integer.parseInt(name));
-				this.get_draw().draw_graph(0, new ArrayList<node_data>());
-				this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
+				String name = JOptionPane.showInputDialog(this,"Please Enter node key for removal\n"
+						+ "In format of int.. - node.key");
+				if(name == null) {
+					this.get_console().setText("Err: no input is entered please try again");
+				}
+				else {
+					this.get_graphGui().get_graphAlgo().removeNode(Integer.parseInt(name));
+					this.get_draw().draw_graph(0, new ArrayList<node_data>());
+					this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
+				}
 			}
 			catch(Exception err) {
-				this.get_console().setText("Error: please check console for more details");
-				err.printStackTrace();
+				this.get_console().setText("Err: "+err.getMessage());
 			}
 		}
 
 		// on options -> remove edge
 		if(e.getActionCommand().equals("Remove Edge")) {
-			String name = JOptionPane.showInputDialog(this,"Please Enter src,dest key for remove the Edge between them\n"
-					+ "In format of int,int.. - src.key,dest.key");
-			String[] split = name.split(",");
 			try {
-				this.get_graphGui().get_graphAlgo().removeEdge(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
-				this.get_draw().draw_graph(0, new ArrayList<node_data>());
-				this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
+				String name = JOptionPane.showInputDialog(this,"Please Enter src,dest key for remove the Edge between them\n"
+						+ "In format of int,int.. - src.key,dest.key");
+				if(name == null) {
+					this.get_console().setText("Err: no input is entered please try again");
+				}
+				else {
+					String[] split = name.split(",");
+					this.get_graphGui().get_graphAlgo().removeEdge(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+					this.get_draw().draw_graph(0, new ArrayList<node_data>());
+					this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
+				}
 			}
 			catch(Exception err) {
-				this.get_console().setText("Error: please check console for more details");
-				err.printStackTrace();
+				this.get_console().setText("Err: "+err.getMessage());
 			}
 		}
 	}
