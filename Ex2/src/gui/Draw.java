@@ -144,9 +144,6 @@ public class Draw {
 		return _Height;
 	}
 
-	protected int get_Resolution() {
-		return _Resolution;
-	}
 
 	protected Range get_RangeY() {
 		return _RangeY;
@@ -170,7 +167,7 @@ public class Draw {
 
 	/** private data ***/
 	private DGraph _graphDraw;
-	private int _Width = 1000, _Height = 700, _Resolution = 1000;
+	private int _Width = 900, _Height = 650;
 	private Range _RangeX, _RangeY;
 
 }

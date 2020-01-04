@@ -213,6 +213,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 			else {
 				this.get_draw().draw_graph(0, new ArrayList<node_data>());
 			}
+			this.get_console().setText("");
 		}
 		// is connected
 		if (e.getActionCommand().equals("is Connected")) {
