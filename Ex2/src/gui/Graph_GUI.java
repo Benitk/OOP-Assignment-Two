@@ -53,6 +53,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		panel1();
 		panel3();
 		panel2();
+		this.get_console().setText("Please click on Show Graph first for initialize the drawing");
 		this.setVisible(true);
 
 	}
