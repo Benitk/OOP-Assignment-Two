@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 import java.util.ArrayList;
 
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,17 +27,26 @@ import algorithms.Graph_Algo;
 import dataStructure.nodeData;
 import dataStructure.node_data;
 import utils.Point3D;
+import utils.StdDraw;
 
 
-public class Graph_GUI extends JFrame implements ActionListener {
+public class Graph_GUI extends JFrame implements ActionListener ,Runnable  {
 
 
 
+	/**
+	 * initialize new GUI
+	 * creating empty graph
+	 */
 	public Graph_GUI() {
 		set_graphGui(new Graph_Algo());
 		initGUI();
 	}
 
+	/**
+	 * initialize new gui
+	 * @param ga - graph algo 
+	 */
 	public Graph_GUI(Graph_Algo ga) {
 		set_graphGui(ga);
 		initGUI();
@@ -44,6 +54,8 @@ public class Graph_GUI extends JFrame implements ActionListener {
 
 	/**
 	 * initialize GUI by setting size, menu, panels and layout as null
+	 * using swing.timer to listen for changes on the graph
+	 * sorce code https://docs.oracle.com/javase/7/docs/api/javax/swing/Timer.html
 	 */
 	private void initGUI() {
 		this.setSize(1000, 700);
@@ -53,10 +65,31 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		panel1();
 		panel3();
 		panel2();
-		this.get_console().setText("Please click on Show Graph first for initialize the drawing");
-		this.setVisible(true);
-
+		set_changes(this.get_graphGui().get_graphAlgo().getMC());
+		this.get_console().setText("Click Show Graph to see the graph");
+		if (this != null) this.setVisible(true);
+		//run();
+		set_draw(new Draw(this.get_graphGui().get_graphAlgo()));
+		ActionListener taskPerformer = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				run();
+			}
+		};
+		javax.swing.Timer t = new javax.swing.Timer(1000, taskPerformer);
+		t.setRepeats(true);
+		t.start();
 	}
+
+	@Override
+	public void run() {
+		int mc = this.get_graphGui().get_graphAlgo().getMC();
+		if(this.get_changes() != mc) {
+			set_changes(mc);
+			this.get_draw().draw_graph(0, new ArrayList<node_data>());
+			StdDraw.Visible();
+		}
+	}
+
 	/**
 	 * initialize panel1 bounds,background color
 	 * adding label 'Algorithms'
@@ -207,12 +240,14 @@ public class Graph_GUI extends JFrame implements ActionListener {
 
 		// click on show Graph
 		if(e.getActionCommand().equals("Show Graph")) {
-			set_draw(new Draw(this.get_graphGui().get_graphAlgo()));
+			//set_draw(new Draw(this.get_graphGui().get_graphAlgo()));
 			if(this.get_graphGui().get_graphAlgo().get_graph().isEmpty()) {
 				this.get_draw().drawEmptyGraph();
+				StdDraw.Visible();
 			}
 			else {
 				this.get_draw().draw_graph(0, new ArrayList<node_data>());
+				StdDraw.Visible();
 			}
 			this.get_console().setText("");
 		}
@@ -258,12 +293,16 @@ public class Graph_GUI extends JFrame implements ActionListener {
 					if(list != null) {
 						this.get_console().setText("shortest Path between node "+split[0]+" to "+split[1]+" is marked with orange");
 						this.get_draw().draw_graph(1,list);
+						StdDraw.Visible();
 					}
 					else {
 						this.get_console().setText("There isn't a path between node "+split[0]+" to "+split[1]+"");
 					}
 				}
 			}
+			catch(ArrayIndexOutOfBoundsException err) { 
+				this.get_console().setText("Err: Wrong input format");	
+			} 
 			catch(Exception err) {
 				this.get_console().setText("Err: "+err.getMessage());
 			}
@@ -288,6 +327,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 					if(Tsp != null) {
 						this.get_console().setText("TSP result is marked with orange");
 						this.get_draw().draw_graph(1,Tsp);
+						StdDraw.Visible();
 					}
 					else {
 						this.get_console().setText("There isn't a path between the given nodes list");
@@ -328,6 +368,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 					this.get_graphGui().init(name);
 					this.get_console().setText("The file load from project directory");
 					set_draw(new Draw(this.get_graphGui().get_graphAlgo()));
+					StdDraw.Visible();
 					this.get_draw().draw_graph(0, new ArrayList<node_data>());
 				}
 			}
@@ -349,9 +390,13 @@ public class Graph_GUI extends JFrame implements ActionListener {
 					nodeData n = new nodeData(new Point3D(Double.parseDouble(split[0]), Double.parseDouble(split[1])));
 					this.get_graphGui().get_graphAlgo().addNode(n);
 					this.get_draw().draw_graph(0, new ArrayList<node_data>());
+					StdDraw.Visible();
 					this.get_console().setText("Node succesfully add - Show Graph to observe");
 				}
 			}
+			catch(ArrayIndexOutOfBoundsException err) { 
+				this.get_console().setText("Err: Wrong input format");	
+			} 
 			catch(Exception err) {
 				this.get_console().setText("Err: "+err.getMessage());
 			}
@@ -369,6 +414,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 					String[] split = name.split(",");
 					this.get_graphGui().get_graphAlgo().connect(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Double.parseDouble(split[2]));
 					this.get_draw().draw_graph(0, new ArrayList<node_data>());
+					StdDraw.Visible();
 					this.get_console().setText("Connect succesfully - Show Graph to observe");
 				}
 			}
@@ -391,6 +437,7 @@ public class Graph_GUI extends JFrame implements ActionListener {
 				else {
 					this.get_graphGui().get_graphAlgo().removeNode(Integer.parseInt(name));
 					this.get_draw().draw_graph(0, new ArrayList<node_data>());
+					StdDraw.Visible();
 					this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
 				}
 			}
@@ -411,9 +458,13 @@ public class Graph_GUI extends JFrame implements ActionListener {
 					String[] split = name.split(",");
 					this.get_graphGui().get_graphAlgo().removeEdge(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
 					this.get_draw().draw_graph(0, new ArrayList<node_data>());
+					StdDraw.Visible();
 					this.get_console().setText("Node "+name+" is now removed - Show Graph to observe");
 				}
 			}
+			catch(ArrayIndexOutOfBoundsException err) { 
+				this.get_console().setText("Err: Wrong input format");	
+			} 
 			catch(Exception err) {
 				this.get_console().setText("Err: "+err.getMessage());
 			}
@@ -444,7 +495,9 @@ public class Graph_GUI extends JFrame implements ActionListener {
 	public Draw get_draw() {
 		return _d;
 	}
-
+	public int get_changes() {
+		return _changes;
+	}
 
 	public JButton get_show_graph() {
 		return _show_graph;
@@ -484,12 +537,15 @@ public class Graph_GUI extends JFrame implements ActionListener {
 		this._d = _d;
 	}
 
+	private void set_changes(int _changes) {
+		this._changes = _changes;
+	}
 
+	private int _changes;
 	private Draw _d;
 	private Graph_Algo _graph_gui;
 	private JPanel _panel1, _panel2, _panel3;
 	private JTextField _console;
 	private JButton _show_graph;
 	private JMenuBar _mb;
-
 }

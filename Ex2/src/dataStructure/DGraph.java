@@ -219,7 +219,7 @@ public class DGraph implements graph, Serializable {
 	 * @return mc
 	 */
 	@Override
-	public int getMC() {
+	  public int getMC() {
 		return _mc;
 	}
 	/**

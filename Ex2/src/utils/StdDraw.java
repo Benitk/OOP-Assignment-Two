@@ -711,11 +711,15 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		frame.setResizable(false);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);            // closes all windows
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);      // closes only current window
-		frame.setTitle("Standard Draw");
+		frame.setTitle("GUI Graph");
 		frame.setJMenuBar(createMenuBar());
 		frame.pack();
 		frame.requestFocusInWindow();
-		frame.setVisible(true);
+		frame.setVisible(false);
+	}
+	
+	public static void Visible() {
+		if(frame != null) frame.setVisible(true);
 	}
 
 	// create the menu bar (changed to private)
