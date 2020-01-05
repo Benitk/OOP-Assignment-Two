@@ -6,8 +6,8 @@ import utils.Point3D;
 
 /**
  * 
- * @author ben itzhak
- * @author liad ben moshe
+ * @author Ben itzhak
+ * @author Liad ben moshe
  *
  */
 public class nodeData implements node_data, Serializable {
@@ -28,8 +28,10 @@ public class nodeData implements node_data, Serializable {
 		setBol('x');
 	}
 
-	/*
+	/**
 	 * adding a new edge with this node as src and input as dest
+	 * @param dest - nodeData
+	 * @param weigth - edge weight
 	 */
 	public void new_edge(nodeData dest, double weight) {
 		edgeData new_edge = new edgeData(this, dest, weight);

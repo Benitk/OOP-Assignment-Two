@@ -26,7 +26,7 @@ public class Draw {
 	/**
 	 * constructor that get collection of functions
 	 * 
-	 * @param functions_list
+	 * @param g - graph 
 	 */
 	protected Draw(graph g) {
 		setGraph(g);

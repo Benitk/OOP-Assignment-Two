@@ -14,7 +14,7 @@ public class DGraph implements graph, Serializable {
 	 * init DGraph with hashmap <Integer, node_data> represent as <node.key,node>
 	 *  and fill it from a given graph
 	 * using Iterator to run on each node and add it to new graph
-	 * @param g
+	 * @param g - graph
 	 */
 	public DGraph(DGraph g) {
 		set_graph(new HashMap<Integer, node_data>());
@@ -32,8 +32,9 @@ public class DGraph implements graph, Serializable {
 		set_mc(0);
 	}
 
-	/*
-	 * @param g
+	/**
+	 * @return node_data
+	 * @param key - node key number
 	 * return the node_data by key
 	 * if dont exist or empty return null
 	 */
@@ -48,6 +49,9 @@ public class DGraph implements graph, Serializable {
 	 * if src node doesnt exist or  graph is empty return null,
 	 * else if src == dest throw Exception
 	 * src.get_edges() --> return the edge_data
+	 * @param src - node key
+	 * @param dest - node key
+	 * @return edge_data 
 	 */
 	@Override
 	public edge_data getEdge(int src, int dest) {
@@ -68,6 +72,7 @@ public class DGraph implements graph, Serializable {
 	 * if node is null throw Exception
 	 * else add it to the hashmap 
 	 * increment mc and nodeKeys (_number_key)
+	 * @param m - node_data 
 	 */
 	@Override
 	public void addNode(node_data n) {
@@ -83,6 +88,9 @@ public class DGraph implements graph, Serializable {
 	/**
 	 * if src == dest throw Exception - not possible to connect node to himself
 	 * src or dest not null create new edge with src.new_edge(dest, weight);
+	 * @param src node key
+	 * @param dest node key
+	 * @param w - edge weight
 	 */
 	@Override
 	public void connect(int src, int dest, double w) {
@@ -140,6 +148,7 @@ public class DGraph implements graph, Serializable {
 	 * Delete the node (with the given ID) from the graph -
 	 * and removes all edges which starts or ends at this node.
 	 * all the edges should be removed.
+	 * @param key - node key
 	 * @return the data of the removed node (null if none). 
 	 */
 	@Override
@@ -168,6 +177,8 @@ public class DGraph implements graph, Serializable {
 	/**
 	 * check validation of src and dest else throw Exception	 
 	 * Delete the edge from the graph, 
+	 * @param src - node key
+	 * @param dest - node key
 	 * @return the data of the removed edge (null if none).
 	 */
 	@Override
@@ -226,7 +237,7 @@ public class DGraph implements graph, Serializable {
 	 * iterate on all the nodes in the graph and return
 	 * the Max and min Y value, check the scale
 	 * this method is for drawing the graph with GUI class
-	 * @return
+	 * @return Range of y
 	 */
 	public Range GraphScaleY() {
 		double minY, maxY;
@@ -248,7 +259,7 @@ public class DGraph implements graph, Serializable {
 	 * iterate on all the nodes in the graph and return
 	 * the Max and min X value, check the scale
 	 * this method is for drawing the graph with GUI class
-	 * @return
+	 * @return Range  of x
 	 */
 	public Range GraphScaleX() {
 		double minX, maxX;

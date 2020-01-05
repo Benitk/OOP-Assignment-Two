@@ -36,9 +36,10 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	}
 
-	/*
+	/**
 	 * load a graph from a file
 	 * using implemention Serializable
+	 * @param file_name 
 	 */
 	@Override
 	public void init(String file_name) {
@@ -70,9 +71,10 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	}
 
-	/*
+	/**
 	 * save graph to a file
 	 * using implemention Serializable,
+	 * @param file_name
 	 */
 	@Override
 	public void save(String file_name) {
@@ -99,6 +101,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 	 * if empty or size == 1 return true becuase
 	 * graph is connected if it has exactly one connected component.
 	 * assume diectional graph
+	 * @return true or false
 	 */
 	@Override
 	public boolean isConnected() {
@@ -153,8 +156,11 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		return sum;
 	}
 
-	/*
+	/**
 	 * return the short distance from src to dest as double
+	 * @param src -node key
+	 * @param dest - node key
+	 * @return double - cost of the length
 	 */
 	@Override
 	public double shortestPathDist(int src, int dest) {
@@ -210,8 +216,10 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			}
 		}
 	}
-	/*
-	 * return a list of node_data that is the shortest way from src to dest
+	/**
+	 * @param src - node key
+	 * @param dest - node key
+	 * @return a list of node_data that is the shortest way from src to dest
 	 */
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
@@ -263,7 +271,8 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 
 	/**
-	 * return the short path that include every node in the input list 'targets'
+	 * @param targest - list that the algorithms need to go throgh
+	 * @return the short path that include every node in the input list 'targets'
 	 */
 	@Override
 	public List<node_data> TSP(List<Integer> targets){
@@ -304,8 +313,8 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		return Tsplist;
 	}
 
-	/*
-	 * return deep copy of this graph algo
+	/**
+	 * @return deep copy of this graph algo
 	 */
 	@Override
 	public graph copy() {

@@ -2,6 +2,11 @@ package dataStructure;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author Ben itzhak
+ * @author Liad ben moshe
+ */
 public class edgeData implements edge_data, Serializable {
 
 	public edgeData(nodeData src, nodeData dest,double weight) {
@@ -58,7 +63,7 @@ public class edgeData implements edge_data, Serializable {
 		this._Tag=t;
 
 	}
-	////////////////private/////////////////
+	/******* private data ********/
 	private void set_Src(nodeData _Src) {
 		this._Src = _Src;
 	}

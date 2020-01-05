@@ -68,8 +68,9 @@ public class Graph_GUI extends JFrame implements ActionListener ,Runnable  {
 		set_changes(this.get_graphGui().get_graphAlgo().getMC());
 		this.get_console().setText("Click Show Graph to see the graph");
 		if (this != null) this.setVisible(true);
-		//run();
 		set_draw(new Draw(this.get_graphGui().get_graphAlgo()));
+		
+		// thread that listen changes in the graph
 		ActionListener taskPerformer = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				run();
@@ -216,6 +217,7 @@ public class Graph_GUI extends JFrame implements ActionListener ,Runnable  {
 
 	/**
 	 * painting a line after label 'algorithmes'
+	 * @param g - graphics
 	 */
 	public void paint(Graphics g) {
 		super.paint(g);
